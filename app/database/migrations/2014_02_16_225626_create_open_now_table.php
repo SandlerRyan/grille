@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoryTable extends Migration {
+class CreateOpenNowTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,10 @@ class CreateCategoryTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('categories', function($table)
- 		{
- 			$table->increments('category_id');
- 			$table->string('name');
-		});
+		Schema::create('open_now', function($table)
+		{
+			$table->boolean('open_flag');
+         });
 	}
 
 	/**
@@ -26,8 +25,7 @@ class CreateCategoryTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('categories');
-
+		Schema::drop('open_now');
 	}
 
 }

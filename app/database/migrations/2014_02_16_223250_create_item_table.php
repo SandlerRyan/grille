@@ -12,9 +12,17 @@ class CreateItemTable extends Migration {
 	 */
 	public function up()
 	{
-		$table->increments('item_id');
-		$table->string('name');
-		$table->
+		Schema::create('items', function($table)
+		{
+			$table->increments('item_id');
+			$table->string('item_name');
+			$table->float('price');
+			/* todo in an edit file--categories table not created yet so will create 
+			* migration conflict if run before the categories migration
+			* $table->foreign('category_id')->references('category_id')->on('categories') */
+			$table->text('description');
+			$table->boolean('available');
+		});
 	}
 
 	/**
@@ -24,7 +32,7 @@ class CreateItemTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('items');
 	}
 
 }
