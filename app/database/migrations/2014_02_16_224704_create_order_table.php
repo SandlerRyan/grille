@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class OrderTable extends Migration {
+class CreateOrderTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -15,11 +15,13 @@ class OrderTable extends Migration {
 		Schema::create('orders', function($table)
 		{
 			$table->increments('order_id');
-			$table->foreign('user_id')->references('id')->on('users');
+			$table->integer('user_id')->unsigned();
+			$table->foreign('user_id')->references('user_id')->on('users');
 			$table->timestamp('created_at');
 			$table->string('venmo_id', 15);
 			$table->string('notes', 140);
-            $table->string('order_status',10)
+            $table->string('order_status',10);
+            $table->float('cost');
          });
 	}
 

@@ -14,7 +14,7 @@ class CreateUserTable extends Migration {
 	{
 		Schema::create('users', function($table)
 		{
-			$table->increments('id');
+			$table->increments('user_id');
 			$table->string('name');
 			$table->smallInteger('phone_number');
 			$table->boolean('hours_notification');
