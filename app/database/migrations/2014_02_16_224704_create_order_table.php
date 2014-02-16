@@ -15,7 +15,7 @@ class OrderTable extends Migration {
 		Schema::create('orders', function($table)
 		{
 			$table->increments('order_id');
-			$table->foreign('user_id')->references('id')->on('users')
+			$table->foreign('user_id')->references('id')->on('users');
 			$table->timestamp('created_at');
 			$table->string('venmo_id', 15);
 			$table->string('notes', 140);
