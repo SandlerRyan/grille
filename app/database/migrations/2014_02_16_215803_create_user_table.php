@@ -1,5 +1,9 @@
 <?php
 
+
+// ACCIDENTAL REDUNDANT MIGRATION FILE!! IGNORE!
+
+
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
