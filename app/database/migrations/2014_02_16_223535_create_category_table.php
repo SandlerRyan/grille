@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTable extends Migration {
+class CreateCategoryTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,17 +12,13 @@ class CreateUserTable extends Migration {
 	 */
 	public function up()
 	{
-		//
-		Schema::create('users', function($table)
+		Schema::create('categories', function($table)
  		{
  			$table->increments('id');
  			$table->string('name');
- 			$table->smallInteger('phone_number');
- 			$table->boolean('hours_notification');
- 			$table->boolean('deals_notification');
-            $table->timestamps();
 		});
 	}
+
 	/**
 	 * Reverse the migrations.
 	 *
@@ -30,8 +26,7 @@ class CreateUserTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('users');
-
+		//
 	}
 
 }
