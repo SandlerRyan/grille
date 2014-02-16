@@ -1,13 +1,9 @@
 <?php
 
-
-// ACCIDENTAL REDUNDANT MIGRATION FILE!! IGNORE!
-
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserTable extends Migration {
+class CreateUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -16,7 +12,15 @@ class CreateUserTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::create('users', function($table)
+		{
+			$table->increments('id');
+			$table->string('name');
+			$table->smallInteger('phone_number');
+			$table->boolean('hours_notification');
+			$table->boolean('deals_notification');
+            $table->timestamps();
+         });
 	}
 
 	/**
@@ -26,7 +30,7 @@ class CreateUserTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('courses');
 	}
 
 }
