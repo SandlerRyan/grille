@@ -12,7 +12,9 @@ class CreateItemTable extends Migration {
 	 */
 	public function up()
 	{
-		//
+		$table->increments('item_id');
+		$table->string('name');
+		$table->
 	}
 
 	/**
