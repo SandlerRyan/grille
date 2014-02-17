@@ -20,7 +20,19 @@ class OrderController extends \BaseController {
      */
     public function create()
     {
-        
+        // TODO: Create a structured JSON of all menue items
+        // Example: 
+        {"name": "burger1",
+        "description"
+        "price"
+        "category": "drinks"
+
+            {"burger1": 50, "burger2": 5}, "drinks": [{JSON ITEMS1, JSON ITEMS2}]
+
+        }
+        [{BURGERS}, {CHEESE}, {DRINKS}, {FRIES}]
+
+
         $this->layout->content = View::make('orders.create');
     }
 
@@ -31,21 +43,7 @@ class OrderController extends \BaseController {
      */
     public function store()
     {
-        $course = new Course();
-        $course->field = Input::get('field');
-        $course->number = Input::get('number');
-        $course->title = Input::get('title');
-        $course->term = Input::get('term');
-        $course->description = Input::get('description');
-        $course->notes = Input::get('notes');
-        $course->meetings = Input::get('meetings');
-        $course->building = Input::get('building');
-        $course->room = Input::get('room');
-        $course->faculty = Input::get('faculty');
-        $course->prerequisites = Input::get('prerequisites');
-        $course->cat_num = Input::get('cat_num');
-        $course->bracketed = Input::get('bracketed');
-        $course->save();
+        
         return Redirect::to('courses/' . $course->id);
     }
 
