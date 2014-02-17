@@ -1,6 +1,6 @@
 <div class="jumbotron">
     
-	<h3>Welcome to Harvard Courses. In this overly simplistic portal, you may Create, Edit, View, and Delete courses, fields, and faculty.</h3>
+	<h3>Welcome to the Eliot Grille website.</h3>
 
 	<hr/>
     <p>
