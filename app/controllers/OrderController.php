@@ -11,6 +11,7 @@ class OrderController extends \BaseController {
     {
         $courses = Order::get();
         $this->layout->content = View::make('orders.index', ['courses' => $courses]);
+
     }
 
     /**
@@ -20,6 +21,7 @@ class OrderController extends \BaseController {
      */
     public function create()
     {
+<<<<<<< HEAD
         // TODO: Create a structured JSON of all menue items
         // Example: 
         {"name": "burger1",
@@ -34,6 +36,17 @@ class OrderController extends \BaseController {
 
 
         $this->layout->content = View::make('orders.create');
+=======
+        //fetch all available menu items
+        $grilled_cheese = Item::select('item_id','item_name','price','description','available')->where('category_id','1')->get();
+        $burgers = Item::select('item_id','item_name','price','description','available')->where('category_id','2')->get();
+        $fries = Item::select('item_id','item_name','price','description','available')->where('category_id','4')->get();
+        $drinks = Item::select('item_id','item_name','price','description','available')->where('category_id','5')->get();
+        
+        //store as a dictionary
+        $menu = ['Grilled Cheese'=> $grilled_cheese, 'Burgers'=> $burgers, 'Fries and Friends'=>$fries, 'Drinks and Desserts'=> $drinks];
+        $this->layout->content = View::make('orders.create', ['menu' => $menu]);
+>>>>>>> 5198a62d3f88429dd194ffb655e5ff7470b68abe
     }
 
     /**
