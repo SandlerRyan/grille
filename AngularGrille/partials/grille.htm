@@ -1,0 +1,29 @@
+﻿<p>
+    Search: <input ng-model="search">
+</p>
+
+<table class="table table-bordered">
+    <tr class="well">
+        <td class="tdRight" colspan="4" >
+            <a href="index.htm#/order" title="go to grille order" ng-disabled="order.getTotalCount() < 1">
+                <i class="icon-grille-order" />
+                <b>{{order.getTotalCount()}}</b> items, <b>{{order.getTotalPrice() | currency}}</b>
+            </a>
+        </td>
+    </tr>
+    <tr ng-repeat="product in grille.products | orderBy:'name' | filter:search" >
+        <h2>Burgers</h2>
+        <td>
+            <b>{{product.name}}</b><br />
+            {{product.description}}
+        </td>
+        <td class="tdRight">
+            {{product.price | currency}}
+        </td>
+        <td class="tdCenter">
+            <a href="" ng-click="order.addItem(product.id, product.name, product.price, 1)">
+                add to order
+            </a>
+        </td>
+    </tr>
+</table>
