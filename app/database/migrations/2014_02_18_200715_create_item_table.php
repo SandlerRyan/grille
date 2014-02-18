@@ -14,14 +14,18 @@ class CreateItemTable extends Migration {
 	{
 		Schema::create('items', function($table)
 		{
-			$table->increments('item_id');
-			$table->string('item_name');
-			$table->float('price');
-			/* todo in an edit file--categories table not created yet so will create 
-			* migration conflict if run before the categories migration
-			* $table->foreign('category_id')->references('category_id')->on('categories') */
-			$table->text('description');
+			$table->increments('id');
+			$table->string('name');
+			$table->decimal('price');
+			$table->string('description');
 			$table->boolean('available');
+
+			$table->integer('grille_id')->unsigned();
+			$table->foreign('grille_id')->references('id')->on('grilles');
+
+			$table->integer('category_id')->unsigned();
+			$table->foreign('category_id')->references('id')->on('categories');
+
 		});
 	}
 
