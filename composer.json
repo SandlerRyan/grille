@@ -40,8 +40,8 @@
 		"moltin/cart": "dev-master",
 		"moltin/laravel-cart": "dev-master",
 		"aheissenberger/foundation": "dev-master",
-		"zurb/foundation": "dev-master"
-	}
-
+		"zurb/foundation": "dev-master",
+		"twilio/sdk": "dev-master"
+		}
 
 }
