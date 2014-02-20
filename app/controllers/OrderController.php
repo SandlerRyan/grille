@@ -21,32 +21,16 @@ class OrderController extends \BaseController {
      */
     public function create()
     {
-<<<<<<< HEAD
-        // TODO: Create a structured JSON of all menue items
-        // Example: 
-        {"name": "burger1",
-        "description"
-        "price"
-        "category": "drinks"
-
-            {"burger1": 50, "burger2": 5}, "drinks": [{JSON ITEMS1, JSON ITEMS2}]
-
-        }
-        [{BURGERS}, {CHEESE}, {DRINKS}, {FRIES}]
-
-
-        $this->layout->content = View::make('orders.create');
-=======
         //fetch all available menu items
-        $grilled_cheese = Item::select('item_id','item_name','price','description','available')->where('category_id','1')->get();
-        $burgers = Item::select('item_id','item_name','price','description','available')->where('category_id','2')->get();
-        $fries = Item::select('item_id','item_name','price','description','available')->where('category_id','4')->get();
-        $drinks = Item::select('item_id','item_name','price','description','available')->where('category_id','5')->get();
+        $grilled_cheese = Item::select('id','name','price','description','available')->where('category_id','1')->get();
+        $burgers = Item::select('id','name','price','description','available')->where('category_id','2')->get();
+        $fries = Item::select('id','name','price','description','available')->where('category_id','4')->get();
+        $drinks = Item::select('id','name','price','description','available')->where('category_id','5')->get();
         
         //store as a dictionary
         $menu = ['Grilled Cheese'=> $grilled_cheese, 'Burgers'=> $burgers, 'Fries and Friends'=>$fries, 'Drinks and Desserts'=> $drinks];
         $this->layout->content = View::make('orders.create', ['menu' => $menu]);
->>>>>>> 5198a62d3f88429dd194ffb655e5ff7470b68abe
+
     }
 
     /**
@@ -113,4 +97,22 @@ class OrderController extends \BaseController {
         return Redirect::to('courses/');
     }
 
+    //Check Request form from the order page. 
+    public function checkout()
+    {   
+
+        // TODO: Check if user exists. If not, redirect to Checkout Page. 
+        //If it exists, redirect to HUID, and then to Checkout Page
+
+        //Form Data
+        $form = Input::all();
+        
+
+
+
+        $this->layout->content = View::make('checkout.index', ['form' => $form]);
+
+    }
+
+       
 }

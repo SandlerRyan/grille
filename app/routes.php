@@ -12,6 +12,13 @@
 */
 
 
+
+Route::post('/checkout', 'OrderController@checkout');
+
 Route::resource('order', 'OrderController');
+// Route::post('/order/checkout', 'OrderController@checkout');
+// Route::get('/order/checkout', 'OrderController@checkout');
+
+
 
 Route::controller('/', 'BaseController');
