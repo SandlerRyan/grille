@@ -16,9 +16,13 @@
 Route::post('/checkout', 'OrderController@checkout');
 
 Route::resource('order', 'OrderController');
-// Route::post('/order/checkout', 'OrderController@checkout');
-// Route::get('/order/checkout', 'OrderController@checkout');
 
+//URL that Venmo redirects to when authentication is complete
+Route::get('/authenticate_venmo', 'OrderController@authenticatePayment');
+
+Route::get('/pay_later', 'OrderController@pay_later');
+//Final Step in the Ordering Process
+Route::get('/success', 'OrderController@success');
 
 
 Route::controller('/', 'BaseController');
