@@ -18,7 +18,7 @@ class CreateUserTable extends Migration {
 			// derived from HUID 
 			$table->string('id',84)->primary();
 			$table->string('name');
-			$table->bigInteger('phone_number');
+			$table->string('phone_number',11);
 			$table->string('email');	// TODO: need to look up how @college emails are handled for graduates
 			$table->boolean('hours_notification')->default(0);	// text notifications
 			$table->boolean('deals_notification')->default(0);
