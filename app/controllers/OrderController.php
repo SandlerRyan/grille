@@ -2,17 +2,6 @@
 
 class OrderController extends \BaseController {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $courses = Order::get();
-        $this->layout->content = View::make('orders.index', ['courses' => $courses]);
-
-    }
 
     /**
      * Show the form for creating a new order.
@@ -32,20 +21,57 @@ class OrderController extends \BaseController {
         }
 
         // now send to the view
-        $this->layout->content = View::make('orders.create', ['menu' => $menu, 'categories' => $categories]);
+        $this->layout->content = View::make('orders.create', 
+            ['menu' => $menu, 'categories' => $categories]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
+    * Increment the quantity of a cart item,
+    * or add it if not yet in cart
+    * Called by ajax when "+" sign is pressed
+    */
+    public function increment($id)
     {
-        
-        return Redirect::to('courses/' . $course->id);
+        $item = Item::select('id','name','price','available')->where('id',$id)->get();
+        // add necessary fields
+        $item['quantity'] = 1;
+        $item['notes'] = "";
+        //turn json into a php array
+        $item = json_decode($item,true);
+        // insert will add a new item if not already in cart, 
+        // or increment item if it exists already
+        Cart::insert($item);
     }
 
+    /**
+    * Decrement the quantity of a cart item,
+    * or remove it if only 1 left
+    * Called by ajax when "-" sign is pressed
+    */
+    public function decrement($id)
+    {
+        $item = Cart::find($id);
+        // check if item exists; if quantity is already zero, do nothing
+        if ($item)
+            //if quantity is 1, remove item
+            if ($item->quantity == 1)
+            {
+                Cart::remove($item->identifier);
+            }
+            else
+            {
+                $item->quantity -- ;
+            }
+    }
+
+    /**
+    * Empty the shopping cart when user presses "clear"
+    * Called by ajax
+    */
+    public function empty_cart()
+    {
+        Cart::destroy();
+    }
     /**
      * Display the specified resource.
      *
@@ -54,31 +80,7 @@ class OrderController extends \BaseController {
      */
     public function show($id)
     {
- 
- 
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $course = Course::findOrFail($id);
-        $this->layout->content = View::make('courses/edit', ["course" => $course]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        return Redirect::to('courses/' . $course->id);
+        
     }
 
     /**
@@ -128,7 +130,8 @@ class OrderController extends \BaseController {
 
         //Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.01, "phone" => "7734901404", "note" => "testing");
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "testing");
         $response = sendPostData($url, $data);
         
         //Redirect to Success Page and show Order ID and Status 
