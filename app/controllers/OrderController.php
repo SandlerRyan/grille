@@ -32,7 +32,8 @@ class OrderController extends \BaseController {
     */
     public function increment($id)
     {
-        $item = Item::select('id','name','price','available')->where('id',$id)->get();
+        
+        $item = Item::findOrFail($id);
         // add necessary fields
         $item['quantity'] = 1;
         $item['notes'] = "";
@@ -41,6 +42,8 @@ class OrderController extends \BaseController {
         // insert will add a new item if not already in cart, 
         // or increment item if it exists already
         Cart::insert($item);
+        return 1;
+
     }
 
     /**
@@ -62,6 +65,7 @@ class OrderController extends \BaseController {
             {
                 $item->quantity -- ;
             }
+        return 1;    
     }
 
     /**

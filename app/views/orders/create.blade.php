@@ -1,5 +1,5 @@
 <?php 
-Cart::destroy();
+// Cart::destroy();
 function increment($id)
 {
     $item = Item::select('id','name','price','available')->where('id',$id)->get()[0];
@@ -29,13 +29,23 @@ function decrement($id)
       }
 }
 
-increment(1);
-increment(1);
-//decrement(1);
+// increment(1);
+// increment(1);
+// //decrement(1);
 
-var_dump(Cart::find(1));
+
 
 ?>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+
+
+
+<div id="result"></div>
+
 
 <form role="form" method="post" action="/checkout">
 
@@ -45,7 +55,19 @@ var_dump(Cart::find(1));
   @foreach($items as $item)
 
   	{{{ $item->name }}}
-	<input type="text" name="{{$item->id}}" class="form-control" value="" />
+
+    <button type="button" class="addItem" id="{{{$item->id}}}">Add Item</button>
+    <?php $qty = Cart::find($item->id);
+      if ($qty) {
+        $qty = $qty->quantity;
+      } else {
+        $qty = 0;
+      }
+      ?> 
+    <input type="text" id="value-{{$item->id}}" value="{{{ $qty }}}" />
+    <button type="button" class="removeItem" id="{{{$item->id}}}">Remove Item</button>
+	  
+
   	{{{ $item->description}}}
 
   	{{{ $item->price}}}
@@ -61,3 +83,53 @@ var_dump(Cart::find(1));
 
 
 </form>
+
+
+
+<script>
+console.log($("#addItem"));
+
+$(".addItem").click(function(){
+  console.log("clicked");
+  var id = this.id;
+  url = "/increment/" + id;
+  $.ajax({
+          url: url,
+          type: "get",
+          success: function(){
+              containerId = "#value-" + id;
+              value = $(containerId).val();
+              $(containerId).val(parseInt(value) + 1);
+          },
+          error:function(){
+              alert("failure");
+              $("#result").html('There is error while submit');
+          }
+      });
+})
+
+$(".removeItem").click(function(){
+  console.log("clicked");
+  var id = this.id;
+  url = "/decrement/" + id;
+  $.ajax({
+          url: url,
+          type: "get",
+          success: function(){
+              containerId = "#value-" + id;
+              value = $(containerId).val();
+              if (value > 0) {
+                $(containerId).val(parseInt(value) - 1);  
+              } else {
+                $(containerId).val(0);  
+              }
+            
+          },
+          error:function(){
+              alert("failure");
+              $("#result").html('There is error while submit');
+          }
+      });
+})
+
+</script>
