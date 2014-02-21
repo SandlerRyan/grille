@@ -30,7 +30,7 @@ Route::get('/decrement/{id}', 'OrderController@decrement');
 Route::get('/empty_cart', 'OrderController@empty_cart');
 
 // Go to checkout after all menu items have been added to cart
-Route::post('/checkout', 'OrderController@checkout');
+Route::get('/checkout', 'OrderController@checkout');
 
 //URL that Venmo redirects to when authentication is complete
 Route::get('/authenticate_venmo', 'OrderController@authenticatePayment');

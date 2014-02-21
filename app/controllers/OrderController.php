@@ -117,9 +117,10 @@ class OrderController extends \BaseController {
         // TODO: Check if user exists. If it does, redirect to Checkout Page. 
         //If it doesn't exist, redirect to HUID, and then to Checkout Page.
 
-        // 
+        // if cart is not empty, get the total
+        $total = Cart::total();
 
-        $this->layout->content = View::make('checkout.index', ['form' => $form]);
+        $this->layout->content = View::make('checkout.index');
 
     }
   

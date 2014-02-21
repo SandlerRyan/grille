@@ -1,10 +1,13 @@
 
 THIS IS YOUR ORDER DETAILS!
 
-@foreach($form as $item)
-
-	{{{ $item }}}
+@foreach(Cart::contents() as $item)
+{{$item->name}}<br/>
+{{$item->price}}<br/>
+{{$item->quantity}}<br/><br/>
 @endforeach
+
+<div id="totalPrice"><b>Total</b>: {{Cart::total()}}</div>
 
 <a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
 
