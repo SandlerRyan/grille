@@ -1,3 +1,7 @@
+<?php 
+	echo Addon::find(1)->addon_items;
+?>
+
 <form role="form" method="post" action="/checkout">
 
 @foreach($menu as $category=>$items)

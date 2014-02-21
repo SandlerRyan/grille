@@ -33,7 +33,6 @@ class OrderController extends \BaseController {
 
         // now send to the view
         $this->layout->content = View::make('orders.create', ['menu' => $menu, 'categories' => $categories]);
-
     }
 
     /**
