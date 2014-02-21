@@ -45,13 +45,12 @@ var SUBMIT_BUTTON = 'button.submit';
 
 // Set the checkout button status when the page is loaded
 $(document).ready(function () {
-  //remove dollar sign from total
+  // initialize the button as disabled
+
+  // remove dollar sign from total
   var total = $('#totalPrice').text().substr(1);
   if (parseInt(total) != 0) {
-    console.log('here');
-
-    /* THIS IS BUGGY!!!!! */
-    $('SUBMIT_BUTTON').removeAttr('disabled');
+    $(SUBMIT_BUTTON).removeAttr('disabled');
   }
 });
 
