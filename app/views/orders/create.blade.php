@@ -1,5 +1,5 @@
 <form role="form" method="post" action="/checkout">
-        
+
 @foreach($menu as $category=>$items)
   <h1>{{$category}}</h1>
 

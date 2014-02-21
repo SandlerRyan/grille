@@ -15,21 +15,24 @@ class OrderController extends \BaseController {
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new order.
      *
      * @return Response
      */
     public function create()
     {
-        //fetch all available menu items
-        $grilled_cheese = Item::select('id','name','price','description','available')->where('category_id','1')->get();
-        $burgers = Item::select('id','name','price','description','available')->where('category_id','2')->get();
-        $fries = Item::select('id','name','price','description','available')->where('category_id','4')->get();
-        $drinks = Item::select('id','name','price','description','available')->where('category_id','5')->get();
-        
-        //store as a dictionary
-        $menu = ['Grilled Cheese'=> $grilled_cheese, 'Burgers'=> $burgers, 'Fries and Friends'=>$fries, 'Drinks and Desserts'=> $drinks];
-        $this->layout->content = View::make('orders.create', ['menu' => $menu]);
+        // fetch all available menu items by category
+        $categories = Category::all();
+        $menu = array();
+        foreach ($categories as $category)
+        {
+            $items = Item::select('id','name','price','description','available')->
+                where('category_id',$category->id)->get();
+            $menu[$category['name']] = $items;
+        }
+
+        // now send to the view
+        $this->layout->content = View::make('orders.create', ['menu' => $menu, 'categories' => $categories]);
 
     }
 
@@ -52,13 +55,8 @@ class OrderController extends \BaseController {
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        $faculty = Faculty::find($course->faculty);
-        $field = Field::find($course->field);
-        $this->layout->content = View::make('courses.show', 
-            ['course' => $course, 
-            'faculty' => $faculty,
-            'field' => $field]);
+ 
+ 
     }
 
     /**
@@ -122,7 +120,7 @@ class OrderController extends \BaseController {
 
     }
 
-
+    // accesses the venmo API so users can pay
     public function authenticatePayment() 
     {   
 
