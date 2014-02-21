@@ -4,7 +4,15 @@
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"require": {
-		"laravel/framework": "4.1.*"
+		"laravel/framework": "4.1.*",
+		"components/jquery": "*",
+		"moltin/currency": "dev-master",
+		"moltin/tax": "dev-master",
+		"moltin/cart": "dev-master",
+		"moltin/laravel-cart": "dev-master",
+		"aheissenberger/foundation": "dev-master",
+		"zurb/foundation": "dev-master",
+		"twilio/sdk": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
@@ -32,16 +40,6 @@
 	"config": {
 		"preferred-install": "dist"
 	},
-	"minimum-stability": "stable",
-
-	"require": {
-		"moltin/currency": "dev-master",
-		"moltin/tax": "dev-master",
-		"moltin/cart": "dev-master",
-		"moltin/laravel-cart": "dev-master",
-		"aheissenberger/foundation": "dev-master",
-		"zurb/foundation": "dev-master",
-		"twilio/sdk": "dev-master"
-		}
+	"minimum-stability": "stable"
 
 }
