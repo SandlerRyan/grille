@@ -32,7 +32,8 @@ class OrderController extends \BaseController {
     */
     public function increment($id)
     {
-        $item = Item::select('id','name','price','available')->where('id',$id)->get();
+        
+        $item = Item::findOrFail($id);
         // add necessary fields
         $item['quantity'] = 1;
         $item['notes'] = "";
@@ -41,6 +42,12 @@ class OrderController extends \BaseController {
         // insert will add a new item if not already in cart, 
         // or increment item if it exists already
         Cart::insert($item);
+
+        $total = Cart::total();
+        $response_array['status'] = 'success';    
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+
     }
 
     /**
@@ -62,6 +69,9 @@ class OrderController extends \BaseController {
             {
                 $item->quantity -- ;
             }
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
     }
 
     /**
@@ -71,6 +81,10 @@ class OrderController extends \BaseController {
     public function empty_cart()
     {
         Cart::destroy();
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+        
     }
     /**
      * Display the specified resource.

@@ -18,6 +18,11 @@ Route::resource('order', 'OrderController');
 // Route called by ajax to increment an item
 Route::get('/increment/{id}', 'OrderController@increment');
 
+// Route::get('/increment/{id}', function($id)
+// {
+//     // Only called if {id} is numeric.
+//     return $id;
+// });
 // Route called by ajax to decrement an item
 Route::get('/decrement/{id}', 'OrderController@decrement');
 
