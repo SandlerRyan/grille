@@ -42,7 +42,11 @@ class OrderController extends \BaseController {
         // insert will add a new item if not already in cart, 
         // or increment item if it exists already
         Cart::insert($item);
-        return 1;
+
+        $total = Cart::total();
+        $response_array['status'] = 'success';    
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
 
     }
 
@@ -65,7 +69,9 @@ class OrderController extends \BaseController {
             {
                 $item->quantity -- ;
             }
-        return 1;    
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
     }
 
     /**
@@ -75,6 +81,10 @@ class OrderController extends \BaseController {
     public function empty_cart()
     {
         Cart::destroy();
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+        
     }
     /**
      * Display the specified resource.

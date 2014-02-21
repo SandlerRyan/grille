@@ -1,47 +1,3 @@
-<?php 
-// Cart::destroy();
-function increment($id)
-{
-    $item = Item::select('id','name','price','available')->where('id',$id)->get()[0];
-    // add necessary fields
-    $item['quantity'] = 1;
-    $item['notes'] = "";
-    //turn json into a php array
-    $item = json_decode($item,true);
-    // insert will add a new item if not already in cart, 
-    // or increment item if it exists already
-    Cart::insert($item);
-}
-
-function decrement($id)
-{
-  $item = Cart::find($id);
-  // check if item exists; if quantity is already zero, do nothing
-  if ($item)
-      //if quantity is 1, remove item
-      if ($item->quantity == 1)
-      {
-          Cart::remove($item->identifier);
-      }
-      else
-      {
-          $item->quantity -- ;
-      }
-}
-
-// increment(1);
-// increment(1);
-// //decrement(1);
-
-
-
-?>
-
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
 
 
 <div id="result"></div>
@@ -64,7 +20,7 @@ function decrement($id)
         $qty = 0;
       }
       ?> 
-    <input type="text" id="value-{{$item->id}}" value="{{{ $qty }}}" />
+    <input type="text" class="itemQuantity" id="value-{{$item->id}}" value="{{{ $qty }}}" />
     <button type="button" class="removeItem" id="{{{$item->id}}}">Remove Item</button>
 	  
 
@@ -79,16 +35,44 @@ function decrement($id)
 
 
 
-        <button type="submit" class="btn btn-default">Submit</button>
-
-
+        <button type="submit" class="btn btn-default">Checkout</button>
+        <br/>
+        
 </form>
+
+<button type="button" class="clearCart">Clear Cart</button> 
+
+<div id="totalPrice">${{{Cart::total()}}}</div>
 
 
 
 <script>
-console.log($("#addItem"));
 
+$(".clearCart").click(function() {
+  var url = "/empty_cart";
+  $.ajax({
+          url: url,
+          type: "get",
+          success: function(data){
+              //update cart
+              var data = JSON.parse(data);
+              var total = data.cart;
+              var total =  "$" + total;
+              $("#totalPrice").html(total);
+              
+              //clear all inputs without having to refresh the page
+              $(".itemQuantity").each(function(i, obj){
+                $(obj).val(0);
+              })
+
+          },
+          error:function(){
+              alert("Sorry, something bad happened.");
+          }
+      });
+})
+
+//Ajax call to add item
 $(".addItem").click(function(){
   console.log("clicked");
   var id = this.id;
@@ -96,10 +80,19 @@ $(".addItem").click(function(){
   $.ajax({
           url: url,
           type: "get",
-          success: function(){
+          success: function(data){
+              console.log(data)
+
+              //update counter
               containerId = "#value-" + id;
               value = $(containerId).val();
               $(containerId).val(parseInt(value) + 1);
+
+              //update cart
+              var data = JSON.parse(data);
+              var total = data.cart;
+              var total =  "$" + total;
+              $("#totalPrice").html(total);
           },
           error:function(){
               alert("failure");
@@ -115,7 +108,7 @@ $(".removeItem").click(function(){
   $.ajax({
           url: url,
           type: "get",
-          success: function(){
+          success: function(data){
               containerId = "#value-" + id;
               value = $(containerId).val();
               if (value > 0) {
@@ -123,10 +116,17 @@ $(".removeItem").click(function(){
               } else {
                 $(containerId).val(0);  
               }
+
+              //update cart
+              var data = JSON.parse(data);
+              var total = data.cart;
+              var total =  "$" + total;
+              $("#totalPrice").html(total);
             
           },
           error:function(){
               alert("failure");
+
               $("#result").html('There is error while submit');
           }
       });
