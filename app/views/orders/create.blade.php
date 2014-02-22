@@ -1,7 +1,6 @@
 
 <div id="result"></div>
 
-
 @foreach($menu as $category=>$items)
   <h1>{{$category}}</h1>
 
@@ -57,7 +56,6 @@ $(document).ready(function () {
 
 // Ajax call to add item
 $(".addItem").click(function(){
-  console.log("clicked");
   var id = this.id;
   url = "/increment/" + id;
   $.ajax({
@@ -77,7 +75,7 @@ $(".addItem").click(function(){
       },
       error:function(){
           alert("failure");
-          $("#result").html('There is error while submit');
+          $("#result").html('There was an error during submission');
       }
   });
 })

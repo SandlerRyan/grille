@@ -15,19 +15,17 @@
 // The default CRUD for creating, destroying, editing, orders
 Route::resource('order', 'OrderController');
 
-// Route called by ajax to increment an item
+// Route called by ajax to increment an item (passes item id as argument)
 Route::get('/increment/{id}', 'OrderController@increment');
 
-// Route::get('/increment/{id}', function($id)
-// {
-//     // Only called if {id} is numeric.
-//     return $id;
-// });
 // Route called by ajax to decrement an item
 Route::get('/decrement/{id}', 'OrderController@decrement');
 
-// Route called by ajax to empty a acart
+// Route called by ajax to empty a cart
 Route::get('/empty_cart', 'OrderController@empty_cart');
+
+//Route called by ajax to add a note
+Route::get('/add_note/{id}/{note}', 'OrderController@add_note');
 
 // Go to checkout after all menu items have been added to cart
 Route::get('/checkout', 'OrderController@checkout');
