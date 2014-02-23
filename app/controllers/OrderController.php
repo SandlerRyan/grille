@@ -2,61 +2,90 @@
 
 class OrderController extends \BaseController {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        $courses = Order::get();
-        $this->layout->content = View::make('orders.index', ['courses' => $courses]);
-
-    }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new order.
      *
      * @return Response
      */
     public function create()
     {
-        //fetch all available menu items
-        $grilled_cheese = Item::select('item_id','item_name','price','description','available')->where('category_id','1')->get();
-        $burgers = Item::select('item_id','item_name','price','description','available')->where('category_id','2')->get();
-        $fries = Item::select('item_id','item_name','price','description','available')->where('category_id','4')->get();
-        $drinks = Item::select('item_id','item_name','price','description','available')->where('category_id','5')->get();
-        
-        //store as a dictionary
-        $menu = ['Grilled Cheese'=> $grilled_cheese, 'Burgers'=> $burgers, 'Fries and Friends'=>$fries, 'Drinks and Desserts'=> $drinks];
-        $this->layout->content = View::make('orders.create', ['menu' => $menu]);
+        // fetch all available menu items by category
+        $categories = Category::all();
+        $menu = array();
+        foreach ($categories as $category)
+        {
+            $items = Item::select('id','name','price','description','available')->
+                where('category_id',$category->id)->get();
+            $menu[$category['name']] = $items;
+        }
+
+        // now send to the view
+        $this->layout->content = View::make('orders.create', 
+            ['menu' => $menu, 'categories' => $categories]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
+    * Increment the quantity of a cart item,
+    * or add it if not yet in cart
+    * Called by ajax when "+" sign is pressed
+    */
+    public function increment($id)
     {
-        $course = new Course();
-        $course->field = Input::get('field');
-        $course->number = Input::get('number');
-        $course->title = Input::get('title');
-        $course->term = Input::get('term');
-        $course->description = Input::get('description');
-        $course->notes = Input::get('notes');
-        $course->meetings = Input::get('meetings');
-        $course->building = Input::get('building');
-        $course->room = Input::get('room');
-        $course->faculty = Input::get('faculty');
-        $course->prerequisites = Input::get('prerequisites');
-        $course->cat_num = Input::get('cat_num');
-        $course->bracketed = Input::get('bracketed');
-        $course->save();
-        return Redirect::to('courses/' . $course->id);
+        
+        $item = Item::findOrFail($id);
+        // add necessary fields
+        $item['quantity'] = 1;
+        $item['notes'] = "";
+        //turn json into a php array
+        $item = json_decode($item,true);
+        // insert will add a new item if not already in cart, 
+        // or increment item if it exists already
+        Cart::insert($item);
+
+        $total = Cart::total();
+        $response_array['status'] = 'success';    
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+
     }
 
+    /**
+    * Decrement the quantity of a cart item,
+    * or remove it if only 1 left
+    * Called by ajax when "-" sign is pressed
+    */
+    public function decrement($id)
+    {
+        $item = Cart::find($id);
+        // check if item exists; if quantity is already zero, do nothing
+        if ($item)
+            //if quantity is 1, remove item
+            if ($item->quantity == 1)
+            {
+                Cart::remove($item->identifier);
+            }
+            else
+            {
+                $item->quantity -- ;
+            }
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+    }
+
+    /**
+    * Empty the shopping cart when user presses "clear"
+    * Called by ajax
+    */
+    public function empty_cart()
+    {
+        Cart::destroy();
+        $response_array['status'] = 'success';      
+        $response_array['cart'] = number_format(Cart::total(), 2);    
+        return json_encode($response_array);
+        
+    }
     /**
      * Display the specified resource.
      *
@@ -65,36 +94,7 @@ class OrderController extends \BaseController {
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        $faculty = Faculty::find($course->faculty);
-        $field = Field::find($course->field);
-        $this->layout->content = View::make('courses.show', 
-            ['course' => $course, 
-            'faculty' => $faculty,
-            'field' => $field]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $course = Course::findOrFail($id);
-        $this->layout->content = View::make('courses/edit', ["course" => $course]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        return Redirect::to('courses/' . $course->id);
+        
     }
 
     /**
@@ -110,4 +110,66 @@ class OrderController extends \BaseController {
         return Redirect::to('courses/');
     }
 
+    //Check Request form from the order page. 
+    public function checkout()
+    {   
+
+        // TODO: Check if user exists. If it does, redirect to Checkout Page. 
+        //If it doesn't exist, redirect to HUID, and then to Checkout Page.
+
+        // if cart is not empty, get the total
+        $total = Cart::total();
+
+        $this->layout->content = View::make('checkout.index');
+
+    }
+  
+       
+    public function pay_later()
+    {
+        //User has decided to Pay Later.
+
+        //TODO: Edit Order for Pay Later and send back Order ID
+        $response = "You have decided to pay later.";
+        return Redirect::to('/success')->with('response', $response);
+
+    }
+
+    // accesses the venmo API so users can pay
+    public function authenticatePayment() 
+    {   
+
+        //Get Access Token from Venmo Response
+        $access_token = Input::get('access_token');
+
+        //Create Payment and Charge the User
+        $url = 'https://api.venmo.com/v1/payments';
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "testing");
+        $response = sendPostData($url, $data);
+        
+        //Redirect to Success Page and show Order ID and Status 
+        return Redirect::to('/success')->with('response', $response);
+
+    }
+
+    //Show Success Page with appropiate message
+    public function success() 
+    {   
+
+     $response = Session::get('response');
+     $this->layout->content = View::make('checkout.success', ['response' => $response]);
+
+    }
+ 
+}
+
+//Function to Make POST Requests with Data  
+function sendPostData($url, $post)
+{
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+    return curl_exec($ch);
 }

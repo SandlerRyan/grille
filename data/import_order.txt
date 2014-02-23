@@ -6,4 +6,4 @@ items
 addons
 addon_items
 orders
-item_orders
+ordered_items
