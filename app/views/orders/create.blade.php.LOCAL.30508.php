@@ -61,20 +61,17 @@
       
         <div class="panel">
 
-        <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
+        <h4>Your total is: ${{{Cart::total()}}} </h4>
         <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-        <button id="checkout" class="button alert round" disabled>Checkout</button>
-        <button id="clearCart" class="button alert round">Clear Cart</button> 
-
-<!--         <button id="checkout" disabled>Checkout</button>
-        <br/>
-        <button type="button" class="clearCart">Clear Cart</button>  -->
+        <button class="button alert round disabled">Checkout</button>
         
+        <button type="button" class="button alert round">Clear Cart</button> 
+
 
 
         <script>
-        var SUBMIT_BUTTON = '#checkout';
+        var SUBMIT_BUTTON = 'button.submit';
 
         // Set the checkout button status when the page is loaded
         $(document).ready(function () {
@@ -150,7 +147,7 @@
         })
 
         // Ajax call to clear cart and zero out item totals
-        $("#clearCart").click(function() {
+        $(".clearCart").click(function() {
           var url = "/empty_cart";
           $.ajax({
             url: url,

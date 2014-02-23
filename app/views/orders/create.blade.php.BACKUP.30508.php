@@ -55,26 +55,28 @@
 
 </div>
 
+<<<<<<< HEAD
   <!-- Call to Action Panel -->
   <div class="row">
       <div class="large-12 columns">
       
         <div class="panel">
 
-        <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
+        <h4>Your total is: ${{{Cart::total()}}} </h4>
         <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
+=======
+@foreach($menu as $category=>$items)
+  <h1>{{$category}}</h1>
+>>>>>>> 6f829fcad0666bde96eca24c56aeb1c8572af003
 
-        <button id="checkout" class="button alert round" disabled>Checkout</button>
-        <button id="clearCart" class="button alert round">Clear Cart</button> 
-
-<!--         <button id="checkout" disabled>Checkout</button>
-        <br/>
-        <button type="button" class="clearCart">Clear Cart</button>  -->
+        <button class="button alert round disabled">Checkout</button>
         
+        <button type="button" class="button alert round">Clear Cart</button> 
+
 
 
         <script>
-        var SUBMIT_BUTTON = '#checkout';
+        var SUBMIT_BUTTON = 'button.submit';
 
         // Set the checkout button status when the page is loaded
         $(document).ready(function () {
@@ -150,7 +152,7 @@
         })
 
         // Ajax call to clear cart and zero out item totals
-        $("#clearCart").click(function() {
+        $(".clearCart").click(function() {
           var url = "/empty_cart";
           $.ajax({
             url: url,
@@ -186,4 +188,69 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+=======
+<button type="button" class="clearCart">Clear Cart</button> 
+
+<div id="totalPrice">${{{Cart::total()}}}</div>
+
+
+
+<script>
+var SUBMIT_BUTTON = 'button.submit';
+
+// Set the checkout button status when the page is loaded
+$(document).ready(function () {
+  // initialize the button as disabled
+
+  // remove dollar sign from total
+  var total = $('#totalPrice').text().substr(1);
+  if (parseInt(total) != 0) {
+    $(SUBMIT_BUTTON).removeAttr('disabled');
+  }
+});
+
+
+// Ajax call to add item
+$(".addItem").click(function(){
+  var id = this.id;
+  url = "/increment/" + id;
+  $.ajax({
+      url: url,
+      type: "get",
+      success: function(data){
+          //update counter
+          containerId = "#value-" + id;
+          value = $(containerId).val();
+          $(containerId).val(parseInt(value) + 1);
+          //update cart
+          var data = JSON.parse(data);
+          var total = data.cart;
+          var total =  "$" + total;
+          $("#totalPrice").html(total);
+          $(SUBMIT_BUTTON).removeAttr('disabled');
+      },
+      error:function(){
+          alert("failure");
+          $("#result").html('There was an error during submission');
+      }
+  });
+})
+
+// Ajax call to remove item
+$(".removeItem").click(function(){
+  var id = this.id;
+  url = "/decrement/" + id;
+  $.ajax({
+      url: url,
+      type: "get",
+      success: function(data){
+          containerId = "#value-" + id;
+          value = $(containerId).val();
+          if (value > 0) {
+            $(containerId).val(parseInt(value) - 1);  
+          } else {
+            $(containerId).val(0);  
+          }
+>>>>>>> 6f829fcad0666bde96eca24c56aeb1c8572af003
 
