@@ -1,5 +1,7 @@
 
-<div id="result"></div>
+
+<div id="result">
+</div>
 
 @foreach($menu as $category=>$items)
   <h1>{{$category}}</h1>
@@ -23,6 +25,17 @@
   	{{{ $item->description}}}
 
   	{{{ $item->price}}}
+
+    @if($item->addon != '[]')
+    <div><i>Addons: </i>
+      @foreach($item->addon as $addon)
+        {{{ $addon->name }}}
+        {{{ $addon->price }}}
+      @endforeach
+    </div>
+    @else
+    <div></div>
+    @endif
 
   	<br/>
   @endforeach

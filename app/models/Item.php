@@ -14,8 +14,14 @@
     		return $this->belongsTo('Grille');
     	}
 
-        public function orders ()
+        public function order ()
         {
             return $this->belongsToMany('Order', 'item_orders');
         }
+
+        public function addon ()
+        {
+            return $this->belongsToMany('Addon', 'addon_items');
+        }
+
     }

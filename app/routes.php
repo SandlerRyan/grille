@@ -21,6 +21,12 @@ Route::get('/increment/{id}', 'OrderController@increment');
 // Route called by ajax to decrement an item
 Route::get('/decrement/{id}', 'OrderController@decrement');
 
+// Route called by ajax to add an addon and associate it with an item
+Route::get('/increment_addon/{item_id}/{addon_id}', 'OrderController@increment_addon');
+
+// Route called by ajax to remove an addon
+Route::get('/decrement_addon/{item_id}/{addon_id}', 'OrderController@decrement_addon');
+
 // Route called by ajax to empty a cart
 Route::get('/empty_cart', 'OrderController@empty_cart');
 

@@ -58,6 +58,7 @@ class UserTableSeeder extends Seeder
 	public function run() 
 	{
 		User::create(array(	'id' => 1,
+							'cs50_id' => 'random_string',
 							'name' => 'Ian Boothby',
 							'phone_number' => '6159183416',
 							'email' => 'iboothby@college.harvard.edu',
@@ -66,6 +67,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'admin'
 							));
 		User::create(array(	'id' => 2,
+							'cs50_id' => 'random_string',
 							'name' => 'Nuseir Yassin',
 							'phone_number' => '7734901404',
 							'email' => 'nyassin@college.harvard.edu',
@@ -74,6 +76,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'admin'
 							));
 		User::create(array(	'id' => 3,
+							'cs50_id' => 'random_string',
 							'name' => 'Ryan Sandler',
 							'phone_number' => '9122578777',
 							'email' => 'ryansandler@college.harvard.edu',
@@ -82,6 +85,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'admin'
 							));
 		User::create(array(	'id' => 4,
+							'cs50_id' => 'random_string',
 							'name' => 'Vladimir Bok',
 							'phone_number' => '6179391419',
 							'email' => 'vladimirbok@college.harvard.edu',
@@ -90,6 +94,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'admin'
 							));
 		User::create(array(	'id' => 5,
+							'cs50_id' => 'random_string',
 							'name' => 'Ian Boothby',
 							'phone_number' => '2063847537',
 							'email' => 'broudy@college.harvard.edu',
@@ -98,6 +103,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'user'
 							));
 		User::create(array(	'id' => 6,
+							'cs50_id' => 'random_string',
 							'name' => 'Jamie Law-Smith',
 							'phone_number' => '6172305842',
 							'email' => 'jlaw-smith@college.harvard.edu',
@@ -106,6 +112,7 @@ class UserTableSeeder extends Seeder
 							'privileges' => 'admin'
 							));
 		User::create(array(	'id' => 7,
+							'cs50_id' => 'random_string',
 							'name' => 'Peter Bang',
 							'phone_number' => '5555555555',
 							'email' => 'pbang@college.harvard.edu',

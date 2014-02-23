@@ -14,8 +14,7 @@ class OrderController extends \BaseController {
         $menu = array();
         foreach ($categories as $category)
         {
-            $items = Item::select('id','name','price','description','available')->
-                where('category_id',$category->id)->get();
+            $items = Item::with('addon')->get();
             $menu[$category['name']] = $items;
         }
 
@@ -39,6 +38,7 @@ class OrderController extends \BaseController {
         // add necessary fields
         $item['quantity'] = 1;
         $item['notes'] = "";
+        $item['type'] = 'item';
         //turn json into a php array
         $item = json_decode($item,true);
         // insert will add a new item if not already in cart, 

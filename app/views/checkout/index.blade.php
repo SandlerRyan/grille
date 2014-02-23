@@ -1,7 +1,4 @@
 <div class="result">
-	<?php
-	var_dump(Cart::contents());
-	?>
 </div>
 
 THESE ARE YOUR ORDER DETAILS!
