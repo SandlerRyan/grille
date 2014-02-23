@@ -66,6 +66,8 @@
 
 </div>
 
+  <div id="footer">Hello World!</div>
+
   <!-- Call to Action Panel -->
   <div class="row">
       <div class="large-12 columns">
@@ -92,15 +94,33 @@
  
     </div>
   </div>
+</div>
 
+<!-- <button type="button" class="clearCart">Clear Cart</button> 
 
-<button type="button" class="clearCart">Clear Cart</button> 
-
-<div id="totalPrice">${{{Cart::total()}}}</div>
+<div id="totalPrice">${{{Cart::total()}}}</div> -->
        
 
 
 <script>
+ 
+
+   $(window).bind("load", function () {
+      var footer = $("#footer");
+      var pos = footer.position();
+      var height = $(window).height();
+      height = height - pos.top;
+      height = height - footer.height();
+      if (height > 0) {
+          footer.css({
+              'margin-top': height + 'px'
+          });
+      }
+  });
+
+
+
+
   var SUBMIT_BUTTON = '#checkout';
 
     // Set the checkout button status when the page is loaded
