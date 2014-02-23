@@ -1,4 +1,4 @@
-	
+<<<<<<< HEAD
 <div class="row">
     <div class="large-12 columns">
     
@@ -25,8 +25,8 @@
 		<td><h5 id="totalPrice">${{Cart::total()}}</h5></td>
 	</tr>
 	</table>
-
-<!-- <div class="result">
+=======
+<div class="result">
 </div>
 
 THESE ARE YOUR ORDER DETAILS!
@@ -39,16 +39,21 @@ Enter a Note:
 <input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
 <button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
 @endforeach
- -->
+>>>>>>> 9e02d73eacb9a8b17d2dc6234359e84f20a2f654
 
 
+<<<<<<< HEAD
 	<!-- <div id="totalPrice"><b>Total</b>: ${{Cart::total()}}</div> -->
 	<div class="large-3 large-centered columns">
 <!-- 	<a class="button success round" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a>
+=======
 <a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&
 	scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
+>>>>>>> 9e02d73eacb9a8b17d2dc6234359e84f20a2f654
 
 	<a class="button success round" href="/pay_later">Pay At Grille</a> -->
+
+<<<<<<< HEAD
 
 	<br/>
 
@@ -63,7 +68,7 @@ Enter a Note:
     </div>
   </div>
 </div>
-
+=======
 <br/>
 <a class="btn btn-lg btn-success" href="/order/create" role="button">Back to Menu</a>
 
@@ -123,3 +128,4 @@ $(document).ready(function () {
 });
 
 </script>
+>>>>>>> 9e02d73eacb9a8b17d2dc6234359e84f20a2f654

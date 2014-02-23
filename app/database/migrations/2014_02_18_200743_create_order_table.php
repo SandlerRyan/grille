@@ -15,7 +15,7 @@ class CreateOrderTable extends Migration {
 		Schema::create('orders', function($table)
 		{
 			$table->increments('id');
-			$table->string('user_id');
+			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
 
 			$table->string('venmo_id', 15);	// if null, user hasn't paid yet

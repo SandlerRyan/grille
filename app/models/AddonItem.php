@@ -1,3 +1,8 @@
 <?php
 
-    class AddonItem extends Eloquent {}
+    class AddonItem extends Eloquent 
+    {
+    	public $timestamps = false;
+
+    	
+    }
