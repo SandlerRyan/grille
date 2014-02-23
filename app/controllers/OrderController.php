@@ -190,15 +190,13 @@ class OrderController extends \BaseController {
         Redirect::to('/success')->with('response',$response);
     }
 
-       
+    //User has decided to Pay Later.
     public function pay_later()
     {
-        //User has decided to Pay Later.
-
         //TODO: Edit Order for Pay Later and send back Order ID
         $response = "You have decided to pay later.";
-        store_order($response);
-
+        //store_order($response);
+        return Redirect::to('/success')->with('response',$response);
     }
 
     // accesses the venmo API so users can pay
@@ -220,10 +218,10 @@ class OrderController extends \BaseController {
     }
 
     //Show Success Page with appropiate message
-    public function success($response) 
+    public function success() 
     {   
-
-     $this->layout->content = View::make('checkout.success', ['response' => $response]);
+        $response = Session::get('response');
+        $this->layout->content = View::make('checkout.success', ['response' => $response]);
 
     }
  
