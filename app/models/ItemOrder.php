@@ -1,3 +1,6 @@
 <?php
 
-    class ItemOrder extends Eloquent {}
+    class ItemOrder extends Eloquent 
+    {
+    	public $timestamps = false;
+    }
