@@ -124,28 +124,37 @@ class OrderController extends \BaseController {
         return Redirect::to('courses/');
     }
 
-    // Check Request form from the order page. 
+
     public function checkout()
     {   
+        require_once(app_path().'/config/id.php');
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
         $err_messages = Session::get('message');
 
-        // TODO: Check if user exists and is logged in. If he does, redirect to Checkout Page. 
-        //If it doesn't exist, redirect to HUID, and then to Checkout Page.
 
         // if cart is not empty, get the total
         $total = Cart::total();
+        
+        //check if user logged in
+        if (Session::has('user'))
+        {
+            $loggedin = True;
+        }
+        else 
+            $loggedin = False;
+
         if ($total == 0)
         {
             Redirect::to('/order/create/')->with('message', 'Cart empty--cannot proceed to checkout');
         }
-        // TODO: more error checking on the exact value of items
 
-        $this->layout->content = View::make('checkout.index');
+        // TODO: more error checking on the exact value of items
+        $this->layout->content = View::make('checkout.index', ['loggedin' => $loggedin]);
 
     }
+
 
     /* Helper function to actually store the order to the database
     *  Called after user has successfully paid
