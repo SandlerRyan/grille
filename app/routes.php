@@ -29,6 +29,15 @@ Route::get('/decrement/{id}', 'OrderController@decrement');
 // Route called by ajax to empty a acart
 Route::get('/empty_cart', 'OrderController@empty_cart');
 
+// Go here when user clicks login
+Route::get('/login', 'OrderController@login');
+
+// Go here when user clicks logout
+Route::get('/logout', 'OrderController@logout');
+
+// Go here if the user opts to pay at the register
+Route::get('/return_to', 'OrderController@return_to');
+
 // Go to checkout after all menu items have been added to cart
 Route::get('/checkout', 'OrderController@checkout');
 
