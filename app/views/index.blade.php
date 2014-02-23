@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html>
-	<body>
-
-	    <div class="row">
-	    <div class="large-3 columns">
-	      <h1><img src="http://placehold.it/400x100&text=Logo" /></h1>
-	    </div>
-	    <div class="large-9 columns">
-	      <ul class="right button-group">
-	      <li><a href="#" class="button">Link 1</a></li>
-	      <li><a href="#" class="button">Link 2</a></li>
-	      <li><a href="#" class="button">Link 3</a></li>
-	      <li><a href="#" class="button">Link 4</a></li>
-	      </ul>
-	     </div>
-	   </div>
-	  
-	<!-- End Header and Nav -->
 	 
 	<!-- First Band (Slider) -->
 	 
 	  <div class="row">
 	    <div class="large-12 columns">
 	    <div id="slider">
-	      <img src="http://placehold.it/1000x400&text=[ img 1 ]" />
+	      <img src="/img/hamburger.jpg" />
 	    </div>
 	    
 	    <hr />
@@ -32,67 +13,59 @@
 	  
 	<!-- Three-up Content Blocks -->
 	 
-	  <div class="row">
+<!-- <div class="row">
+
 	    <div class="large-4 columns">
-	      <img src="http://placehold.it/400x300&text=[img]" />
-	      <h4>This is a content section.</h4>
-	      <p>Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.</p>
-	    </div>
+	      <h4>Hours</h4>
+	      <ul>
+	      	<li><b>Monday</b></li>
+	      	<li><b>Tuesday</b></li>
+	      	<li><b>Wednesday</b></li>
+	      	<li><b>Thursday</b></li>
+	      	<li><b>Friday</b></li>
+	      	<li><b>Saturday</b></li>
+	      	<li><b>Sunday</b></li>
+	      </ul>
+	    </div> -->
+
+<!-- 	    <div class="large-3 columns">
+	      <img src="/img/map.png" />	
+	      <h4>Where to find us?</h4>
+	      <p>
+	      	The Eliot Grille, also known as "Inferno", is located in the basement of Eliot House, 101 Dunster Street.
+	      </p>
+	    </div> -->
 	    
-	    <div class="large-4 columns">
-	      <img src="http://placehold.it/400x300&text=[img]" />
-	      <h4>This is a content section.</h4>
-	      <p>Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.</p>
-	    </div>
 	    
-	    <div class="large-4 columns">
-	      <img src="http://placehold.it/400x300&text=[img]" />
+	    <!-- <div class="large-1 columns"> -->
+	      <!-- <img src="http://placehold.it/400x300&text=[img]" />
 	      <h4>This is a content section.</h4>
 	      <p>Bacon ipsum dolor sit amet nulla ham qui sint exercitation eiusmod commodo, chuck duis velit. Aute in reprehenderit, dolore aliqua non est magna in labore pig pork biltong. Eiusmod swine spare ribs reprehenderit culpa. Boudin aliqua adipisicing rump corned beef.</p>
-	    </div>
-	  
-	    </div>
+	    </div> -->
+	    <!-- </div> -->
+
 	    
 	<!-- Call to Action Panel -->
 	<div class="row">
-	    <div class="large-12 columns">
+		<div class="large-4 columns"></div>
+	    <div class="large-4 columns">
 	    
-	      <div class="panel">
-	        <h4>Get in touch!</h4>
-	            
-	        <div class="row">
-	          <div class="large-9 columns">
-	            <p>We'd love to hear from you, you attractive person you.</p>
-	          </div>
-	          <div class="large-3 columns">
-	            <a href="#" class="radius button right">Contact Us</a>
-	          </div>
-	        </div>
-	      </div>
+	      <!-- <div class="panel"> -->
+	        <!-- <h4>See the menu</h4> -->
+	        <!-- <div class="row"> -->
+<!-- 	          <div class="large-9 columns">
+	            <p>Check out our selection of delicious items.</p>
+	          </div> -->
+	          <!-- <div class="row"> -->
+	            <a href="/order/create" class="button alert round"><h4 style="color: white;">I'm hungry!</h4></a>
+	          <!-- </div> -->
+	        <!-- </div> -->
+	      <!-- </div> -->
 	      
 	    </div>
+	    <div class="large-4 columns"></div>
 	  </div>
 	 
-	  <!-- Footer -->
-	  
-	  <footer class="row">
-	    <div class="large-12 columns">
-	      <hr />
-	      <div class="row">
-	        <div class="large-6 columns">
-	          <p>© Copyright no one at all. Go to town.</p>
-	        </div>
-	        <div class="large-6 columns">
-	          <ul class="inline-list right">
-	            <li><a href="#">Link 1</a></li>
-	            <li><a href="#">Link 2</a></li>
-	            <li><a href="#">Link 3</a></li>
-	            <li><a href="#">Link 4</a></li>
-	          </ul>
-	        </div>
-	      </div>
-	    </div> 
-	  </footer>
 
 	</body>
 </html>
