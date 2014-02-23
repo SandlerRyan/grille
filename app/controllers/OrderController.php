@@ -2,7 +2,6 @@
 
 class OrderController extends \BaseController {
 
-
     /**
      * Show the form for creating a new order.
      *
@@ -15,14 +14,16 @@ class OrderController extends \BaseController {
         $menu = array();
         foreach ($categories as $category)
         {
-            $items = Item::select('id','name','price','description','available')->
-                where('category_id',$category->id)->get();
+            $items = Item::where('category_id', $category->id)->get();
             $menu[$category['name']] = $items;
         }
 
+        // get any errors sent from other functions
+        $errors = Session::get('message');
+
         // now send to the view
         $this->layout->content = View::make('orders.create', 
-            ['menu' => $menu, 'categories' => $categories]);
+            ['menu' => $menu, 'err_messages' => $errors]);
     }
 
     /**
@@ -37,6 +38,7 @@ class OrderController extends \BaseController {
         // add necessary fields
         $item['quantity'] = 1;
         $item['notes'] = "";
+        $item['type'] = 'item';
         //turn json into a php array
         $item = json_decode($item,true);
         // insert will add a new item if not already in cart, 
@@ -86,6 +88,18 @@ class OrderController extends \BaseController {
         return json_encode($response_array);
         
     }
+
+    /**
+    * Add to the session if user specifies anything from the checkout page
+    * */
+    public function add_note($id, $note)
+    {
+        $item = Cart::find($id);
+        $item->notes = $note;
+        $response_array['status'] = 'success';
+        return json_encode($response_array);
+    }
+    
     /**
      * Display the specified resource.
      *
@@ -110,72 +124,15 @@ class OrderController extends \BaseController {
         return Redirect::to('courses/');
     }
 
-    //Check if user already logged in
-    public function login()
-    {
-        require_once(app_path().'/config/id.php');
-        // if user is already logged in, redirect to index.php
-        if (Session::has('user'))
-        {
-            //$protocol = (Request::secure()) ? "https" : "http";
-            //$host  = Request::server("HTTP_HOST");
-            //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-            //return Redirect::to('{$protocol}://{$host}{$path}.php');
-            return Redirect::to('/checkout');  
-        }
 
-        // else redirect user to CS50 ID
-        else
-            return Redirect::to(CS50::getLoginUrl(TRUST_ROOT, RETURN_TO));
-    }
-
-    public function logout()
-    {
-
-        require_once(app_path().'/config/id.php');
-
-        if (Session::has('user'))
-            Session::forget('user');
-    
-        // redirect user to checkout
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
-        return Redirect::to('/checkout');  
-    }
-
-    public function return_to()
-    {
-
-        // configuration
-        require_once(app_path().'/config/id.php');
-
-        // remember which user, if any, logged in
-        $user = CS50::getUser(RETURN_TO);
-        if ($user !== false)
-            //$_SESSION["user"] = $user;
-            Session::put("user", $user);
-       
-        // redirect user to index.php
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
-        return Redirect::to('/checkout');
-    }
-    //Check Request form from the order page. 
     public function checkout()
     {   
         require_once(app_path().'/config/id.php');
-        // TODO: Check if user exists. If it does, redirect to Checkout Page. 
-        //If it doesn't exist, redirect to HUID, and then to Checkout Page.
+        // if the user was not authenticated when storing the order, 
+        // controller will return here and raise an error
+        // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
+        $err_messages = Session::get('message');
 
-        //$identity = $_SESSION["user"]["identity"];
-        //$fullname = $_SESSION["user"]["fullname"];
-        //$email = $_SESSION["user"]["email"];
-        //$isset = isset($_SESSION["user"]);
 
         // if cart is not empty, get the total
         $total = Cart::total();
@@ -188,18 +145,59 @@ class OrderController extends \BaseController {
         else 
             $loggedin = False;
 
+        if ($total == 0)
+        {
+            Redirect::to('/order/create/')->with('message', 'Cart empty--cannot proceed to checkout');
+        }
+
+        // TODO: more error checking on the exact value of items
         $this->layout->content = View::make('checkout.index', ['loggedin' => $loggedin]);
 
     }
 
 
+    /* Helper function to actually store the order to the database
+    *  Called after user has successfully paid
+    */
+    private function store_order($reponse, $venmo=NULL)
+    {
+        if (!Auth::check())
+        {
+            // Raise some kind of error
+            Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
+        }
+
+        // create the new order
+        $order = new Order();
+        // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
+        $order->user_id = Auth::user()->id;
+        $order->cost = Cart::total();
+        $order->$venmo_id = $venmo;
+        $order->fulfilled = 0;
+        $order.save();
+
+        // now add the ordered items to the item_orders join table
+        $contents = Cart::contents();
+        foreach ($contents as $item)
+        {
+            $item_order = new ItemOrder();
+            $item_order->order_id = $order->id;
+            $item_order->item_id = $item->id;
+            $item_order.save();
+        }
+        // empty the cart
+        Cart::destroy();
+        Redirect::to('/success')->with('response',$response);
+    }
+
+       
     public function pay_later()
     {
         //User has decided to Pay Later.
 
         //TODO: Edit Order for Pay Later and send back Order ID
         $response = "You have decided to pay later.";
-        return Redirect::to('/success')->with('response', $response);
+        store_order($response);
 
     }
 
@@ -210,22 +208,21 @@ class OrderController extends \BaseController {
         //Get Access Token from Venmo Response
         $access_token = Input::get('access_token');
 
-        //Create Payment and Charge the User
+        // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
             "phone" => "7734901404", "note" => "testing");
         $response = sendPostData($url, $data);
-        
-        //Redirect to Success Page and show Order ID and Status 
-        return Redirect::to('/success')->with('response', $response);
+
+        // Store the order info in the database
+        // store_order($response, $venmo_key=??)
 
     }
 
     //Show Success Page with appropiate message
-    public function success() 
+    public function success($response) 
     {   
 
-     $response = Session::get('response');
      $this->layout->content = View::make('checkout.success', ['response' => $response]);
 
     }

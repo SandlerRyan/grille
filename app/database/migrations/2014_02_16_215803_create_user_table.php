@@ -16,7 +16,8 @@ class CreateUserTable extends Migration {
 		{	
 			// primary key is unique 84-char URL yielded by CS50ID,
 			// derived from HUID 
-			$table->string('id',84)->primary();
+			$table->increments('id');
+			$table->string('cs50_id',84);
 			$table->string('name');
 			$table->string('phone_number',11);
 			$table->string('email');	// TODO: need to look up how @college emails are handled for graduates

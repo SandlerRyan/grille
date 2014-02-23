@@ -15,28 +15,32 @@
 // The default CRUD for creating, destroying, editing, orders
 Route::resource('order', 'OrderController');
 
-// Route called by ajax to increment an item
+// Route called by ajax to increment an item (passes item id as argument)
 Route::get('/increment/{id}', 'OrderController@increment');
 
-// Route::get('/increment/{id}', function($id)
-// {
-//     // Only called if {id} is numeric.
-//     return $id;
-// });
 // Route called by ajax to decrement an item
 Route::get('/decrement/{id}', 'OrderController@decrement');
 
-// Route called by ajax to empty a acart
+// Route called by ajax to add an addon and associate it with an item
+Route::get('/increment_addon/{item_id}/{addon_id}', 'OrderController@increment_addon');
+
+// Route called by ajax to remove an addon
+Route::get('/decrement_addon/{item_id}/{addon_id}', 'OrderController@decrement_addon');
+
+// Route called by ajax to empty a cart
 Route::get('/empty_cart', 'OrderController@empty_cart');
 
 // Go here when user clicks login
-Route::get('/login', 'OrderController@login');
+Route::get('/login', 'UserController@login');
 
 // Go here when user clicks logout
-Route::get('/logout', 'OrderController@logout');
+Route::get('/logout', 'UserController@logout');
 
 // Go here if the user opts to pay at the register
-Route::get('/return_to', 'OrderController@return_to');
+Route::get('/return_to', 'UserController@return_to');
+
+//Route called by ajax to add a note
+Route::get('/add_note/{id}/{note}', 'OrderController@add_note');
 
 // Go to checkout after all menu items have been added to cart
 Route::get('/checkout', 'OrderController@checkout');
