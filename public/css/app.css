@@ -80,3 +80,13 @@ body {
     width: 100%;
     overflow:hidden;
 }
+
+.mainImg {
+	width: 70%;
+	margin-left:auto;
+	margin-right:auto;
+	display: block;
+}
+
+
+
