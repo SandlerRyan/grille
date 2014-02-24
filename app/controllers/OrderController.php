@@ -85,8 +85,7 @@ class OrderController extends \BaseController {
         Cart::destroy();
         $response_array['status'] = 'success';      
         $response_array['cart'] = number_format(Cart::total(), 2);    
-        return json_encode($response_array);
-        
+        return json_encode($response_array);   
     }
 
     /**
@@ -147,7 +146,8 @@ class OrderController extends \BaseController {
 
         if ($total == 0)
         {
-            Redirect::to('/order/create/')->with('message', 'Cart empty--cannot proceed to checkout');
+            return Redirect::to('/order/create/')->with('message', 
+                'Cart empty. Cannot proceed to checkout');
         }
 
         // TODO: more error checking on the exact value of items
@@ -155,16 +155,41 @@ class OrderController extends \BaseController {
 
     }
 
-
-    /* Helper function to actually store the order to the database
-    *  Called after user has successfully paid
-    */
-    private function store_order($reponse, $venmo=NULL)
+    //User has decided to Pay Later.
+    public function pay_later()
     {
-        if (!Auth::check())
-        {
+        //TODO: Edit Order for Pay Later and send back Order ID
+        $response = "You have decided to pay later.";
+        return Redirect::to('/success')->with('response',$response);
+    }
+
+    // accesses the venmo API so users can pay
+    public function authenticatePayment() 
+    {   
+
+        //Get Access Token from Venmo Response
+        $access_token = Input::get('access_token');
+
+        // Create Payment and Charge the User
+        $url = 'https://api.venmo.com/v1/payments';
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "testing");
+        $response = sendPostData($url, $data);
+
+    }
+
+    //Show Success Page with appropiate message
+    public function success() 
+    {   
+        // make sure this was routed from the payment methods
+        $response = Session::get('response');
+        if (!$response){ 
+            return Redirect::to('/checkout')->with('message','You must select a payment option.');
+        }
+        // make sure user is logged in
+        if (!Auth::check()) {
             // Raise some kind of error
-            Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
+            return Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
         }
 
         // create the new order
@@ -187,42 +212,7 @@ class OrderController extends \BaseController {
         }
         // empty the cart
         Cart::destroy();
-        Redirect::to('/success')->with('response',$response);
-    }
-
-    //User has decided to Pay Later.
-    public function pay_later()
-    {
-        //TODO: Edit Order for Pay Later and send back Order ID
-        $response = "You have decided to pay later.";
-        //store_order($response);
-        return Redirect::to('/success')->with('response',$response);
-    }
-
-    // accesses the venmo API so users can pay
-    public function authenticatePayment() 
-    {   
-
-        //Get Access Token from Venmo Response
-        $access_token = Input::get('access_token');
-
-        // Create Payment and Charge the User
-        $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "testing");
-        $response = sendPostData($url, $data);
-
-        // Store the order info in the database
-        // store_order($response, $venmo_key=??)
-
-    }
-
-    //Show Success Page with appropiate message
-    public function success() 
-    {   
-        $response = Session::get('response');
         $this->layout->content = View::make('checkout.success', ['response' => $response]);
-
     }
  
 }
