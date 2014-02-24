@@ -139,7 +139,7 @@
             alert("failure");
             $("#result").html('There was an error during submission');
         }
-    });
+      });
   });
 
   // Ajax call to remove item

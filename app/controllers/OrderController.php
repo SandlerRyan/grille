@@ -119,7 +119,7 @@ class OrderController extends \BaseController {
         }
 
         // TODO: more error checking on the exact value of items
-        $this->layout->content = View::make('checkout.index', ['err_messages' => $errors]);
+        $this->layout->content = View::make('checkout.index', ['err_messages' => $errors, 'user'=>Session::get('user')]);
     }
 
     //User has decided to Pay Later.
@@ -139,14 +139,14 @@ class OrderController extends \BaseController {
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "testing");
+            "phone" => "7734901404", "note" => "grille!");
         $response = sendPostData($url, $data);
-        return Redirect::to('/success')->with('response', $response);
     }
 
     //Show Success Page with appropiate message
     public function success() 
     {   
+
         // make sure this was routed from the payment methods
         $response = Session::get('response');
         if (!$response){ 
