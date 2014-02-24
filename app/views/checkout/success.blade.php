@@ -3,7 +3,7 @@
 
     <div class="panel">
 
-	<h3>You have successfully paid via Venmo.</h3>
+	<h3>{{{$response }}}</h3>
 
 	<h5><b>Order number:</b> 12345</h5>
 

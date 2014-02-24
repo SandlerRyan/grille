@@ -123,7 +123,11 @@
               containerId = "#value-" + id;
               value = $(containerId).val();
               if (value > 0) {
+                console.log(value)
                 $(containerId).val(parseInt(value) - 1);  
+
+                value = $(containerId).val();
+                console.log(value)
               } else {
                 $(containerId).val(0);  
               }
@@ -210,23 +214,6 @@ $(".addItem").click(function(){
   });
 })
 
-// Ajax call to remove item
-  $(".removeItem").click(function(){
-    var id = this.id;
-    url = "/decrement/" + id;
-    $.ajax({
-        url: url,
-        type: "get",
-        success: function(data){
-            containerId = "#value-" + id;
-            value = $(containerId).val();
-            if (value > 0) {
-              $(containerId).val(parseInt(value) - 1);  
-            } else {
-              $(containerId).val(0);  
-            }
-        }});
-  });
 
 </script>
 

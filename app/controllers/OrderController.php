@@ -209,17 +209,17 @@ class OrderController extends \BaseController {
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "testing");
+            "phone" => "7734901404", "note" => "grille!");
         $response = sendPostData($url, $data);
 
-        // Store the order info in the database
-        // store_order($response, $venmo_key=??)
+        return Redirect::to('/success')->with('response',$response);
 
     }
 
     //Show Success Page with appropiate message
     public function success() 
     {   
+
         $response = Session::get('response');
         $this->layout->content = View::make('checkout.success', ['response' => $response]);
 

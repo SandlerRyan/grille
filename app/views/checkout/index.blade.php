@@ -54,28 +54,19 @@ Enter a Note:
 
 
 <br/>
-<a class="btn btn-lg btn-success" href="/checkout" role="button">Checkout</a>
 
 @if ($loggedin)
-	<h1>You are logged in!</h1>
-	<div>
-		<a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
-	</div>
-	<div>
-		<a href="/pay_later">Pay At Grille</a>
-	</div>
-	<div>
-		<a href='/logout'>Log out</a>
-	</div>
-@else
-	<a href='/login'>Log in</a>.
-@endif
-
-
-	    <ul class="button-group round even-2">
+	
+	<ul class="button-group round even-2">
           <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a></li>
           <li><a class="button success" href="/pay_later">Pay At Pick-Up</a></li>
-        </ul>
+    </ul>
+@else
+	<ul class="">
+          <li><a class="button success" href="/login">Log In To Proceed</a></li>
+    </ul>
+@endif
+
 	</div>
 
 	<br />
@@ -85,7 +76,6 @@ Enter a Note:
 </div>
 
 <br/>
-<a class="btn btn-lg btn-success" href="/order/create" role="button">Back to Menu</a>
 
 <script>
 // makes an ajax call to the database to add a note
