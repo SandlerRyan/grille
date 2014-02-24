@@ -126,8 +126,11 @@ class OrderController extends \BaseController {
     public function pay_later()
     {
         //TODO: Edit Order for Pay Later and send back Order ID
-        $response = "You have decided to pay later.";
-        return Redirect::to('/success')->with('response',$response);
+        
+        $response_array['status'] = 'later';
+        $response_array['message'] = "You have decided to pay later.";
+
+        return Redirect::to('/success')->with('response',$response_array);
     }
 
     // accesses the venmo API so users can pay
@@ -141,6 +144,12 @@ class OrderController extends \BaseController {
         $data = array("access_token" => $access_token, "amount" => 0.01, 
             "phone" => "7734901404", "note" => "grille!");
         $response = sendPostData($url, $data);
+
+        $response_array['status'] = 'venmo';
+        $response_array['message'] = $response;
+
+        return Redirect::to('/success')->with('response',$response_array);
+
     }
 
     //Show Success Page with appropiate message
@@ -158,14 +167,30 @@ class OrderController extends \BaseController {
             return Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
         }
 
+        if($response['status'] == "venmo") {
+            //get the id
+            $venmoJSON = json_decode($response['message']);
+            $transaction = 0;
+            if (array_key_exists('error', $venmoJSON)) {
+                
+                return Redirect::to('/checkout')->with('message', 'Venmo Payment Failed');
+
+            } else {
+                
+                $transaction = $venmoJSON['data']['payment']['id'];
+            }
+
+        } else {
+            $transaction = 0;
+        }
         // create the new order
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
-        $order->user_id = Auth::user()->id;
+        $order->user_id = Session::get('user')->id;
         $order->cost = Cart::total();
-        $order->$venmo_id = $venmo;
+        $order->$venmo_id = $transaction;
         $order->fulfilled = 0;
-        $order.save();
+        $order->save();
 
         // now add the ordered items to the item_orders join table
         $contents = Cart::contents();
