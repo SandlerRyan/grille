@@ -8,10 +8,6 @@ class UserController extends \BaseController {
         // if user is already logged in, redirect to index.php
         if (Session::has('user'))
         {
-            //$protocol = (Request::secure()) ? "https" : "http";
-            //$host  = Request::server("HTTP_HOST");
-            //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-            //return Redirect::to('{$protocol}://{$host}{$path}.php');
             return Redirect::to('/checkout');  
         }
 
@@ -28,11 +24,7 @@ class UserController extends \BaseController {
         if (Session::has('user'))
             Session::forget('user');
 
-        // redirect user to checkout
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
+        // redirect user back to checkout
         return Redirect::to('/checkout');  
     }
 
@@ -44,16 +36,21 @@ class UserController extends \BaseController {
 
         // remember which user, if any, logged in
         $user = CS50::getUser(RETURN_TO);
-        if ($user !== false)
-            //$_SESSION["user"] = $user;
-            Session::put("user", $user);
-       
-        // redirect user to index.php
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
 
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
+        if ($user !== false)
+            Session::put("user", $user);
+            
+
+        //check if returning user, return to checkout page
+        $rules = array('id' => 'unique:users,email');
+
+$validator = Validator::make($input, $rules);
         return Redirect::to('/checkout');
+    }
+
+
+    public function create()
+    {
+
     }
 }
