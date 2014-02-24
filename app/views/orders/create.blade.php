@@ -1,4 +1,3 @@
-
 <!-- <div id="result"></div> -->
 
   <div id="s">

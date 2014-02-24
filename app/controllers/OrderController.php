@@ -186,7 +186,7 @@ class OrderController extends \BaseController {
         // create the new order
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
-        $order->user_id = Session::get('user')->id;
+        $order->user_id = Session::get('user')[0]->id;
         $order->cost = Cart::total();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
