@@ -48,7 +48,7 @@ class UserController extends \BaseController {
             
             //Check if User has signed in before. If not, create the user
             $user = User::where('cs50_id', $userCS50['identity'])->get();
-            if ($user) {
+            if ($user != "[]") {
                 Session::put("user", $user);
             } else {
                 //Create User in the database

@@ -188,7 +188,7 @@ class OrderController extends \BaseController {
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
         $order->user_id = Session::get('user')->id;
         $order->cost = Cart::total();
-        $order->$venmo_id = $transaction;
+        $order->venmo_id = $transaction;
         $order->fulfilled = 0;
         $order->save();
 
@@ -196,14 +196,17 @@ class OrderController extends \BaseController {
         $contents = Cart::contents();
         foreach ($contents as $item)
         {
-            $item_order = new ItemOrder();
+            $item_order = new   ItemOrder();
             $item_order->order_id = $order->id;
             $item_order->item_id = $item->id;
+            $item_order->quantity = $item->quantity;
+            $item_order->notes = $item->notes;
             $item_order->save();
+
         }
         // empty the cart
         Cart::destroy();
-        $this->layout->content = View::make('checkout.success', ['response' => $response]);
+        $this->layout->content = View::make('checkout.success', ['response' => $response['status']]);
     }
  
 }
