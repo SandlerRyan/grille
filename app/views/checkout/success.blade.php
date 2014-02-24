@@ -22,7 +22,8 @@
 	    <legend>Leave your phone number here to get notifications</legend>
 
 	    <label>Phone number
-	      <input type="text" placeholder="(XXX) XXX-XXXX">
+	      <input type="text" placeholder="(XXX) XXX-XXXX"/>
+	      <button type="button" class="addPhone">Submit</button>
 	    </label>
 	  </fieldset>
 	</form>
