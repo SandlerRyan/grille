@@ -37,6 +37,9 @@
     <link rel="stylesheet" href="/css/tables/reveal.css">
     <link rel="stylesheet" href="/css/tables/mobile.css">
 
+
+    <script type="text/javascript" src="/js/jquery.sticky.js"></script>
+
   </head>
 
   <body>
@@ -58,6 +61,7 @@
           </ul>
         </div>
       </nav>
+    </div>
       
     <!-- End Header and Nav -->
 
@@ -82,4 +86,5 @@
       </footer>
 
     </body>
+
 </html>

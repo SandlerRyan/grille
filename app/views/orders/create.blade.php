@@ -1,6 +1,35 @@
 
 <!-- <div id="result"></div> -->
+
+  <div id="s">
+          <div class="row">
+            <div class="large-12 columns">
+            
+              <div class="panel">
+
+              <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
+              <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
+
+              <button id="checkout" class="button alert round" disabled>Checkout</button>
+              <button id="clearCart" class="button alert round">Clear Cart</button> 
+
+      <!--         <button id="checkout" disabled>Checkout</button>
+              <br/>
+              <button type="button" class="clearCart">Clear Cart</button>  -->
+              
+
+          <br/>
+
+       
+          </div>
+        </div>
+      </div>
+  </div>
+
+
+
 <div class="row">
+
 
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
@@ -69,42 +98,53 @@
   @endforeach
 
 </div>
-
   <!-- Call to Action Panel -->
-  <div class="row">
-      <div class="large-12 columns">
-      
-        <div class="panel">
+ <!--        <div class="row">
+            <div class="large-12 columns">
+            
+              <div class="panel"> -->
 
-<div id="result">
-</div>
+      <div id="result">
+      </div>
 
+              <!-- <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4> -->
+              <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-        <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
-        <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
+     /
+      <!--         <button id="checkout" disabled>Checkout</button>
+              <br/>
+              <button type="button" class="clearCart">Clear Cart</button>  -->
+              
 
-        <button id="checkout" class="button alert round" disabled>Checkout</button>
-        <button id="clearCart" class="button alert round">Clear Cart</button> 
+<!--         	<br/>
 
-<!--         <button id="checkout" disabled>Checkout</button>
-        <br/>
-        <button type="button" class="clearCart">Clear Cart</button>  -->
-        
-
-  	<br/>
-
- 
-    </div>
-  </div>
-
-
-<button type="button" class="clearCart">Clear Cart</button> 
-
-<div id="totalPrice">${{{Cart::total()}}}</div>
        
+          </div>
+        </div>
+      </div>
+ -->
+<!-- <button type="button" class="clearCart">Clear Cart</button> 
 
+<div id="totalPrice">${{{Cart::total()}}}</div> -->
+
+
+  
 
 <script>
+ 
+  //  $(window).bind("load", function () {
+  //     var footer = $("#footer");
+  //     var pos = footer.position();
+  //     var height = $(window).height();
+  //     height = height - pos.top;
+  //     height = height - footer.height();
+  //     if (height > 0) {
+  //         footer.css({
+  //             'margin-top': height + 'px'
+  //         });
+  //     }
+  // });
+
   var SUBMIT_BUTTON = '#checkout';
 
   // Set the checkout button status when the page is loaded
@@ -208,6 +248,31 @@
     $(this).attr('disabled', 'disabled');
     window.location = '/checkout';
  });
+
+// Set the checkout button status when the page is loaded
+
+
+
+$(document).ready(function() {  
+	var stickyNavTop = $('#s').offset().top;  
+	  
+	var stickyNav = function(){  
+	var scrollTop = $(window).scrollTop();  
+	       
+	if (scrollTop > stickyNavTop) {   
+	    $('#s').addClass('sticky');  
+	} else {  
+	    $('#s').removeClass('sticky');   
+	}  
+};  
+  
+stickyNav();  
+  
+$(window).scroll(function() {  
+    stickyNav();  
+	});  
+});  
+
 
 </script>
 
