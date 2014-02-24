@@ -1,7 +1,10 @@
 <!-- <div id="result"></div> -->
 <div class="row">
 
-  
+  @if($err_messages)
+    <h5 color><font color="red">{{$err_messages}}</font></h5>
+  @endif
+
   @foreach($menu as $category=>$items)
     <h3>{{$category}}</h3>
 
@@ -103,52 +106,74 @@
 <script>
   var SUBMIT_BUTTON = '#checkout';
 
-    // Set the checkout button status when the page is loaded
-    $(document).ready(function () {
-      // initialize the button as disabled
-      // remove dollar sign from total
-      var total = $('#totalPrice').text().substr(1);
-      if (parseInt(total) != 0) {
-        $(SUBMIT_BUTTON).removeAttr('disabled');
-      }
-    });
-   // Ajax call to remove item
-    $(".removeItem").click(function(){
-      var id = this.id;
-      url = "/decrement/" + id;
-      $.ajax({
-          url: url,
-          type: "get",
-          success: function(data){
-              containerId = "#value-" + id;
-              value = $(containerId).val();
-              if (value > 0) {
-                console.log(value)
-                $(containerId).val(parseInt(value) - 1);  
+  // Set the checkout button status when the page is loaded
+  $(document).ready(function () {
+    // initialize the button as disabled
+    // remove dollar sign from total
+    var total = $('#totalPrice').text().substr(1);
+    if (parseInt(total) != 0) {
+      $(SUBMIT_BUTTON).removeAttr('disabled');
+    }
+  });
 
-                value = $(containerId).val();
-                console.log(value)
-              } else {
-                $(containerId).val(0);  
-              }
-
-              //update cart and gray out checkout button if total is zero
-              var data = JSON.parse(data);
-              var total = data.cart;
-              if (parseInt(total) == 0) {
-                $(SUBMIT_BUTTON).attr('disabled','disabled');
-              }
-              var total =  "$" + total;
-              $("#totalPrice").html(total);
-
-          },
-          error:function(){
-              alert("failure");
-
-              $("#result").html('There was an error during submission');
-          }
+  // Ajax call to add item
+  $(".addItem").click(function(){
+    var id = this.id;
+    url = "/increment/" + id;
+    $.ajax({
+        url: url,
+        type: "get",
+        success: function(data){
+            //update counter
+            containerId = "#value-" + id;
+            value = $(containerId).val();
+            $(containerId).val(parseInt(value) + 1);
+            //update cart
+            var data = JSON.parse(data);
+            var total = data.cart;
+            var total =  "$" + total;
+            $("#totalPrice").html(total);
+            $(SUBMIT_BUTTON).removeAttr('disabled');
+        },
+        error:function(){
+            alert("failure");
+            $("#result").html('There was an error during submission');
+        }
       });
-    })
+  });
+
+  // Ajax call to remove item
+  $(".removeItem").click(function(){
+    var id = this.id;
+    url = "/decrement/" + id;
+    $.ajax({
+        url: url,
+        type: "get",
+        success: function(data){
+            containerId = "#value-" + id;
+            value = $(containerId).val();
+            if (value > 0) {
+              $(containerId).val(parseInt(value) - 1);  
+            } else {
+              $(containerId).val(0);  
+            }
+            //update cart and gray out checkout button if total is zero
+            var data = JSON.parse(data);
+            var total = data.cart;
+            if (parseInt(total) == 0) {
+              $(SUBMIT_BUTTON).attr('disabled','disabled');
+            }
+            var total =  "$" + total;
+            $("#totalPrice").html(total);
+
+        },
+        error: function(){
+            alert("failure");
+
+            $("#result").html('There was an error during submission');
+        }
+    });
+  })
 
     // Ajax call to clear cart and zero out item totals
   $("#clearCart").click(function() {
@@ -182,38 +207,6 @@
     $(this).attr('disabled', 'disabled');
     window.location = '/checkout';
  });
-
-
-// Set the checkout button status when the page is loaded
-
-
-
-// Ajax call to add item
-$(".addItem").click(function(){
-  var id = this.id;
-  url = "/increment/" + id;
-  $.ajax({
-      url: url,
-      type: "get",
-      success: function(data){
-          //update counter
-          containerId = "#value-" + id;
-          value = $(containerId).val();
-          $(containerId).val(parseInt(value) + 1);
-          //update cart
-          var data = JSON.parse(data);
-          var total = data.cart;
-          var total =  "$" + total;
-          $("#totalPrice").html(total);
-          $(SUBMIT_BUTTON).removeAttr('disabled');
-      },
-      error:function(){
-          alert("failure");
-          $("#result").html('There was an error during submission');
-      }
-  });
-})
-
 
 </script>
 
