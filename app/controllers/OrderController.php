@@ -174,7 +174,7 @@ class OrderController extends \BaseController {
             $item_order = new ItemOrder();
             $item_order->order_id = $order->id;
             $item_order->item_id = $item->id;
-            $item_order.save();
+            $item_order->save();
         }
         // empty the cart
         Cart::destroy();
