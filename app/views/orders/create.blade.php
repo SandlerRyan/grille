@@ -110,7 +110,6 @@
               <!-- <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4> -->
               <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-     /
       <!--         <button id="checkout" disabled>Checkout</button>
               <br/>
               <button type="button" class="clearCart">Clear Cart</button>  -->
@@ -126,8 +125,6 @@
 <!-- <button type="button" class="clearCart">Clear Cart</button> 
 
 <div id="totalPrice">${{{Cart::total()}}}</div> -->
-
-
   
 
 <script>
@@ -256,15 +253,15 @@
 $(document).ready(function() {  
 	var stickyNavTop = $('#s').offset().top;  
 	  
-	var stickyNav = function(){  
-	var scrollTop = $(window).scrollTop();  
-	       
-	if (scrollTop > stickyNavTop) {   
-	    $('#s').addClass('sticky');  
-	} else {  
-	    $('#s').removeClass('sticky');   
-	}  
-};  
+	var stickyNav = function() {  
+  	var scrollTop = $(window).scrollTop();  
+  	       
+  	if (scrollTop > stickyNavTop) {   
+  	    $('#s').addClass('sticky');  
+  	} else {  
+  	    $('#s').removeClass('sticky');   
+  	}  
+  };  
   
 stickyNav();  
   
