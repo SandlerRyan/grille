@@ -6,9 +6,6 @@
             
               <div class="panel">
 
-      <div id="result">
-      </div>
-
               <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
               <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
@@ -96,32 +93,30 @@
 
 </div>
   <!-- Call to Action Panel -->
-        <div class="row">
+ <!--        <div class="row">
             <div class="large-12 columns">
             
-              <div class="panel">
+              <div class="panel"> -->
 
       <div id="result">
       </div>
 
-              <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
+              <!-- <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4> -->
               <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-              <button id="checkout" class="button alert round" disabled>Checkout</button>
-              <button id="clearCart" class="button alert round">Clear Cart</button> 
-
+     /
       <!--         <button id="checkout" disabled>Checkout</button>
               <br/>
               <button type="button" class="clearCart">Clear Cart</button>  -->
               
 
-        	<br/>
+<!--         	<br/>
 
        
           </div>
         </div>
       </div>
-
+ -->
 <!-- <button type="button" class="clearCart">Clear Cart</button> 
 
 <div id="totalPrice">${{{Cart::total()}}}</div> -->
@@ -144,8 +139,6 @@
           });
       }
   });
-
-
 
 
   var SUBMIT_BUTTON = '#checkout';
