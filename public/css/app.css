@@ -38,17 +38,20 @@ nav .button {
 	margin-bottom: 15px;
 }
 
-.sticky {
+/*.sticky {
 	transition: position 2s;
-	-webkit-transition: width 2s; /* Safari */
-}
+	-webkit-transition: width 2s;
+}*/
 
 .sticky {  
+	transition: position 2s;
+	-webkit-transition: width 2s; 
     position: fixed;  
     width: 100%;  
     left: 0;  
     /*top: 0;  */
     bottom: 0;
     z-index: 100;  
-    border-top: 0;  
+    /*border-top: 0;  */
+    border-bottom: 0
 } 
