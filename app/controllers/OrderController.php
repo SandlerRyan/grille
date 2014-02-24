@@ -98,52 +98,20 @@ class OrderController extends \BaseController {
         $response_array['status'] = 'success';
         return json_encode($response_array);
     }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        
-    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $course = Course::findOrFail($id);
-        $course->delete();
-        return Redirect::to('courses/');
-    }
-
-
+    * Displays checkout page with order summary and check is use is logged in
+    */
     public function checkout()
     {   
         require_once(app_path().'/config/id.php');
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
-        $err_messages = Session::get('message');
-
+        $errors = Session::get('message');
 
         // if cart is not empty, get the total
         $total = Cart::total();
-        
-        //check if user logged in
-        if (Session::has('user'))
-        {
-            $loggedin = True;
-        }
-        else 
-            $loggedin = False;
-
         if ($total == 0)
         {
             return Redirect::to('/order/create/')->with('message', 
@@ -151,8 +119,7 @@ class OrderController extends \BaseController {
         }
 
         // TODO: more error checking on the exact value of items
-        $this->layout->content = View::make('checkout.index', ['loggedin' => $loggedin]);
-
+        $this->layout->content = View::make('checkout.index', ['err_messages' => $errors]);
     }
 
     //User has decided to Pay Later.
@@ -166,7 +133,6 @@ class OrderController extends \BaseController {
     // accesses the venmo API so users can pay
     public function authenticatePayment() 
     {   
-
         //Get Access Token from Venmo Response
         $access_token = Input::get('access_token');
 
@@ -175,7 +141,7 @@ class OrderController extends \BaseController {
         $data = array("access_token" => $access_token, "amount" => 0.01, 
             "phone" => "7734901404", "note" => "testing");
         $response = sendPostData($url, $data);
-
+        return Redirect::to('/success')->with('response', $response);
     }
 
     //Show Success Page with appropiate message
@@ -187,7 +153,7 @@ class OrderController extends \BaseController {
             return Redirect::to('/checkout')->with('message','You must select a payment option.');
         }
         // make sure user is logged in
-        if (!Auth::check()) {
+        if (!Session::has('user')) {
             // Raise some kind of error
             return Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
         }

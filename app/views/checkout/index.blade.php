@@ -1,4 +1,7 @@
 <div class="row">
+	@if($err_messages)
+		<h5><font color="red">{{$err_messages}}</font></h5>
+	@endif
     <div class="large-12 columns">
     
       <div class="panel">
@@ -56,7 +59,7 @@ Enter a Note:
 <br/>
 <a class="btn btn-lg btn-success" href="/checkout" role="button">Checkout</a>
 
-@if ($loggedin)
+@if (Session::has('user'))
 	<h1>You are logged in!</h1>
 	<div>
 		<a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
