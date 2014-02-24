@@ -12,6 +12,15 @@
 */
 
 
+// Go here when user clicks login
+Route::get('/login', 'UserController@login');
+
+// Go here when user clicks logout
+Route::get('/logout', 'UserController@logout');
+
+// Go here if the user opts to pay at the register
+Route::get('/return_to', 'UserController@return_to');
+
 // The default CRUD for creating, destroying, editing, orders
 Route::resource('order', 'OrderController');
 
@@ -29,15 +38,6 @@ Route::get('/decrement_addon/{item_id}/{addon_id}', 'OrderController@decrement_a
 
 // Route called by ajax to empty a cart
 Route::get('/empty_cart', 'OrderController@empty_cart');
-
-// Go here when user clicks login
-Route::get('/login', 'UserController@login');
-
-// Go here when user clicks logout
-Route::get('/logout', 'UserController@logout');
-
-// Go here if the user opts to pay at the register
-Route::get('/return_to', 'UserController@return_to');
 
 //Route called by ajax to add a note
 Route::get('/add_note/{id}/{note}', 'OrderController@add_note');

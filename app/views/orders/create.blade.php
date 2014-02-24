@@ -2,7 +2,7 @@
 <div class="row">
 
   @if($err_messages)
-    <h5 color><font color="red">{{$err_messages}}</font></h5>
+    <h5><font color="red">{{$err_messages}}</font></h5>
   @endif
 
   @foreach($menu as $category=>$items)

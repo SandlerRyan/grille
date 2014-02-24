@@ -47,14 +47,18 @@ class UserController extends \BaseController {
         if ($userCS50 !== false)
             Session::put("user", $userCS50);
 
+            //Check if User has signed in before. If not, create the user
             //Create User in the database
-
-            // $user = new User();
-            // $user->cs50_id= $userCS50->identity;
-            // $user->name= $userCS50->fullname;
-            // $user->email= $userCS50->email;
-            // $user->privileges = "user";
-            // $user->save();
+            $name = explode(" ", $userCS50['fullname']);
+            $first_name = $name[0];
+            $user = new User();
+            $user->cs50_id= $userCS50['identity'];
+            $user->name= $userCS50['fullname'];
+            $user->email= $userCS50['email'];
+            $user->preferred_name = $first_name;
+            $user->privileges = "user";
+            $user->phone_number = "1111111111";
+            $user->save();
 
        
         
