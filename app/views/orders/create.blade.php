@@ -30,13 +30,11 @@
 
 <div class="row">
 
-<<<<<<< HEAD
-=======
+
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
   @endif
 
->>>>>>> 567eaa179f5378b58eab3854dc034fc3ba5446b1
   @foreach($menu as $category=>$items)
     <h3>{{$category}}</h3>
 
@@ -134,20 +132,18 @@
 
 <script>
  
-
-   $(window).bind("load", function () {
-      var footer = $("#footer");
-      var pos = footer.position();
-      var height = $(window).height();
-      height = height - pos.top;
-      height = height - footer.height();
-      if (height > 0) {
-          footer.css({
-              'margin-top': height + 'px'
-          });
-      }
-  });
-
+  //  $(window).bind("load", function () {
+  //     var footer = $("#footer");
+  //     var pos = footer.position();
+  //     var height = $(window).height();
+  //     height = height - pos.top;
+  //     height = height - footer.height();
+  //     if (height > 0) {
+  //         footer.css({
+  //             'margin-top': height + 'px'
+  //         });
+  //     }
+  // });
 
   var SUBMIT_BUTTON = '#checkout';
 
@@ -253,55 +249,8 @@
     window.location = '/checkout';
  });
 
-<<<<<<< HEAD
-
 // Set the checkout button status when the page is loaded
 
-
-
-// Ajax call to add item
-$(".addItem").click(function(){
-  var id = this.id;
-  url = "/increment/" + id;
-  $.ajax({
-      url: url,
-      type: "get",
-      success: function(data){
-          //update counter
-          containerId = "#value-" + id;
-          value = $(containerId).val();
-          $(containerId).val(parseInt(value) + 1);
-          //update cart
-          var data = JSON.parse(data);
-          var total = data.cart;
-          var total =  "$" + total;
-          $("#totalPrice").html(total);
-          $(SUBMIT_BUTTON).removeAttr('disabled');
-      },
-      error:function(){
-          alert("failure");
-          $("#result").html('There was an error during submission');
-      }
-  });
-})
-
-// Ajax call to remove item
-  $(".removeItem").click(function(){
-    var id = this.id;
-    url = "/decrement/" + id;
-    $.ajax({
-        url: url,
-        type: "get",
-        success: function(data){
-            containerId = "#value-" + id;
-            value = $(containerId).val();
-            if (value > 0) {
-              $(containerId).val(parseInt(value) - 1);  
-            } else {
-              $(containerId).val(0);  
-            }
-        }});
-  });
 
 
 $(document).ready(function() {  
@@ -325,7 +274,5 @@ $(window).scroll(function() {
 });  
 
 
-=======
->>>>>>> 567eaa179f5378b58eab3854dc034fc3ba5446b1
 </script>
 
