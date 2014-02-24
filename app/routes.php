@@ -39,6 +39,12 @@ Route::get('/logout', 'UserController@logout');
 // Go here if the user opts to pay at the register
 Route::get('/return_to', 'UserController@return_to');
 
+// Go here when user clicks logout
+Route::get('/logout', 'UserController@logout');
+
+//post to store updated user info
+Route::get('/edit_user/{id}', 'UserController@edit_user');
+
 //Route called by ajax to add a note
 Route::get('/add_note/{id}/{note}', 'OrderController@add_note');
 

@@ -35,22 +35,57 @@ class UserController extends \BaseController {
         require_once(app_path().'/config/id.php');
 
         // remember which user, if any, logged in
-        $user = CS50::getUser(RETURN_TO);
+        $current_user = CS50::getUser(RETURN_TO);
 
-        if ($user !== false)
-            Session::put("user", $user);
+        if ($current_user !== false)
+            Session::put("user", $current_user);
             
 
-        //check if returning user, return to checkout page
-        $rules = array('id' => 'unique:users,email');
+        //check if returning user
+        $input = array('cs50_id' => $current_user["identity"]);
+        $rules = array('cs50_id' => 'exists:users,cs50_id');
 
-$validator = Validator::make($input, $rules);
-        return Redirect::to('/checkout');
+        $validator = Validator::make($input, $rules);
+
+        //if doesn't exist, take user to edit page
+        if ($validator->fails())
+        {
+            //parse first name
+            $full = $current_user["fullname"];
+            $split = explode(' ',trim($full));
+            $first = $split[0];
+
+            $user = new User();
+            $user->cs50_id = $current_user["identity"];
+            $user->name = $current_user["fullname"];
+            $user->preferred_name = $first;
+            $user->phone_number = "";
+            $user->email = $current_user["email"];
+            $user-> save();
+
+            //$first = $user->name;
+            return View::make('users.edit')->with('user', $user);
+        }
+
+        //else, redirect to checkout page
+        else
+            return Redirect::to('/checkout');
+            
     }
 
 
-    public function create()
+
+    public function edit_user($id)
     {
+        //update tabl with user's preferred name and phone number
+        DB::table('users')->where('id',$id)->update(array('preferred_name' => Input::get('preferred_name'),
+                                                            'phone_number' => Input::get('phone_number'),
+                                                            'hours_notification' => Input::get('hours_notification'),
+                                                            'deals_notification' => Input::get('deals_notification')));
+                            
+                                                   
+      
+        return Redirect::to('/checkout');
 
     }
 }

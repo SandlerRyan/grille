@@ -133,7 +133,7 @@ class OrderController extends \BaseController {
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
         $err_messages = Session::get('message');
 
-
+        
         // if cart is not empty, get the total
         $total = Cart::total();
         
