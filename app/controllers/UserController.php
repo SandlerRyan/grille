@@ -83,7 +83,8 @@ class UserController extends \BaseController {
                                                             'hours_notification' => Input::get('hours_notification'),
                                                             'deals_notification' => Input::get('deals_notification')));
                             
-                                                
+        return Redirect::to('/checkout');                                      
+    }
 
     /* adds user's phone number to the database
     * called by ajax from the success page
