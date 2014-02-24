@@ -196,7 +196,7 @@ class OrderController extends \BaseController {
         $contents = Cart::contents();
         foreach ($contents as $item)
         {
-            $item_order = new   ItemOrder();
+            $item_order = new ItemOrder();
             $item_order->order_id = $order->id;
             $item_order->item_id = $item->id;
             $item_order->quantity = $item->quantity;
@@ -204,9 +204,12 @@ class OrderController extends \BaseController {
             $item_order->save();
 
         }
+        // put all the order info into one nice object to pass to the view
+        $order_info = Order::with('item_orders')->get()->find($order->id);
         // empty the cart
         Cart::destroy();
-        $this->layout->content = View::make('checkout.success', ['response' => $response['status']]);
+        $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
+            'order' => $order_info]);
     }
  
 }
