@@ -159,7 +159,7 @@ class OrderController extends \BaseController {
     /* Helper function to actually store the order to the database
     *  Called after user has successfully paid
     */
-    private function store_order($reponse, $venmo=NULL)
+    protected function store_order($reponse, $venmo=NULL)
     {
         if (!Auth::check())
         {
@@ -187,7 +187,7 @@ class OrderController extends \BaseController {
         }
         // empty the cart
         Cart::destroy();
-        Redirect::to('/success')->with('response',$response);
+        Redirect::to('/success')->with('response', $response);
     }
 
        
@@ -197,7 +197,7 @@ class OrderController extends \BaseController {
 
         //TODO: Edit Order for Pay Later and send back Order ID
         $response = "You have decided to pay later.";
-        store_order($response);
+        //store_order($response);
 
     }
 
