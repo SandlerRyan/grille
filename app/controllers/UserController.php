@@ -74,7 +74,7 @@ class UserController extends \BaseController {
     }
 
 
-
+ 
     public function edit_user($id)
     {
         //update tabl with user's preferred name and phone number
