@@ -1,5 +1,11 @@
 <!-- <div id="result"></div> -->
 
+<!--         <ul class="button-group round even-3">
+          <li><input type="submit" class="button success" value="Button 1"></li>
+          <li><input type="submit" class="button success" value="Button 2"></li>
+          <li><input type="submit" class="button success" value="Button 3"></li>
+        </ul> -->
+
   <div id="s">
           <div class="row">
             <div class="large-12 columns">
@@ -9,13 +15,13 @@
               <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
               <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-              <button id="checkout" class="button alert round" disabled>Checkout</button>
-              <button id="clearCart" class="button alert round">Clear Cart</button> 
+<!--               <button id="checkout" class="button alert round" disabled>Checkout</button>
+              <button id="clearCart" class="button alert round">Clear Cart</button>  -->
 
-      <!--         <button id="checkout" disabled>Checkout</button>
-              <br/>
-              <button type="button" class="clearCart">Clear Cart</button>  -->
-              
+              <ul class="button-group round even-2">
+                <li><button id="checkout" class="button success round" disabled>Checkout</button></li>
+                <li><button id="clearCart" class="button alert round">Clear Cart</button></li>
+               </ul>
 
           <br/>
 
@@ -109,7 +115,6 @@
               <!-- <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4> -->
               <!-- <div id="totalPrice">${{{Cart::total()}}}</div> -->
 
-     /
       <!--         <button id="checkout" disabled>Checkout</button>
               <br/>
               <button type="button" class="clearCart">Clear Cart</button>  -->
@@ -125,8 +130,6 @@
 <!-- <button type="button" class="clearCart">Clear Cart</button> 
 
 <div id="totalPrice">${{{Cart::total()}}}</div> -->
-
-
   
 
 <script>
@@ -255,15 +258,15 @@
 $(document).ready(function() {  
 	var stickyNavTop = $('#s').offset().top;  
 	  
-	var stickyNav = function(){  
-	var scrollTop = $(window).scrollTop();  
-	       
-	if (scrollTop > stickyNavTop) {   
-	    $('#s').addClass('sticky');  
-	} else {  
-	    $('#s').removeClass('sticky');   
-	}  
-};  
+	var stickyNav = function() {  
+  	var scrollTop = $(window).scrollTop();  
+  	       
+  	if (scrollTop > stickyNavTop) {   
+  	    $('#s').addClass('sticky');  
+  	} else {  
+  	    $('#s').removeClass('sticky');   
+  	}  
+  };  
   
 stickyNav();  
   
