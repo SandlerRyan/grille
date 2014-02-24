@@ -85,8 +85,7 @@ class OrderController extends \BaseController {
         Cart::destroy();
         $response_array['status'] = 'success';      
         $response_array['cart'] = number_format(Cart::total(), 2);    
-        return json_encode($response_array);
-        
+        return json_encode($response_array);   
     }
 
     /**
@@ -99,82 +98,99 @@ class OrderController extends \BaseController {
         $response_array['status'] = 'success';
         return json_encode($response_array);
     }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        
-    }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $course = Course::findOrFail($id);
-        $course->delete();
-        return Redirect::to('courses/');
-    }
-
-
+    * Displays checkout page with order summary and check is use is logged in
+    */
     public function checkout()
     {   
         require_once(app_path().'/config/id.php');
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
-        $err_messages = Session::get('message');
-
+        $errors = Session::get('message');
 
         // if cart is not empty, get the total
         $total = Cart::total();
-        
-        //check if user logged in
-        if (Session::has('user'))
-        {
-            $loggedin = True;
-        }
-        else 
-            $loggedin = False;
-
         if ($total == 0)
         {
-            Redirect::to('/order/create/')->with('message', 'Cart empty--cannot proceed to checkout');
+            return Redirect::to('/order/create/')->with('message', 
+                'Cart empty. Cannot proceed to checkout');
         }
 
         // TODO: more error checking on the exact value of items
-        $this->layout->content = View::make('checkout.index', ['loggedin' => $loggedin]);
+        $this->layout->content = View::make('checkout.index', ['err_messages' => $errors, 'user'=>Session::get('user')]);
+    }
+
+    //User has decided to Pay Later.
+    public function pay_later()
+    {
+        //TODO: Edit Order for Pay Later and send back Order ID
+        
+        $response_array['status'] = 'later';
+        $response_array['message'] = "You have decided to pay later.";
+
+        return Redirect::to('/success')->with('response',$response_array);
+    }
+
+    // accesses the venmo API so users can pay
+    public function authenticatePayment() 
+    {   
+        //Get Access Token from Venmo Response
+        $access_token = Input::get('access_token');
+
+        // Create Payment and Charge the User
+        $url = 'https://api.venmo.com/v1/payments';
+        $data = array("access_token" => $access_token, "amount" => 0.02, 
+            "phone" => "7734901404", "note" => "grille!!! ANOTHER TEST");
+        $response = sendPostData($url, $data);
+
+        $response_array['status'] = 'venmo';
+        $response_array['message'] = $response;
+
+        return Redirect::to('/success')->with('response',$response_array);
 
     }
 
+    //Show Success Page with appropiate message
+    public function success() 
+    {   
 
-    /* Helper function to actually store the order to the database
-    *  Called after user has successfully paid
-    */
-    protected function store_order($reponse, $venmo=NULL)
-    {
-        if (!Auth::check())
-        {
+        // make sure this was routed from the payment methods
+        $response = Session::get('response');
+        if (!$response){ 
+            return Redirect::to('/checkout')->with('message','You must select a payment option.');
+        }
+        // make sure user is logged in
+        if (!Session::has('user')) {
             // Raise some kind of error
-            Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
+            return Redirect::to('/checkout')->with('message', 'You must login to complete checkout');
         }
 
+        if($response['status'] == "venmo") {
+            //get the id
+            $venmoJSON = json_decode($response['message'], true);
+            $transaction = 0;
+            if (array_key_exists('error', $venmoJSON)) {
+                
+                return Redirect::to('/checkout')->with('message', 'Venmo Payment Failed');
+
+            } else {
+                
+                $transaction = $venmoJSON['data']['payment']['id'];
+            }
+
+        } else {
+            $transaction = 0;
+        }
         // create the new order
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
-        $order->user_id = Auth::user()->id;
+        $order->user_id = Session::get('user')->id;
         $order->cost = Cart::total();
-        $order->$venmo_id = $venmo;
+        $order->venmo_id = $transaction;
         $order->fulfilled = 0;
-        $order.save();
+        $order->save();
 
         // now add the ordered items to the item_orders join table
         $contents = Cart::contents();
@@ -183,50 +199,17 @@ class OrderController extends \BaseController {
             $item_order = new ItemOrder();
             $item_order->order_id = $order->id;
             $item_order->item_id = $item->id;
-            $item_order.save();
+            $item_order->quantity = $item->quantity;
+            $item_order->notes = $item->notes;
+            $item_order->save();
+
         }
+        // put all the order info into one nice object to pass to the view
+        $order_info = Order::with('item_orders')->get()->find($order->id);
         // empty the cart
         Cart::destroy();
-        Redirect::to('/success')->with('response', $response);
-    }
-
-    //User has decided to Pay Later.
-    public function pay_later()
-    {
-        //TODO: Edit Order for Pay Later and send back Order ID
-        $response = "You have decided to pay later.";
-        //store_order($response);
-<<<<<<< HEAD
-
-========
-        return Redirect::to('/success')->with('response',$response);
->>>>>>> ee2454cb9dabc42fd0984d3b05395652e33dedd1
-    }
-
-    // accesses the venmo API so users can pay
-    public function authenticatePayment() 
-    {   
-
-        //Get Access Token from Venmo Response
-        $access_token = Input::get('access_token');
-
-        // Create Payment and Charge the User
-        $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "testing");
-        $response = sendPostData($url, $data);
-
-        // Store the order info in the database
-        // store_order($response, $venmo_key=??)
-
-    }
-
-    //Show Success Page with appropiate message
-    public function success() 
-    {   
-        $response = Session::get('response');
-        $this->layout->content = View::make('checkout.success', ['response' => $response]);
-
+        $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
+            'order' => $order_info]);
     }
  
 }

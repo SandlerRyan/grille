@@ -43,17 +43,28 @@ class UserController extends \BaseController {
         require_once(app_path().'/config/id.php');
 
         // remember which user, if any, logged in
-        $user = CS50::getUser(RETURN_TO);
-        if ($user !== false)
-            //$_SESSION["user"] = $user;
-            Session::put("user", $user);
-       
-        // redirect user to index.php
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
+        $userCS50 = CS50::getUser(RETURN_TO);
+        if ($userCS50 !== false)
+            
+            //Check if User has signed in before. If not, create the user
+            $user = User::where('cs50_id', $userCS50['identity'])->get();
+            if ($user != "[]") {
+                Session::put("user", $user);
+            } else {
+                //Create User in the database
+                $name = explode(" ", $userCS50['fullname']);
+                $first_name = $name[0];
+                $user = new User();
+                $user->cs50_id= $userCS50['identity'];
+                $user->name= $userCS50['fullname'];
+                $user->email= $userCS50['email'];
+                $user->preferred_name = $first_name;
+                $user->privileges = "user";
+                $user->save();
 
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
+                Session::put("user", $user);
+            }
+                
         return Redirect::to('/checkout');
     }
 }
