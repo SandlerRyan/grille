@@ -67,4 +67,29 @@ class UserController extends \BaseController {
                 
         return Redirect::to('/checkout');
     }
+
+    /* adds user's phone number to the database
+    * called by ajax from the success page
+    */
+    public function add_phone($phone)
+    {
+        $user = Session::get('user')[0];
+        if (!$user){
+            return Redirect::to('/checkout')->with('message','Could not add phone number. User not logged in');
+        }
+        $user_info = User::findorfail($user->id);
+        $user_info->phone_number = $phone;
+        $user_info->save();
+        Session::put("user",$user_info);
+        $response['status'] = 'success';
+        return json_encode($response);
+    }
 }
+
+
+
+
+
+
+
+
