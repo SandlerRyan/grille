@@ -153,8 +153,9 @@
   $(document).ready(function () {
     // initialize the button as disabled
     // remove dollar sign from total
-    var total = $('#totalPrice').text().substr(1);
+    var total = $('#totalPrice').text().substr(2);
     if (parseInt(total) != 0) {
+      console.log('enabled checkout');
       $(SUBMIT_BUTTON).removeAttr('disabled');
     }
   });

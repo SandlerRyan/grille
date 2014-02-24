@@ -33,7 +33,7 @@ class UserController extends \BaseController {
         //$host  = Request::server("HTTP_HOST");
         //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
         //return Redirect::to('{$protocol}://{$host}{$path}.php');
-        return Redirect::to('/checkout');  
+        return Redirect::to('/');  
     }
 
     public function return_to()
@@ -73,7 +73,7 @@ class UserController extends \BaseController {
     */
     public function add_phone($phone)
     {
-        $user = Session::get('user')[0];
+        $user = Session::get('user');
         if (!$user){
             return Redirect::to('/checkout')->with('message','Could not add phone number. User not logged in');
         }
