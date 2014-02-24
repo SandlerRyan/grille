@@ -1,4 +1,8 @@
+
 <div class="row">
+	@if($err_messages)
+		<h5><font color="red">{{$err_messages}}</font></h5>
+	@endif
     <div class="large-12 columns">
     
       <div class="panel">
@@ -10,35 +14,42 @@
 		<th>Item</th>
 		<th>Price</th>
 		<th>Quantity</th>
+		<th>Notes</th>
+		<th></th>
 	<tr>
 	@foreach(Cart::contents() as $item)
 	<tr>
 		<td>{{$item->name}}</td>
 		<td>${{$item->price}}</td>
 		<td>{{$item->quantity}}</td>
+		<td>
+			<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
+		</td>
+		<td>
+			<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
+		</td>
 	</tr>
 	@endforeach
 	<tr>
 		<td></td>
 		<td><h5>Total:</h5></td>
 		<td><h5 id="totalPrice">${{Cart::total()}}</h5></td>
+		<td></td>
 	</tr>
 	</table>
 
-<!-- <div class="result">
+<div class="result">
 </div>
 
-THESE ARE YOUR ORDER DETAILS!
+<!-- THESE ARE YOUR ORDER DETAILS!
 
 @foreach(Cart::contents() as $item)
 {{$item->name}}<br/>
 {{$item->price}}<br/>
-{{$item->quantity}}<br/><br/>
-Enter a Note:
-<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
-<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
-@endforeach
- -->
+{{$item->quantity}}<br/><br/> -->
+
+<!-- @endforeach -->
+
 
 
 	<!-- <div id="totalPrice"><b>Total</b>: ${{Cart::total()}}</div> -->
@@ -54,28 +65,20 @@ Enter a Note:
 
 
 <br/>
-<a class="btn btn-lg btn-success" href="/checkout" role="button">Checkout</a>
 
-@if ($loggedin)
-	<h1>You are logged in!</h1>
-	<div>
-		<a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
-	</div>
-	<div>
-		<a href="/pay_later">Pay At Grille</a>
-	</div>
-	<div>
-		<a href='/logout'>Log out</a>
-	</div>
-@else
-	<a href='/login'>Log in</a>.
-@endif
-
-
-	    <ul class="button-group round even-2">
+  
+  
+@if (Session::has('user'))
+	<ul class="button-group round even-2">
           <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a></li>
           <li><a class="button success" href="/pay_later">Pay At Pick-Up</a></li>
-        </ul>
+    </ul>
+@else
+	<ul class="">
+          <li><a class="button success" href="/login">Log In To Proceed</a></li>
+    </ul>
+@endif
+
 	</div>
 
 	<br />
@@ -85,7 +88,6 @@ Enter a Note:
 </div>
 
 <br/>
-<a class="btn btn-lg btn-success" href="/order/create" role="button">Back to Menu</a>
 
 <script>
 // makes an ajax call to the database to add a note

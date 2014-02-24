@@ -12,6 +12,18 @@
 */
 
 
+// Go here when user clicks login
+Route::get('/login', 'UserController@login');
+
+// Go here when user clicks logout
+Route::get('/logout', 'UserController@logout');
+
+// Go here if the user opts to pay at the register
+Route::get('/return_to', 'UserController@return_to');
+
+// Called by ajax to add phone number of a user to databse
+Route::get('/add_phone/{phone}', 'UserController@add_phone');
+
 // The default CRUD for creating, destroying, editing, orders
 Route::resource('order', 'OrderController');
 
@@ -59,6 +71,5 @@ Route::get('/pay_later', 'OrderController@pay_later');
 
 //Final Step in the Ordering Process
 Route::get('/success', 'OrderController@success');
-
 
 Route::controller('/', 'BaseController');

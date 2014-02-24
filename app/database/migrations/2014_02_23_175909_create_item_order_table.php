@@ -20,7 +20,7 @@ class CreateItemOrderTable extends Migration {
 			$table->integer('item_id')->unsigned();
 			$table->foreign('item_id')->references('id')->on('items');
 
-			$table->integer('addon_id')->unsigned();
+			$table->integer('addon_id')->unsigned()->nullable()->default(NULL);
 			$table->foreign('addon_id')->references('id')->on('addons');
 			
 			$table->integer('quantity');
