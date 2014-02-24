@@ -19,6 +19,7 @@ class CreateUserTable extends Migration {
 			$table->increments('id');
 			$table->string('cs50_id',84);
 			$table->string('name');
+			$table->string('preferred_name');
 			$table->string('phone_number',11);
 			$table->string('email');	// TODO: need to look up how @college emails are handled for graduates
 			$table->boolean('hours_notification')->default(0);	// text notifications

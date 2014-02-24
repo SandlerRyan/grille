@@ -270,23 +270,23 @@ $(".addItem").click(function(){
 
 
 $(document).ready(function() {  
-var stickyNavTop = $('#s').offset().top;  
-  
-var stickyNav = function(){  
-var scrollTop = $(window).scrollTop();  
-       
-if (scrollTop > stickyNavTop) {   
-    $('#s').addClass('sticky');  
-} else {  
-    $('#s').removeClass('sticky');   
-}  
+	var stickyNavTop = $('#s').offset().top;  
+	  
+	var stickyNav = function(){  
+	var scrollTop = $(window).scrollTop();  
+	       
+	if (scrollTop > stickyNavTop) {   
+	    $('#s').addClass('sticky');  
+	} else {  
+	    $('#s').removeClass('sticky');   
+	}  
 };  
   
 stickyNav();  
   
 $(window).scroll(function() {  
     stickyNav();  
-});  
+	});  
 });  
 
 

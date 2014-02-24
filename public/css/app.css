@@ -38,6 +38,11 @@ nav .button {
 	margin-bottom: 15px;
 }
 
+.sticky {
+	transition: position 2s;
+	-webkit-transition: width 2s; /* Safari */
+}
+
 .sticky {  
     position: fixed;  
     width: 100%;  
