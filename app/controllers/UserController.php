@@ -8,6 +8,7 @@ class UserController extends \BaseController {
         // if user is already logged in, redirect to index.php
         if (Session::has('user'))
         {
+            // TODO: redirect to most recent page
             return Redirect::to('/checkout');  
         }
 
@@ -35,10 +36,6 @@ class UserController extends \BaseController {
         // remember which user, if any, logged in
         $current_user = CS50::getUser(RETURN_TO);
 
-        if ($current_user !== false)
-            Session::put("user", $current_user);
-            
-
         //check if returning user
         $input = array('cs50_id' => $current_user["identity"]);
         $rules = array('cs50_id' => 'exists:users,cs50_id');
@@ -61,14 +58,16 @@ class UserController extends \BaseController {
             $user->email = $current_user["email"];
             $user-> save();
 
-            //$first = $user->name;
             return View::make('users.edit')->with('user', $user);
         }
 
         //else, redirect to checkout page
         else
+        {
+            $user = User::where('cs50_id', $current_user['identity'])->get()[0];
+            Session::put('user', $user);
             return Redirect::to('/checkout');
-            
+        }   
     }
 
 
@@ -83,6 +82,7 @@ class UserController extends \BaseController {
                                                             'phone_number' => Input::get('phone_number'),
                                                             'hours_notification' => $hours_notification,
                                                             'deals_notification' => $deals_notification));
+        Session::put('user', User::findorfail($id));
         // TODO: redirect to most recent page
         return Redirect::to('/checkout');                                      
     }

@@ -23,7 +23,7 @@
 
 	    <label>Phone number
 	      <input type="text" class="phoneInput" id="{{$order->user_id}}" 
-	      	value="{{Session::get('user')->phone_number}}"/>
+	      	value="{{User::findorfail($order->user_id)->phone_number}}"/>
 	      <button type="button" class="addPhone">Submit</button>
 	    </label>
 	  </fieldset>

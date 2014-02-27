@@ -84,7 +84,7 @@
               <ul class="inline-list right">
                 <li><a href="/">Home</a></li>
                 <li><a href="/order/create">Menu</a></li>
-                <li><a href="#">Log out</a></li>
+                <li><a href="/logout">Log out</a></li>
               </ul>
             </div>
           </div>

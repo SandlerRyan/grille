@@ -1,3 +1,5 @@
+user: {{Session::get('user')}}
+
 <!-- <div id="result"></div> -->
 
 <!--         <ul class="button-group round even-3">
