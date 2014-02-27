@@ -23,9 +23,7 @@ class UserController extends \BaseController {
 
         if (Session::has('user'))
             Session::forget('user');
-
-        // redirect user back to checkout
-        return Redirect::to('/checkout');  
+        return Redirect::to('/');  
     }
 
     public function return_to()
@@ -77,12 +75,15 @@ class UserController extends \BaseController {
  
     public function edit_user($id)
     {
-        //update tabl with user's preferred name and phone number
+        // Input doesn't return zero for unchecked boxes, so change these to zero
+        $hours_notification = (Input::get('hours_notification') ? 1 : 0);
+        $deals_notification = (Input::get('deals_notification') ? 1 : 0);
+        //update table with user's preferred name and phone number
         DB::table('users')->where('id',$id)->update(array('preferred_name' => Input::get('preferred_name'),
                                                             'phone_number' => Input::get('phone_number'),
-                                                            'hours_notification' => Input::get('hours_notification'),
-                                                            'deals_notification' => Input::get('deals_notification')));
-                            
+                                                            'hours_notification' => $hours_notification,
+                                                            'deals_notification' => $deals_notification));
+        // TODO: redirect to most recent page
         return Redirect::to('/checkout');                                      
     }
 
@@ -91,7 +92,7 @@ class UserController extends \BaseController {
     */
     public function add_phone($phone)
     {
-        $user = Session::get('user')[0];
+        $user = Session::get('user');
         if (!$user){
             return Redirect::to('/checkout')->with('message','Could not add phone number. User not logged in');
         }

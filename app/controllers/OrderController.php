@@ -144,8 +144,8 @@ class OrderController extends \BaseController {
 
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.02, 
-            "phone" => "7734901404", "note" => "grille!!! ANOTHER TEST");
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "malan example");
         $response = sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
@@ -189,7 +189,7 @@ class OrderController extends \BaseController {
         // create the new order
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
-        $order->user_id = Session::get('user')[0]->id;
+        $order->user_id = Session::get('user')->id;
         $order->cost = Cart::total();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
