@@ -73,4 +73,15 @@ Route::get('/pay_later', 'OrderController@pay_later');
 //Final Step in the Ordering Process
 Route::get('/success', 'OrderController@success');
 
+
+//ADMIN DASHBOARD ROUTES
+Route::get('/admin', 'AdminController@dashboard');
+Route::get('/filled_orders', 'AdminController@filled_orders');
+Route::post('/refund_order/{id}', 'AdminController@refund_order');
+Route::post('/get_new_orders', 'AdminController@get_new_orders');
+Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
+Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
+Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
+
+
 Route::controller('/', 'BaseController');
