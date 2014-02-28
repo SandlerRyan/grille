@@ -25,6 +25,10 @@ class CreateUserTable extends Migration {
 			$table->boolean('hours_notification')->default(0);	// text notifications
 			$table->boolean('deals_notification')->default(0);
 			$table->enum('privileges', array('user','staff','manager','admin'))->default('user');
+
+			// if user is associated with a grille as a staff or manager
+			$table->integer('grille_id')->unsigned()->nullable()->default(NULL);
+			$table->foreign('grille_id')->references('id')->on('grilles');
             $table->timestamps();
          });
 	}
