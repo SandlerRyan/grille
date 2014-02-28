@@ -1,18 +1,3 @@
-<?php
-
-$item = array('id'=>1, 'name'=>'burger', 'quantity'=>1, 'price'=>4.5, 'addons'=>array());
-Cart::insert($item);
-$addon = array('id'=>1, 'name'=>'bacon', 'quantity'=>1, 'price'=>1.25, 'addons'=>array());
-Cart::insert_addon($addon, Cart::find(1));
-
-if(empty($item->addons)) {echo 'empty'; }
-
-foreach(Cart::contents() as $item){
-  var_dump($item);
-}
-
-?>
-
 <!-- Global header/footer -->
 <div id="s">
   <div class="row">
