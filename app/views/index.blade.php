@@ -7,7 +7,10 @@
 	      <img src="/img/hamburger.jpg" />
 	    </div>
 	    
+
 	    <hr />
+
+	    <a href="/admin">Admin Login</a>
 	    </div>
 	  </div>
 	  
