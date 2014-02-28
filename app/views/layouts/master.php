@@ -17,10 +17,8 @@
     <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
     <link rel="apple-touch-icon-precomposed" href="http://foundation.zurb.com/img/favicons/apple-touch-icon-precomposed.png">
     <link rel="icon" href="http://foundation.zurb.com/img/favicons/favicon.ico" type="image/x-icon">
-    <title>Foundation Docs: Kitchen Sink</title>
     <link rel="stylesheet" href="http://foundation.zurb.com/docs/assets/normalize.css" />
     <link rel="stylesheet" href="/css/app.css" />
-    <script src="/packages/aheissenberger/foundation/js/vendor/custom.modernizr.js"></script>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -37,9 +35,7 @@
     <link rel="stylesheet" href="/css/tables/reveal.css">
     <link rel="stylesheet" href="/css/tables/mobile.css">
 
-
-    <script type="text/javascript" src="/js/jquery.sticky.js"></script>
-
+    <title>Eliot Inferno Grille</title>
   </head>
 
   <body>
