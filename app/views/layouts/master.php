@@ -37,12 +37,20 @@
     <link rel="stylesheet" href="/css/tables/reveal.css">
     <link rel="stylesheet" href="/css/tables/mobile.css">
 
+
+    <script type="text/javascript" src="/js/jquery.sticky.js"></script>
+
   </head>
 
   <body>
 
-        <div class="row">
+  <!-- <a href="#" class="button [radius round]">Log out</a> -->
+
+
+      <div class="row">
+
         <div class="large-12 columns">
+
           <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
         </div>
        </div>
@@ -58,6 +66,7 @@
           </ul>
         </div>
       </nav>
+    </div>
       
     <!-- End Header and Nav -->
 
@@ -75,6 +84,7 @@
               <ul class="inline-list right">
                 <li><a href="/">Home</a></li>
                 <li><a href="/order/create">Menu</a></li>
+                <li><a href="/logout">Log out</a></li>
               </ul>
             </div>
           </div>
@@ -82,4 +92,5 @@
       </footer>
 
     </body>
+
 </html>

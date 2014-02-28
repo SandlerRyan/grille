@@ -1,7 +1,7 @@
 <?php
 
 class OrderController extends \BaseController {
-
+    $GRILLE_ID = 1;
     /**
      * Show the form for creating a new order.
      *
@@ -108,6 +108,9 @@ class OrderController extends \BaseController {
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
+
+        $err_messages = Session::get('message');
+
         $errors = Session::get('message');
 
         // if cart is not empty, get the total
@@ -141,8 +144,8 @@ class OrderController extends \BaseController {
 
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.02, 
-            "phone" => "7734901404", "note" => "grille!!! ANOTHER TEST");
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "malan example");
         $response = sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
@@ -187,6 +190,7 @@ class OrderController extends \BaseController {
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
         $order->user_id = Session::get('user')->id;
+        $order->grille_id = $GRILLE_ID;
         $order->cost = Cart::total();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
@@ -196,7 +200,7 @@ class OrderController extends \BaseController {
         $contents = Cart::contents();
         foreach ($contents as $item)
         {
-            $item_order = new   ItemOrder();
+            $item_order = new ItemOrder();
             $item_order->order_id = $order->id;
             $item_order->item_id = $item->id;
             $item_order->quantity = $item->quantity;
@@ -204,9 +208,12 @@ class OrderController extends \BaseController {
             $item_order->save();
 
         }
+        // put all the order info into one nice object to pass to the view
+        $order_info = Order::with('item_orders')->get()->find($order->id);
         // empty the cart
         Cart::destroy();
-        $this->layout->content = View::make('checkout.success', ['response' => $response['status']]);
+        $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
+            'order' => $order_info]);
     }
  
 }

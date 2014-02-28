@@ -14,35 +14,42 @@
 		<th>Item</th>
 		<th>Price</th>
 		<th>Quantity</th>
+		<th>Notes</th>
+		<th></th>
 	<tr>
 	@foreach(Cart::contents() as $item)
 	<tr>
 		<td>{{$item->name}}</td>
 		<td>${{$item->price}}</td>
 		<td>{{$item->quantity}}</td>
+		<td>
+			<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
+		</td>
+		<td>
+			<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
+		</td>
 	</tr>
 	@endforeach
 	<tr>
 		<td></td>
 		<td><h5>Total:</h5></td>
 		<td><h5 id="totalPrice">${{Cart::total()}}</h5></td>
+		<td></td>
 	</tr>
 	</table>
 
-<!-- <div class="result">
+<div class="result">
 </div>
 
-THESE ARE YOUR ORDER DETAILS!
+<!-- THESE ARE YOUR ORDER DETAILS!
 
 @foreach(Cart::contents() as $item)
 {{$item->name}}<br/>
 {{$item->price}}<br/>
-{{$item->quantity}}<br/><br/>
-Enter a Note:
-<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
-<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
-@endforeach
- -->
+{{$item->quantity}}<br/><br/> -->
+
+<!-- @endforeach -->
+
 
 
 	<!-- <div id="totalPrice"><b>Total</b>: ${{Cart::total()}}</div> -->

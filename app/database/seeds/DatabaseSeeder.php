@@ -13,11 +13,11 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('UnseedTables');
 
-		$this->call('UserTableSeeder');
-		$this->command->info('Users Table Seeded!');
-
 		$this->call('GrilleTableSeeder');
 		$this->command->info('Grilles Table Seeded!');
+
+		$this->call('UserTableSeeder');
+		$this->command->info('Users Table Seeded!');
 
 		$this->call('HourTableSeeder');
 		$this->command->info('Hours Table Seeded!');
@@ -48,8 +48,8 @@ class UnseedTables extends Seeder
 		DB::table('items')->delete();
 		DB::table('categories')->delete();
 		DB::table('hours')->delete();
-		DB::table('grilles')->delete();
 		DB::table('users')->delete();
+		DB::table('grilles')->delete();
 	}
 }
 
@@ -125,7 +125,8 @@ class UserTableSeeder extends Seeder
 							'email' => 'pbang@college.harvard.edu',
 							'hours_notification' => 1,
 							'deals_notification' => 1,
-							'privileges' => 'manager'
+							'privileges' => 'manager',
+							'grille_id' => 1
 							));
 	}
 }
@@ -137,7 +138,6 @@ class GrilleTableSeeder extends Seeder
 		Grille::create(array(	'id' => 1,
 								'name' => 'Eliot Inferno',
 								'phone_number' => '5555555555',
-								'manager_id' => 7,
 								'open_now' => 1
 							));
 	}

@@ -4,7 +4,7 @@
 	  <div class="row">
 	    <div class="large-12 columns">
 	    <div id="slider">
-	      <img src="/img/hamburger.jpg" />
+	      <img class="mainImg" src="/img/hamburger2.png" />
 	    </div>
 	    
 
