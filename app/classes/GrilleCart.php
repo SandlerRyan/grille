@@ -25,7 +25,7 @@ class GrilleCart extends Cart
         'addons',
     );
 
-	public function insert_addon (array $addon, Item $item)
+    public static function insert_addon (array $addon, Item $item)
 	{
         $this->checkArgs($addon);
 
@@ -50,7 +50,7 @@ class GrilleCart extends Cart
         {
 	        // create the addon as an Item object and add it to the appropriate item
 	        $addon = new Item($addonIdentifier, $addon, $this->store);
-	        $item->addons[$addon->id] = $addon;
+	        static::$item->addons[$addon->id] = $addon;
 
 	        return $addonIdentifier;
 	    }	

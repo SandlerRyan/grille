@@ -1,14 +1,14 @@
 <?php
 
 $item = array('id'=>1, 'name'=>'burger', 'quantity'=>1, 'price'=>4.5, 'addons'=>array());
-GrilleCart::insert($item);
+Cart::insert($item);
 $addon = array('id'=>1, 'name'=>'bacon', 'quantity'=>1, 'price'=>1.25, 'addons'=>array());
-GrilleCart::insert_addon($addon, Cart::find(1));
+Cart::insert_addon($addon, Cart::find(1));
 
 if(empty($item->addons)) {echo 'empty'; }
 
-foreach(GrilleCart::contents() as $item){
-  var_dump($item->addons);
+foreach(Cart::contents() as $item){
+  var_dump($item);
 }
 
 ?>
