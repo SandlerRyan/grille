@@ -1,7 +1,7 @@
 <?php
 
 class OrderController extends \BaseController {
-
+    $GRILLE_ID = 1;
     /**
      * Show the form for creating a new order.
      *
@@ -190,6 +190,7 @@ class OrderController extends \BaseController {
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
         $order->user_id = Session::get('user')->id;
+        $order->grille_id = $GRILLE_ID;
         $order->cost = Cart::total();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
