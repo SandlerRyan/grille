@@ -18,6 +18,9 @@ class CreateOrderTable extends Migration {
 			$table->integer('user_id')->unsigned();
 			$table->foreign('user_id')->references('id')->on('users');
 
+			$table->integer('grille_id')->unsigned();
+			$table->foreign('grille_id')->references('id')->on('grilles');
+
 			$table->string('venmo_id', 19)->nullable();	// if null, user hasn't paid yet
 			$table->boolean('fulfilled');	// checked off when the user picks up their food
             $table->decimal('cost');

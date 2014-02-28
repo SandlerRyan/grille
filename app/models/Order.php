@@ -11,4 +11,9 @@
     	{
     		return $this->belongsToMany('Item','item_orders');
     	}
+
+        public function grille ()
+        {
+            return $this->belongsTo('Grille');
+        }
     }
