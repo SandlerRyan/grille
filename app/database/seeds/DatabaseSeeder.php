@@ -43,6 +43,9 @@ class UnseedTables extends Seeder
 {
 	public function run()
 	{
+		DB::table('addon_item_orders')->delete();
+		DB::table('item_orders')->delete();
+		DB::table('orders')->delete();
 		DB::table('addon_items')->delete();
 		DB::table('addons')->delete();
 		DB::table('items')->delete();

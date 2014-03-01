@@ -53,6 +53,16 @@ class OrderController extends \BaseController {
         $this->layout->content = View::make('checkout.index', ['err_messages' => $errors, 'user'=>Session::get('user')]);
     }
 
+    //Function to Make POST Requests with Data  
+    protected function sendPostData($url, $post)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+        return curl_exec($ch);
+    }
+
     //User has decided to Pay Later.
     public function pay_later()
     {
@@ -74,7 +84,7 @@ class OrderController extends \BaseController {
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
             "phone" => "7734901404", "note" => "malan example");
-        $response = sendPostData($url, $data);
+        $response = $this->sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
         $response_array['message'] = $response;
@@ -139,25 +149,19 @@ class OrderController extends \BaseController {
             foreach($item->addons as $addon)
             {
                 $addon_order = new AddonItemOrder();
+                $addon_order->item_order_id = $item_order->id;
+                $addon_order->addon_id = $addon->id;
+                $addon_order->quantity = $addon->quantity;
+                $addon_order->save();
             }
 
         }
         // put all the order info into one nice object to pass to the view
-        $order_info = Order::with('item_orders')->get()->find($order->id);
+        $order_info = Order::with('item_orders')->find($order->id);
         // empty the cart
         Cart::destroy();
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
     }
  
-}
-
-//Function to Make POST Requests with Data  
-function sendPostData($url, $post)
-{
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
-    return curl_exec($ch);
 }

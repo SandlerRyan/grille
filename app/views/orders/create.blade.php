@@ -58,7 +58,7 @@
                   }
                   else $addon_qty = 0; 
                 ?>
-                <div class="addonQuantity" id="addon-value-{{ $addon->id }}">{{ $addon_qty }}</div>
+                <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
               </td>
               <td>
                 <button type="button" class="removeAddon" id="{{$addon->id}}-{{ $item->id }}">

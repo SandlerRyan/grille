@@ -74,7 +74,7 @@ $(".addAddon").click(function(){
         var data = JSON.parse(data); 
         if (data.validated == true) {
           // update counter
-          containerID = '#addon-value-' + addon_id;
+          containerID = '#value-' + addon_id + '-' + item_id;
           var qty = $(containerID).text();
           $(containerID).text(parseInt(qty) + 1);
           // update cart footer
@@ -99,7 +99,7 @@ $(".removeAddon").click(function(){
       type: 'get',
       success: function(data){
           // update counter
-          containerID = "#addon-value-" + addon_id;
+          containerID = "#value-" + addon_id + '-' + item_id;
           var qty = $(containerID).text();
           if (qty > 0) {
             $(containerID).text(parseInt(qty) - 1);  

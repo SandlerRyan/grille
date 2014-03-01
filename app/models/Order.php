@@ -9,7 +9,7 @@
 
     	public function item_orders ()
     	{
-    		return $this->belongsToMany('Item','item_orders');
+    		return $this->belongsToMany('Item','item_orders')->withPivot('quantity','id');
     	}
 
         public function grille ()

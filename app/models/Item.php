@@ -16,7 +16,7 @@
 
         public function order ()
         {
-            return $this->belongsToMany('Order', 'item_orders');
+            return $this->belongsToMany('Order', 'item_orders')->withPivot('id','quantity');
         }
 
         public function addon ()

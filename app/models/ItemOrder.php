@@ -6,6 +6,6 @@
 
     	public function addons()
     	{
-    		return $this->belongsToMany('Addon','addon_item_orders');
+    		return $this->belongsToMany('Addon','addon_item_orders')->withPivot('quantity');
     	}
     }
