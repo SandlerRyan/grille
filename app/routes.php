@@ -42,10 +42,10 @@ Route::get('/increment/{id}', 'CartController@increment');
 Route::get('/decrement/{id}', 'CartController@decrement');
 
 // Route called by ajax to add an addon and associate it with an item
-Route::get('/increment_addon/{item_id}/{addon_id}', 'CartController@increment_addon');
+Route::get('/increment_addon/{addon_id}/{item_id}', 'CartController@increment_addon');
 
 // Route called by ajax to remove an addon
-Route::get('/decrement_addon/{item_id}/{addon_id}', 'CartController@decrement_addon');
+Route::get('/decrement_addon/{addon_id}/{item_id}', 'CartController@decrement_addon');
 
 // Route called by ajax to empty a cart
 Route::get('/empty_cart', 'CartController@empty_cart');

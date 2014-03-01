@@ -42,7 +42,7 @@ class OrderController extends \BaseController {
         $errors = Session::get('message');
 
         // if cart is not empty, get the total
-        $total = Cart::total();
+        $total = Cart::total_with_addons();
         if ($total == 0)
         {
             return Redirect::to('/order/create/')->with('message', 
@@ -119,7 +119,7 @@ class OrderController extends \BaseController {
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
         $order->user_id = Session::get('user')->id;
         $order->grille_id = $this->GRILLE_ID;
-        $order->cost = Cart::total();
+        $order->cost = Cart::total_with_addons();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
         $order->save();
@@ -134,6 +134,12 @@ class OrderController extends \BaseController {
             $item_order->quantity = $item->quantity;
             $item_order->notes = $item->notes;
             $item_order->save();
+
+            // get the addons and save them to addon_item_orders join table
+            foreach($item->addons as $addon)
+            {
+                $addon_order = new AddonItemOrder();
+            }
 
         }
         // put all the order info into one nice object to pass to the view

@@ -8,12 +8,11 @@ $(".addItem").click(function(){
       success: function(data){
           //update counter
           containerId = "#value-" + id;
-          value = $(containerId).val();
-          $(containerId).val(parseInt(value) + 1);
-          //update cart
+          var qty = $(containerId).text();
+          $(containerId).text(parseInt(qty) + 1);
+          //update cart footer
           var data = JSON.parse(data);
-          var total = data.cart;
-          var total =  "$" + total;
+          var total = "$" + data.cart;
           $("#totalPrice").html(total);
           $(SUBMIT_BUTTON).removeAttr('disabled');
       },
@@ -32,12 +31,13 @@ $(".removeItem").click(function(){
       url: url,
       type: "get",
       success: function(data){
+          // update counter
           containerId = "#value-" + id;
-          value = $(containerId).val();
-          if (value > 0) {
-            $(containerId).val(parseInt(value) - 1);  
+          var qty = $(containerId).text();
+          if (qty > 0) {
+            $(containerId).text(parseInt(qty) - 1);  
           } else {
-            $(containerId).val(0);  
+            $(containerId).text(0);  
           }
           //update cart and gray out checkout button if total is zero
           var data = JSON.parse(data);
@@ -48,6 +48,8 @@ $(".removeItem").click(function(){
           var total =  "$" + total;
           $("#totalPrice").html(total);
 
+          //decrement any addons that have been removed by item removal
+          check_addons(id);
       },
       error: function(){
           alert("failure");
@@ -57,7 +59,68 @@ $(".removeItem").click(function(){
   });
 })
 
-  // Ajax call to clear cart and zero out item totals
+// Ajax call to add an addon
+$(".addAddon").click(function(){
+  var info = this.id.split("-");
+  var addon_id = info[0];
+  var item_id = info[1];
+  $.ajax({
+      url: '/increment_addon/' + addon_id + '/' + item_id,
+      type: 'get',
+      success: function(data){
+        // if there are fewer items than the addon you're trying to add
+        // the back end will return success but will not update the cart, 
+        // so do not update counters
+        var data = JSON.parse(data); 
+        if (data.validated == true) {
+          // update counter
+          containerID = '#addon-value-' + addon_id;
+          var qty = $(containerID).text();
+          $(containerID).text(parseInt(qty) + 1);
+          // update cart footer
+          var total = '$' + data.cart;
+          $("#totalPrice").html(total);
+        }
+      },
+      error:function(){
+        alert("failure");
+        $("#result").html('There was an error during submission');
+      }
+  });
+});
+
+// Ajax call to remove an addon
+$(".removeAddon").click(function(){
+  var info = this.id.split("-");
+  var addon_id = info[0];
+  var item_id = info[1];
+  $.ajax({
+      url: '/decrement_addon/' + addon_id + '/' + item_id,
+      type: 'get',
+      success: function(data){
+          // update counter
+          containerID = "#addon-value-" + addon_id;
+          var qty = $(containerID).text();
+          if (qty > 0) {
+            $(containerID).text(parseInt(qty) - 1);  
+          } else {
+            $(containerID).text(0);  
+          }
+          //update cart and gray out checkout button if total is zero
+          var data = JSON.parse(data);
+          var total = data.cart;
+          var total =  "$" + total;
+          $("#totalPrice").html(total);
+
+      },
+      error: function(){
+          alert("failure");
+          $("#result").html('There was an error during submission');
+      }
+  });
+})
+
+// Ajax call to clear cart and zero out item totals
 $("#clearCart").click(function() {
   var url = "/empty_cart";
   $.ajax({
@@ -70,9 +133,12 @@ $("#clearCart").click(function() {
         var total =  "$" + total;
         $("#totalPrice").html(total);
         
-        // clear all inputs without having to refresh the page
+        // clear all quantity values without having to refresh the page
         $(".itemQuantity").each(function(i, obj){
-          $(obj).val(0);
+          $(obj).text(0);
+        })
+        $(".addonQuantity").each(function(i, obj){
+          $(obj).text(0);
         })
         // disable checkout button
         $(SUBMIT_BUTTON).attr('disabled','disabled');
@@ -82,3 +148,27 @@ $("#clearCart").click(function() {
     }
   });
 })
+
+// Called when an item is decremented to ensure that all that items
+// addons do not have quantities greater than the item
+// (backend deduction of excess items is handled by the decrement function)
+function check_addons(item_id) {
+  var item_qty = parseInt($('#value-' + item_id).text());
+
+  // select all addons belonging to the item
+  var item_addons = $("." + item_id).find(".addonQuantity");
+  // iterate through the addons
+  item_addons.each(function(i, obj){
+    var addon_qty = parseInt($(obj).text());
+
+    // set any excess addon quantities equal to item quantity
+    if (addon_qty > item_qty){
+      $(obj).text(String(item_qty));
+    }
+  });
+}
+
+
+
+
+

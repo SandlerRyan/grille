@@ -31,17 +31,42 @@
         <th width="50">Price</th>
       </tr>
     @foreach($items as $item)
-    <tr>
-
+    <?php $this_item = Cart::find($item->id);
+          $qty = ($this_item ? $this_item->quantity : 0); ?> 
+    <tr class="{{ $item->id }}">
       <td>
     	 <b>{{{ $item->name }}}</b> <br/>
        {{{ $item->description}}}
       @if($item->addon != '[]')
         <div><i>Addons: </i>
-          @foreach($item->addon as $addon)
-            {{{ $addon->name }}}
-            {{{ $addon->price }}}
-          @endforeach
+          <table>
+            @foreach($item->addon as $addon)
+            <tr>
+              <td>
+              {{{ $addon->name }}}
+              {{{ $addon->price }}}
+              </td>
+              <td>
+                <button type="button" class="addAddon" id="{{$addon->id}}-{{ $item->id }}">
+                  <font size="2"> + </font></button>
+              </td>
+              <td>
+                <?php 
+                  if ($this_item){
+                  $this_addon = Cart::find_addon($addon->id, $this_item);
+                  $addon_qty = ($this_addon ? $this_addon->quantity : 0);
+                  }
+                  else $addon_qty = 0; 
+                ?>
+                <div class="addonQuantity" id="addon-value-{{ $addon->id }}">{{ $addon_qty }}</div>
+              </td>
+              <td>
+                <button type="button" class="removeAddon" id="{{$addon->id}}-{{ $item->id }}">
+                  <font size="2"> - </font></button>
+              </td>
+            </tr>
+            @endforeach
+        </table>
         </div>
       @else
       <div></div>
@@ -49,22 +74,15 @@
       </td>
 
       <td>
-        <button type="button" class="addItem" id="{{{$item->id}}}"> + </button>
-        <?php $qty = Cart::find($item->id);
-          if ($qty) {
-            $qty = $qty->quantity;
-          } else {
-            $qty = 0;
-          }
-        ?> 
+        <button type="button" class="addItem" id="{{ $item->id }}"> + </button>
       </td>
 
       <td>
-        <input type="text" size="1" class="itemQuantity" id="value-{{$item->id}}" value="{{{ $qty }}}" />
+        <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
       </td>
       
       <td>
-        <button type="button" class="removeItem" id="{{{$item->id}}}"> - </button>
+        <button type="button" class="removeItem" id="{{ $item->id }}"> - </button>
   	  </td>
 
       <td>
@@ -105,7 +123,6 @@ $(document).ready(function () {
   // remove dollar sign from total
   var total = $('#totalPrice').text().substr(2);
   if (parseInt(total) != 0) {
-    console.log('enabled checkout');
     $(SUBMIT_BUTTON).removeAttr('disabled');
   }
 });
@@ -113,7 +130,6 @@ $(document).ready(function () {
 
 // enable the checkout button whenver there are items in the cart
  $(SUBMIT_BUTTON).click(function () {
-    console.log("clicked");
     $(this).attr('disabled', 'disabled');
     window.location = '/checkout';
  });
@@ -140,4 +156,3 @@ $(window).scroll(function() {
 
 
 </script>
-
