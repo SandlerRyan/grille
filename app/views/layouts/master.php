@@ -44,25 +44,30 @@
 
 
       <div class="row">
-
         <div class="large-12 columns">
-
           <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
         </div>
-       </div>
+      </div>
 
       <nav class="row">
         <div class="large-12 columns">
           <!-- <h2>Eliot Grille</h2> -->
-          <ul class="button-group radius even-2">
-            <li><a class="button" href="/">Home</a></li>
-            <li><a class="button" href="/order/create">Menu</a></li>
+          <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')){ ?>
+            <ul class="button-group radius even-3">
+              <li><a class="button" href="/">Home</a></li>
+              <li><a class="button" href="/order/create">Menu</a></li>
+              <li><a class="button" href="/admin">Staff</a></li>
 <!--             <li><a class="button" href="#">Russian Blue</a></li>
             <li><a class="button" href="#">Scottish Fold</a></li> -->
           </ul>
+          <?php }else{ ?>
+            <ul class="button-group radius even-2">
+              <li><a class="button" href="/">Home</a></li>
+              <li><a class="button" href="/order/create">Menu</a></li>
+            </ul>
+          <?php } ?>
         </div>
       </nav>
-    </div>
       
     <!-- End Header and Nav -->
 
@@ -80,7 +85,11 @@
               <ul class="inline-list right">
                 <li><a href="/">Home</a></li>
                 <li><a href="/order/create">Menu</a></li>
+                <?php if(Session::has('user')){ ?>
                 <li><a href="/logout">Log out</a></li>
+                <?php }else{ ?>
+                <li><a href="/login">Login</a></li>
+                <?php } ?>
               </ul>
             </div>
           </div>
