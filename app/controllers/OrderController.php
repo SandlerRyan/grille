@@ -1,7 +1,7 @@
 <?php
 
 class OrderController extends \BaseController {
-
+    protected $GRILLE_ID = 1;
     /**
      * Show the form for creating a new order.
      *
@@ -26,78 +26,6 @@ class OrderController extends \BaseController {
             ['menu' => $menu, 'err_messages' => $errors]);
     }
 
-    /**
-    * Increment the quantity of a cart item,
-    * or add it if not yet in cart
-    * Called by ajax when "+" sign is pressed
-    */
-    public function increment($id)
-    {
-        
-        $item = Item::findOrFail($id);
-        // add necessary fields
-        $item['quantity'] = 1;
-        $item['notes'] = "";
-        $item['type'] = 'item';
-        //turn json into a php array
-        $item = json_decode($item,true);
-        // insert will add a new item if not already in cart, 
-        // or increment item if it exists already
-        Cart::insert($item);
-
-        $total = Cart::total();
-        $response_array['status'] = 'success';    
-        $response_array['cart'] = number_format(Cart::total(), 2);    
-        return json_encode($response_array);
-
-    }
-
-    /**
-    * Decrement the quantity of a cart item,
-    * or remove it if only 1 left
-    * Called by ajax when "-" sign is pressed
-    */
-    public function decrement($id)
-    {
-        $item = Cart::find($id);
-        // check if item exists; if quantity is already zero, do nothing
-        if ($item)
-            //if quantity is 1, remove item
-            if ($item->quantity == 1)
-            {
-                Cart::remove($item->identifier);
-            }
-            else
-            {
-                $item->quantity -- ;
-            }
-        $response_array['status'] = 'success';      
-        $response_array['cart'] = number_format(Cart::total(), 2);    
-        return json_encode($response_array);
-    }
-
-    /**
-    * Empty the shopping cart when user presses "clear"
-    * Called by ajax
-    */
-    public function empty_cart()
-    {
-        Cart::destroy();
-        $response_array['status'] = 'success';      
-        $response_array['cart'] = number_format(Cart::total(), 2);    
-        return json_encode($response_array);   
-    }
-
-    /**
-    * Add to the session if user specifies anything from the checkout page
-    * */
-    public function add_note($id, $note)
-    {
-        $item = Cart::find($id);
-        $item->notes = $note;
-        $response_array['status'] = 'success';
-        return json_encode($response_array);
-    }
 
     /**
     * Displays checkout page with order summary and check is use is logged in
@@ -108,10 +36,13 @@ class OrderController extends \BaseController {
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
+
+        $err_messages = Session::get('message');
+
         $errors = Session::get('message');
 
         // if cart is not empty, get the total
-        $total = Cart::total();
+        $total = Cart::total_with_addons();
         if ($total == 0)
         {
             return Redirect::to('/order/create/')->with('message', 
@@ -120,6 +51,16 @@ class OrderController extends \BaseController {
 
         // TODO: more error checking on the exact value of items
         $this->layout->content = View::make('checkout.index', ['err_messages' => $errors, 'user'=>Session::get('user')]);
+    }
+
+    //Function to Make POST Requests with Data  
+    protected function sendPostData($url, $post)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+        return curl_exec($ch);
     }
 
     //User has decided to Pay Later.
@@ -141,9 +82,9 @@ class OrderController extends \BaseController {
 
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
-        $data = array("access_token" => $access_token, "amount" => 0.02, 
-            "phone" => "7734901404", "note" => "grille!!! ANOTHER TEST");
-        $response = sendPostData($url, $data);
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+            "phone" => "7734901404", "note" => "malan example");
+        $response = $this->sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
         $response_array['message'] = $response;
@@ -186,8 +127,9 @@ class OrderController extends \BaseController {
         // create the new order
         $order = new Order();
         // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
-        $order->user_id = Session::get('user')[0]->id;
-        $order->cost = Cart::total();
+        $order->user_id = Session::get('user')->id;
+        $order->grille_id = $this->GRILLE_ID;
+        $order->cost = Cart::total_with_addons();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;
         $order->save();
@@ -203,23 +145,23 @@ class OrderController extends \BaseController {
             $item_order->notes = $item->notes;
             $item_order->save();
 
+            // get the addons and save them to addon_item_orders join table
+            foreach($item->addons as $addon)
+            {
+                $addon_order = new AddonItemOrder();
+                $addon_order->item_order_id = $item_order->id;
+                $addon_order->addon_id = $addon->id;
+                $addon_order->quantity = $addon->quantity;
+                $addon_order->save();
+            }
+
         }
         // put all the order info into one nice object to pass to the view
-        $order_info = Order::with('item_orders')->get()->find($order->id);
+        $order_info = Order::with('item_orders')->find($order->id);
         // empty the cart
         Cart::destroy();
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
     }
  
-}
-
-//Function to Make POST Requests with Data  
-function sendPostData($url, $post)
-{
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
-    return curl_exec($ch);
 }

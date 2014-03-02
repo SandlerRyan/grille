@@ -18,8 +18,6 @@ class CreateGrilleTable extends Migration {
 			$table->string('name');
 			$table->bigInteger('phone_number');
 
-			$table->integer('manager_id')->unsigned();
-			$table->foreign('manager_id')->references('id')->on('users');
 			$table->boolean('open_now');
 			$table->timestamps();
          });

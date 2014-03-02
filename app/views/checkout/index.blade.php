@@ -29,11 +29,20 @@
 			<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
 		</td>
 	</tr>
+		@if($item->addons)
+		<tr>
+			@foreach($item->addons as $addon)
+				<td> + {{$addon->name}}</td>
+				<td> $ {{$addon->price}}</td>
+				<td>{{$addon->quantity}}</td>
+			@endforeach
+		</tr>
+		@endif
 	@endforeach
 	<tr>
 		<td></td>
 		<td><h5>Total:</h5></td>
-		<td><h5 id="totalPrice">${{Cart::total()}}</h5></td>
+		<td><h5 id="totalPrice">${{number_format(Cart::total_with_addons(), 2)}}</h5></td>
 		<td></td>
 	</tr>
 	</table>

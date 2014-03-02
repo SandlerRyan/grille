@@ -8,10 +8,7 @@ class UserController extends \BaseController {
         // if user is already logged in, redirect to index.php
         if (Session::has('user'))
         {
-            //$protocol = (Request::secure()) ? "https" : "http";
-            //$host  = Request::server("HTTP_HOST");
-            //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-            //return Redirect::to('{$protocol}://{$host}{$path}.php');
+            // TODO: redirect to most recent page
             return Redirect::to('/checkout');  
         }
 
@@ -27,13 +24,7 @@ class UserController extends \BaseController {
 
         if (Session::has('user'))
             Session::forget('user');
-
-        // redirect user to checkout
-        //$protocol = (Request::secure()) ? "https" : "http";
-        //$host  = Request::server("HTTP_HOST");
-        //$path = rtrim(dirname(Request::server("PHP_SELF")), "/\\");
-        //return Redirect::to('{$protocol}://{$host}{$path}.php');
-        return Redirect::to('/checkout');  
+        return Redirect::to('/');  
     }
 
     public function return_to()
@@ -43,29 +34,57 @@ class UserController extends \BaseController {
         require_once(app_path().'/config/id.php');
 
         // remember which user, if any, logged in
-        $userCS50 = CS50::getUser(RETURN_TO);
-        if ($userCS50 !== false)
-            
-            //Check if User has signed in before. If not, create the user
-            $user = User::where('cs50_id', $userCS50['identity'])->get();
-            if ($user != "[]") {
-                Session::put("user", $user);
-            } else {
-                //Create User in the database
-                $name = explode(" ", $userCS50['fullname']);
-                $first_name = $name[0];
-                $user = new User();
-                $user->cs50_id= $userCS50['identity'];
-                $user->name= $userCS50['fullname'];
-                $user->email= $userCS50['email'];
-                $user->preferred_name = $first_name;
-                $user->privileges = "user";
-                $user->save();
+        $current_user = CS50::getUser(RETURN_TO);
 
-                Session::put("user", $user);
-            }
-                
-        return Redirect::to('/checkout');
+        //check if returning user
+        $input = array('cs50_id' => $current_user["identity"]);
+        $rules = array('cs50_id' => 'exists:users,cs50_id');
+
+        $validator = Validator::make($input, $rules);
+
+        //if doesn't exist, take user to edit page
+        if ($validator->fails())
+        {
+            //parse first name
+            $full = $current_user["fullname"];
+            $split = explode(' ',trim($full));
+            $first = $split[0];
+
+            $user = new User();
+            $user->cs50_id = $current_user["identity"];
+            $user->name = $current_user["fullname"];
+            $user->preferred_name = $first;
+            $user->phone_number = "";
+            $user->email = $current_user["email"];
+            $user-> save();
+
+            return View::make('users.edit')->with('user', $user);
+        }
+
+        //else, redirect to checkout page
+        else
+        {
+            $user = User::where('cs50_id', $current_user['identity'])->get()[0];
+            Session::put('user', $user);
+            return Redirect::to('/checkout');
+        }   
+    }
+
+
+ 
+    public function edit_user($id)
+    {
+        // Input doesn't return zero for unchecked boxes, so change these to zero
+        $hours_notification = (Input::get('hours_notification') ? 1 : 0);
+        $deals_notification = (Input::get('deals_notification') ? 1 : 0);
+        //update table with user's preferred name and phone number
+        DB::table('users')->where('id',$id)->update(array('preferred_name' => Input::get('preferred_name'),
+                                                            'phone_number' => Input::get('phone_number'),
+                                                            'hours_notification' => $hours_notification,
+                                                            'deals_notification' => $deals_notification));
+        Session::put('user', User::findorfail($id));
+        // TODO: redirect to most recent page
+        return Redirect::to('/checkout');                                      
     }
 
     /* adds user's phone number to the database
@@ -73,7 +92,7 @@ class UserController extends \BaseController {
     */
     public function add_phone($phone)
     {
-        $user = Session::get('user')[0];
+        $user = Session::get('user');
         if (!$user){
             return Redirect::to('/checkout')->with('message','Could not add phone number. User not logged in');
         }
