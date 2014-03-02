@@ -30,6 +30,9 @@ Route::get('/add_phone/{phone}', 'UserController@add_phone');
 //post to store updated user info
 Route::get('/edit_user/{id}', 'UserController@edit_user');
 
+//post to store updated user info
+Route::get('/edit_test/', 'UserController@edit_test');
+
 
 /**
 * CART CONTROLLER ROUTES
@@ -54,7 +57,6 @@ Route::get('/empty_cart', 'CartController@empty_cart');
 Route::get('/add_note/{id}/{note}', 'CartController@add_note');
 
 
-
 /**
 * ORDER CONTROLLER ROUTES
 */
@@ -73,6 +75,12 @@ Route::get('/pay_later', 'OrderController@pay_later');
 //Final Step in the Ordering Process
 Route::get('/success', 'OrderController@success');
 
+//send user a text message
+Route::get('/send_sms/{phone}/{message}', 'OrderController@send_sms');
+
+//test route for ryans twilio integration
+Route::get('/order_update', 'OrderController@order_update');
+
 
 //ADMIN DASHBOARD ROUTES
 Route::get('/admin', 'AdminController@dashboard');
@@ -82,6 +90,7 @@ Route::post('/get_new_orders', 'AdminController@get_new_orders');
 Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
 Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
 Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
-
+Route::get('/alert_deals', 'AdminController@alert_deals');
+Route::get('/alert_hours', 'AdminController@alert_hours');
 
 Route::controller('/', 'BaseController');

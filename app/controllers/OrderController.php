@@ -156,12 +156,55 @@ class OrderController extends \BaseController {
             }
 
         }
+
         // put all the order info into one nice object to pass to the view
         $order_info = Order::with('item_orders')->find($order->id);
+
         // empty the cart
         Cart::destroy();
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
+
+
+    }
+
+    public function send_sms($phone, $message)
+    {
+        // this line loads the library 
+
+        require(app_path().'/config/twilio-php/Services/Twilio.php');
+         
+        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
+        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
+        $client = new Services_Twilio($account_sid, $auth_token); 
+         
+        $client->account->messages->create(array( 
+            'To' => $phone, 
+            'From' => "+18432716240", 
+            'Body' => $message,
+        ));
+
+        $response = "success";
+        return json_encode($response);
+    }
+
+    //put in success() function...
+    public function order_update()
+    {
+        //send a text message to user to tell them how many orders in front
+        $order_id = 1;
+        $user_id = Order::where('id', $order_id)->pluck('user_id');
+
+
+        $name = User::where('id', $user_id)->pluck('preferred_name');
+        $phone = User::where('id', $user_id)->pluck('phone_number');
+        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
+                                                ->count();
+        $message = "Hi " . $name . ", your order has been received! There are currently " .
+                    $num_orders . " orders in front of you. See you soon!";
+
+        return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
+
     }
  
 }

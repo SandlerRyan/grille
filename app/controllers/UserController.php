@@ -70,10 +70,29 @@ class UserController extends \BaseController {
         }   
     }
 
+    public function edit_test()
+    {
 
+        $user = new User();
+        $user->cs50_id = 'testetstest';
+        $user->name = "Ryan Wade Sandler";
+        $user->preferred_name = "Ryan";
+        $user->phone_number = "";
+        $user->email = "SandlerRyan@gmail.com";
+        $user-> save();
+        return View::make('users.edit')->with('user', $user);
+    }
  
     public function edit_user($id)
     {
+        //check to make sure phone number in correct format
+        $number = Input::get('phone_number');
+
+        //took pattern from http://www.w3resource.com/javascript/form/phone-no-validation.php
+        $pattern = "/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/"
+
+        if preg_match ($pattern, $number) 
+        {
         // Input doesn't return zero for unchecked boxes, so change these to zero
         $hours_notification = (Input::get('hours_notification') ? 1 : 0);
         $deals_notification = (Input::get('deals_notification') ? 1 : 0);
@@ -84,7 +103,10 @@ class UserController extends \BaseController {
                                                             'deals_notification' => $deals_notification));
         Session::put('user', User::findorfail($id));
         // TODO: redirect to most recent page
-        return Redirect::to('/checkout');                                      
+        return Redirect::to('/checkout');    
+
+        }
+                                          
     }
 
     /* adds user's phone number to the database
@@ -103,6 +125,8 @@ class UserController extends \BaseController {
         $response['status'] = 'success';
         return json_encode($response);
     }
+
+
 }
 
 
