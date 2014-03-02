@@ -8,9 +8,11 @@ class CartController extends \BaseController {
     * Called by ajax when "+" sign is pressed
     */
     public function increment($id)
-    {
-        
+    {   
         $item = Item::findOrFail($id);
+        // if(!$item->available){
+        //     return json_encode(array('redirect','/order/create'));
+        // }
         // add necessary fields
         $item['quantity'] = 1;
         $item['notes'] = "";
@@ -25,7 +27,6 @@ class CartController extends \BaseController {
         $response_array['status'] = 'success';    
         $response_array['cart'] = number_format(Cart::total_with_addons(), 2);    
         return json_encode($response_array);
-
     }
 
     /**
@@ -38,22 +39,28 @@ class CartController extends \BaseController {
         $item = Cart::find($id);
         // check if item exists; if quantity is already zero, do nothing
         if ($item)
-            //if quantity is 1, remove item
+        {
+            // if quantity is 1, remove item
             if ($item->quantity == 1) {
                 Cart::remove($item->identifier);
             }
-            else {
-                $item->quantity -- ;
+        }
+        else 
+        {
+            // if(!$item->available){
+            //     return json_encode(array('redirect','/order/create'));
+            // }
+            $item->quantity -- ;
 
-                // check the item's addons to see if there are more than the number of items;
-                // if so, decrement those addons
-                foreach(Cart::get_addons($item) as $addon)
-                {
-                    if ($addon->quantity > $item->quantity) {
-                        Cart::update_addon($addon->id, $item, 'quantity', $item->quantity);
-                    }
+            // check the item's addons to see if there are more than the number of items;
+            // if so, decrement those addons
+            foreach(Cart::get_addons($item) as $addon)
+            {
+                if ($addon->quantity > $item->quantity) {
+                    Cart::update_addon($addon->id, $item, 'quantity', $item->quantity);
                 }
             }
+        }
 
         $response_array['status'] = 'success';      
         $response_array['cart'] = number_format(Cart::total_with_addons(), 2);  
@@ -68,6 +75,10 @@ class CartController extends \BaseController {
     {
         $item = Cart::find($item_id);           // from cart in session
         $addon = Addon::findOrFail($addon_id);  // from database
+        if(!$addon->available){
+            return Redirect::to('/order/create')->with('message', 
+            'Sorry, this item just went out of stock!');
+        }
         // if item doesn't exist, return success 
         // but don't validate so nothing will change
         if (!$item){ return json_encode(array('status' => 'success', 'validated' => 'false')); }
@@ -109,6 +120,10 @@ class CartController extends \BaseController {
                     Cart::remove_addon($addon_id, $item);
                 }
                 else {
+                    if(!$addon->available){
+                        return Redirect::to('/order/create')->with('message', 
+                            'Sorry, this item just went out of stock!');
+                    }
                     Cart::update_addon($addon_id, $item, 'quantity', $addon->quantity --);
                 }
             }

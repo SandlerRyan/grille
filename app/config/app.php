@@ -107,6 +107,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Moltin\Cart\CartServiceProvider',
+		// 'GrilleCartServiceProvider',
 		'Aheissenberger\Foundation\FoundationServiceProvider',
 
 	),
@@ -176,6 +177,7 @@ return array(
 		'View'            => 'Illuminate\Support\Facades\View',
 
 		'Cart' 			  => 'Moltin\Cart\Facade',
+		// 'GrilleCart'	  => 'Moltin\Cart\Facade',
 
 	),
 

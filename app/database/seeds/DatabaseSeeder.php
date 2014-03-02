@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder {
 
 		$this->call('AddonItemTableSeeder');
 		$this->command->info('Addon_items Table Seeded!');
+
+		$this->call('InventoryTableSeeder');
+		$this->command->info('Inventories Table Seeded!');
 	}
 
 }
@@ -43,6 +46,7 @@ class UnseedTables extends Seeder
 {
 	public function run()
 	{
+		DB::table('inventories')->delete();
 		DB::table('addon_item_orders')->delete();
 		DB::table('item_orders')->delete();
 		DB::table('orders')->delete();
@@ -229,7 +233,7 @@ class ItemTableSeeder extends Seeder
 							'category_id' => 1,
 							'grille_id' => 1,
 							'description' => 'American and swiss on marbled or rye',
-							'available' => 1
+							'available' => 0
 							));
 		Item::create(array(	'id' => 4,
 							'name' => 'The Doug Meltin',
@@ -309,7 +313,7 @@ class ItemTableSeeder extends Seeder
 							'category_id' => 3,
 							'grille_id' => 1,
 							'description' => '',
-							'available' => 1
+							'available' => 0
 							));
 		Item::create(array(	'id' => 14,
 							'name' => 'Sweet Potato Fries',
@@ -412,7 +416,27 @@ class AddonItemTableSeeder extends Seeder
 	}
 }
 
-
+class InventoryTableSeeder extends Seeder
+{
+	public function run ()
+	{
+		Inventory::create(array(	'id' => 1,
+									'name' => 'Burgers',
+									'description' => 'Ground beef',
+									'quantity' => 50,
+									'units' => 'patties'));
+		Inventory::create(array(	'id' => 2,
+									'name' => 'Fries',
+									'description' => 'Sliced potatoes',
+									'quantity' => 15,
+									'units' => 'bags'));
+		Inventory::create(array(	'id' => 3,
+									'name' => 'Root Beer',
+									'description' => '',
+									'quantity' => 23,
+									'units' => 'Liters'));
+	}
+}
 
 
 
