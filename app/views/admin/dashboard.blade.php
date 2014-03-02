@@ -1,13 +1,105 @@
+   
+    <!-- Top Navigation Bar -->
+    <div class="sb-navbar sb-slide">
+    
+      <!-- Left Slidebar control -->
+      <div class="sb-toggle-left">
+        <div class="navicon-line"></div>
+        <div class="navicon-line"></div>
+        <div class="navicon-line"></div>
+      </div>
+          
+    </div>
+    <!-- Left Slidebar -->
+    <div class="sb-slidebar sb-left"> 
+
+      <!-- Lists in Slidebars -->
+      <ul class="sb-menu">
+
+
+        @foreach($items as $item)
+          <li>
+
+            @if ($item->available) 
+              {{ $item->name}} 
+
+                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
+                    <input type="checkbox" />
+                    <span>
+                    Available?
+                      <span>No</span>
+                      <span>Yes</span>
+                    </span>
+
+                    <a></a>
+                  </label>
+
+
+            @else
+              {{ $item->name }} 
+
+
+                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
+                    <input type="checkbox" />
+                    <span>
+                    Available?
+                      <span>No</span>
+                      <span>Yes</span>
+                    </span>
+
+                    <a></a>
+                  </label>
+
+            @endif
+
+          </li>
+      
+        @endforeach
+
+      </ul>
+
+      
+    </div><!-- /.sb-slidebar .sb-left -->
+
+
 <div class="row">
-This is admin dashboard
-<br/>
+
 
 <div id="show_orders">
 
 
 </div>
 
-@foreach($items as $item)
+
+    <div style='width: 300px; height: 300px; background-color: white; border: 1px solid black;float: left; margin-right: 5%; margin-bottom: 5%;' class='order' id='" + 
+      order.id + 
+      "'> 
+      <div id='orderInfo'> 
+        12345
+        <div id='order_user'> 
+          Sample User
+        </div>
+      </div> 
+      <div id='items'>
+
+        Item 1 <br/> 
+        This is a description
+
+        Item 2 <br/> 
+        This is a description
+
+        Item 3 <br/> 
+        This is a description
+
+      </div>
+      <a href='javascript:void(0)' class='completed' id="1234">Mark As Complete</a><br/>
+      <a href='javascript:void(0)' class='refund' id="1234">Refund Order</a> 
+
+    </div>
+
+
+
+<!-- @foreach($items as $item)
 	
 	@if ($item->available) 
 		{{ $item->name}} - available 
@@ -22,7 +114,8 @@ This is admin dashboard
 		</a>
 	@endif
 	<br/>
-@endforeach
+@endforeach -->
+
 </div>
 
 <script>
