@@ -1,3 +1,9 @@
+<?php 
+  // $item = array('id'=>1, 'name'=>'The Standard', 'quantity'=>1, 'price'=> 3.5, 'addons'=>array());
+  // GrilleCart::insert($item);
+  // var_dump(GrilleCart::find(1));
+  
+?>
 <!-- Global header/footer -->
 <div id="s">
   <div class="row">
@@ -31,65 +37,66 @@
         <th width="50">Price</th>
       </tr>
     @foreach($items as $item)
-    <?php $this_item = Cart::find($item->id);
-          $qty = ($this_item ? $this_item->quantity : 0); ?> 
+    <?php //get item quantity
+        $this_item = Cart::find($item->id);
+        $qty = ($this_item ? $this_item->quantity : 0); ?> 
+    
     <tr class="{{ $item->id }}">
       <td>
-    	 <b>{{{ $item->name }}}</b> <br/>
-       {{{ $item->description}}}
-      @if($item->addon != '[]')
-        <div><i>Addons: </i>
-          <table>
-            @foreach($item->addon as $addon)
-            <tr>
-              <td>
-              {{{ $addon->name }}}
-              {{{ $addon->price }}}
-              </td>
-              <td>
-                <button type="button" class="addAddon" id="{{$addon->id}}-{{ $item->id }}">
-                  <font size="2"> + </font></button>
-              </td>
-              <td>
-                <?php 
-                  if ($this_item){
-                  $this_addon = Cart::find_addon($addon->id, $this_item);
-                  $addon_qty = ($this_addon ? $this_addon->quantity : 0);
-                  }
-                  else $addon_qty = 0; 
-                ?>
-                <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
-              </td>
-              <td>
-                <button type="button" class="removeAddon" id="{{$addon->id}}-{{ $item->id }}">
-                  <font size="2"> - </font></button>
-              </td>
-            </tr>
-            @endforeach
-        </table>
-        </div>
-      @else
-      <div></div>
-      @endif
-      </td>
-
-      <td>
-        <button type="button" class="addItem" id="{{ $item->id }}"> + </button>
-      </td>
-
-      <td>
-        <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
-      </td>
-      
-      <td>
-        <button type="button" class="removeItem" id="{{ $item->id }}"> - </button>
-  	  </td>
-
-      <td>
-    	 ${{{ $item->price}}}
-      </td>
-
-    </tr>
+          <b>{{{ $item->name }}}</b> 
+          @if(!$item->available) <i>(unavailable)</i>@endif
+          <br/>
+          {{{ $item->description}}}
+          @if($item->addon != '[]')
+            <div><i>Addons: </i>
+              <table>
+                @foreach($item->addon as $addon)
+                <tr>
+                  <td>
+                  {{{ $addon->name }}}
+                  {{{ $addon->price }}}
+                  </td>
+                  <td>
+                    <button type="button" class="addAddon" id="{{$addon->id}}-{{ $item->id }}"
+                      @if(!$item->available || !$addon->available) disabled @endif>+</button>
+                  </td>
+                  <td>
+                    <?php 
+                      if ($this_item){
+                      $this_addon = Cart::find_addon($addon->id, $this_item);
+                      $addon_qty = ($this_addon ? $this_addon->quantity : 0);
+                      }
+                      else $addon_qty = 0; 
+                    ?>
+                    <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
+                  </td>
+                  <td>
+                    <button type="button" class="removeAddon" id="{{$addon->id}}-{{ $item->id }}"
+                      @if(!$item->available || !$addon->available) disabled @endif>-</button>
+                  </td>
+                </tr>
+                @endforeach
+            </table>
+            </div>
+          @else
+          <div></div>
+          @endif
+          </td>
+          <td>
+            <button type="button" class="addItem" id="{{ $item->id }}"
+              @if(!$item->available) disabled @endif> + </button>
+          </td>
+          <td>
+            <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
+          </td>          
+          <td>
+            <button type="button" class="removeItem" id="{{ $item->id }}" 
+              @if(!$item->available) disabled @endif> - </button>
+      	  </td>
+          <td>
+        	 ${{{ $item->price}}}
+          </td>
+        </tr>
       @endforeach
     </table>
   @endforeach

@@ -6,12 +6,16 @@ $(".addItem").click(function(){
       url: url,
       type: "get",
       success: function(data){
+          var data = JSON.parse(data);
+          // if (data.redirect) {
+          //   // data.redirect contains the string URL to redirect to
+          //   window.lc = data.redirect;
+          // }
           //update counter
           containerId = "#value-" + id;
           var qty = $(containerId).text();
           $(containerId).text(parseInt(qty) + 1);
           //update cart footer
-          var data = JSON.parse(data);
           var total = "$" + data.cart;
           $("#totalPrice").html(total);
           $(SUBMIT_BUTTON).removeAttr('disabled');
