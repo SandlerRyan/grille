@@ -1,14 +1,19 @@
-<?php 
-  $item = array('id'=>1, 'name'=>'The Standard', 'quantity'=>2, 'price'=> 3.5, 'addons'=>array());
-  Cart::insert($item);
-  $item = Cart::find(1);
-  $addon = array('id'=>1, 'name'=>'bacon', 'quantity'=>2, 'price'=>1.25, 'addons'=>array());
-  Cart::insert_addon($addon, $item);
+<?php
 
-  Cart::update_addon($addon['id'], $item, 'quantity', 1);
-  foreach($item->addons as $addon) {
-    var_dump($addon);
+$orders = Order::with('item_orders')->where('fulfilled', 0)->get();
+foreach($orders as $order){
+    // add user info
+    $order->user;
+}
+foreach($orders as $order){
+  foreach($order->item_orders as $item){
+    $item_addons = ItemOrder::find($item->pivot->id)->addons->toArray();
+    $item['addons'] = $item_addons;
   }
+}
+$response_array['status'] = 'success';    
+$response_array['cart'] =  json_decode($orders);
+echo json_encode($response_array);
 ?>
 
 <!-- Global header/footer -->
@@ -167,6 +172,4 @@ $(window).scroll(function() {
     stickyNav();  
 	});  
 });  
-
-
 </script>

@@ -23,10 +23,6 @@ class AdminController extends \AdminBaseController {
 
     }
 
-    public function inventory() {
-        $this->layout->content = View::make('admin.inventory');        
-    }
-
 
     protected function sendPostData($url, $post)
     {
@@ -74,8 +70,6 @@ class AdminController extends \AdminBaseController {
         ));
     }
 
-
-
     public function refund_order($id) {
         $order = Order::find($id);
         if ($order->venmo_id != 0) {
@@ -105,16 +99,20 @@ class AdminController extends \AdminBaseController {
     public function get_new_orders() {
         $orders = Order::with('item_orders')->where('fulfilled', 0)->get();
         foreach($orders as $order){
+            // add user info
             $order->user;
         }
-        // return json_encode($orders);
+        foreach($orders as $order){
+          foreach($order->item_orders as $item){
+            $item_addons = ItemOrder::find($item->pivot->id)->addons->toArray();
+            $item['addons'] = $item_addons;
+          }
+        }
         $response_array['status'] = 'success';    
-        $response_array['cart'] =  json_decode($orders);    
-
-        return json_encode($response_array);
-        // return $response_array;
-
+        $response_array['cart'] =  json_decode($orders);
+        return json_encode($response_array);  
     }
+    
     public function mark_as_cooked($id) {
         $order = Order::find($id);
         //alert user that order is ready
