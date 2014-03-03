@@ -81,8 +81,6 @@
         </div>
       </div>
 
-
-
       <nav class="row">
         <div class="large-12 columns">
           <!-- <h2>Eliot Grille</h2> -->
