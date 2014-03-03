@@ -172,8 +172,7 @@ class OrderController extends \BaseController {
 
 
         $name = User::where('id', $user_id)->pluck('preferred_name');
-        //$phone = User::where('id', $user_id)->pluck('phone_number');
-        $phone = "7734901404";
+        $phone = User::where('id', $user_id)->pluck('phone_number');
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
                                                 ->count();
         $message = "Hi " . $name . ", your order has been received! There are currently " .
