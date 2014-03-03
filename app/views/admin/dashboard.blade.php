@@ -118,7 +118,6 @@
 
         <div style="float:left;"><img border="0" src="/img/venmo.png" width="90px"></div>
         <div align="right"><h4>$55.0</h4></div>
-
         <br/>
 
 
@@ -181,6 +180,7 @@
 </div>
 
 <script>
+
  
  $(document).ready(function () {
     get_new_orders();
@@ -193,50 +193,103 @@
         url: "/get_new_orders",
         async: false
     }).complete(function(data){
-        
     	data = JSON.parse(data.responseText);
     	console.log(data.cart)
     	$("#show_orders").html("");
     	html = generate_html_content(data);
     	
-    	$("#show_orders").html(html);
+    	$(".clearing-thumbs").html(html);
         setTimeout(function(){get_new_orders();}, 5000);
     });
  }
+  var getTD = function(itemName) {
+    return "<td>" + itemName + "</td>";
+  }
+  var getTR = function(rowItems) {
+   return "<tr>" + rowItems + "</tr>"; 
+  }
+  var addButtons = function(order) {
+    return "<ul class='button-group'>" + 
+            "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" + 
+            "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Picked-Up</a></li>" +
+            "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button alert refund'>Refund Order</a></li>" +
+            "</ul>"
+  }
+  var AddTable = function(order) {
+    var rows = ""
+    var head = ""
+    order.item_orders.forEach(function(item) {
+        rows += getTR(getTD(item.name) + getTD(item.notes));
+    }) 
+    rows = "<tbody>" + rows + "<tbody>"
+    head =  "<thead><tr><th width='150'>Item</th><th width='150'>Description</th>" +
+            "</tr></thead>"
+    var content = head + rows;
+    return "<table>" + content + "</table>";
+  }
+
+  var addMainWrapper = function(content, orderID) {
+      return "<li><div class='large-12 columns'>" + 
+             "<div class='panel' id='" + orderID + "'>" +
+             content + 
+             "</div>" +
+             "</li></div>";
+  }
+  var addVenmoHeader= function(order) {
+    return "<div style='float:left;'><img border='0'" +
+            "src='/img/venmo.png' width='90px'></div>" +
+            "<div align='right'><h4>$" + order.cost + "</h4></div>"+
+            "<br/>" + 
+            "<h5>" + order.user.name + "</h5>" + 
+            "<h6>ID:" + order.id + "</h6>";
+  }
+  var addPickUpHeader = function(order) {
+    return "<div style='float:left;'><h4>Pick-Up</h4>" +
+            "</div>" +
+            "<div align='right'><h4>$" + order.cost + "</h4></div>"+
+            "<br/>" + 
+            "<h5>" + order.user.name + "</h5>" + 
+            "<h6>ID:" + order.id + "</h6>";
+  }
   function generate_html_content(data) {
-	htmlcontent = ""
-	itemshtml = ""
+	var htmlcontent = ""
+	var itemshtml = ""
+  var main = ""
 	data.cart.forEach(function(order) {
 
-		order.item_orders.forEach(function(item) {
-				console.log("IM HERE!")
-				itemshtml += item.name + "</br>" + item.description;
-			}) 
-		htmlcontent += 
-		"<div style='width: 300px; height: 300px; background-color: white; border: 1px solid black;float: left; margin-right: 5%; margin-bottom: 5%;' class='order' id='" + 
-			order.id + 
-			"'>" + 	
-			"<div id='orderInfo'>" + 
-				order.id + 
-				"<div id='order_user'>" +
-					order.user.name +
-				"</div>" + 
-			"</div>" +
-			"<div id='items'>" 
-				+ 
-				itemshtml
-				+
-			"</div>" +
-			"<a href='javascript:void(0)' class='completed' id='" + order.id + "'>Mark As Complete</a><br/>" + 
-			"<a href='javascript:void(0)' class='refund' id='" + order.id + "'>Refund Order</a>" + 
-
-		"</div>";
+    htmlcontent = ""
+    if(order.venmo_id != 0) {
+      htmlcontent += addVenmoHeader(order);
+    } else {
+      htmlcontent += addPickUpHeader(order);
+    }
+    htmlcontent += AddTable(order);
+    htmlcontent += addButtons(order);
+    main += addMainWrapper(htmlcontent, order.id);
 	})
 
-	return htmlcontent;
+	return main;
   }
+
+  
+$( document ).on( 'click', '.cooked', function () {
+    console.log($(this).attr('id'))
+    var url = "/mark_as_cooked/" + $(this).attr('id');
+  $.ajax({
+      url: url,
+      type: "post",
+      success: function(data){
+          // update cart
+          console.log("good")
+          $(this).html("heh");
+      },
+      error:function(){
+          alert("Sorry, something bad happened.");
+      }
+    });
+});
 	
-$( document ).on( 'click', '.completed', function () {
+$( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
     var url = "/mark_as_fulfilled/" + $(this).attr('id');
  	$.ajax({
@@ -260,10 +313,11 @@ $( document ).on( 'click', '.refund', function () {
       type: "post",
       success: function(data){
           // update cart
+
           console.log("order refunded and has been cancelled")
       },
       error:function(){
-          alert("Sorry, something bad happened.");
+          alert("Sorry, something went wrong.");
       }
     });
 });

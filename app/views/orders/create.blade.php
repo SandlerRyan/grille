@@ -1,9 +1,16 @@
 <?php 
-  // $item = array('id'=>1, 'name'=>'The Standard', 'quantity'=>1, 'price'=> 3.5, 'addons'=>array());
-  // GrilleCart::insert($item);
-  // var_dump(GrilleCart::find(1));
-  
+  $item = array('id'=>1, 'name'=>'The Standard', 'quantity'=>2, 'price'=> 3.5, 'addons'=>array());
+  Cart::insert($item);
+  $item = Cart::find(1);
+  $addon = array('id'=>1, 'name'=>'bacon', 'quantity'=>2, 'price'=>1.25, 'addons'=>array());
+  Cart::insert_addon($addon, $item);
+
+  Cart::update_addon($addon['id'], $item, 'quantity', 1);
+  foreach($item->addons as $addon) {
+    var_dump($addon);
+  }
 ?>
+
 <!-- Global header/footer -->
 <div id="s">
   <div class="row">
@@ -57,7 +64,7 @@
                   {{{ $addon->price }}}
                   </td>
                   <td>
-                    <button type="button" class="addAddon" id="{{$addon->id}}-{{ $item->id }}"
+                    <button type="button" class="addAddon" id="add-{{$addon->id}}-{{ $item->id }}"
                       @if(!$item->available || !$addon->available) disabled @endif>+</button>
                   </td>
                   <td>
@@ -71,7 +78,7 @@
                     <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
                   </td>
                   <td>
-                    <button type="button" class="removeAddon" id="{{$addon->id}}-{{ $item->id }}"
+                    <button type="button" class="removeAddon" id="remove-{{$addon->id}}-{{ $item->id }}"
                       @if(!$item->available || !$addon->available) disabled @endif>-</button>
                   </td>
                 </tr>
@@ -83,14 +90,14 @@
           @endif
           </td>
           <td>
-            <button type="button" class="addItem" id="{{ $item->id }}"
+            <button type="button" class="addItem" id="add-{{ $item->id }}"
               @if(!$item->available) disabled @endif> + </button>
           </td>
           <td>
             <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
           </td>          
           <td>
-            <button type="button" class="removeItem" id="{{ $item->id }}" 
+            <button type="button" class="removeItem" id="remove-{{ $item->id }}" 
               @if(!$item->available) disabled @endif> - </button>
       	  </td>
           <td>
