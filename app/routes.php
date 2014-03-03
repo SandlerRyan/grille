@@ -54,7 +54,6 @@ Route::get('/empty_cart', 'CartController@empty_cart');
 Route::get('/add_note/{id}/{note}', 'CartController@add_note');
 
 
-
 /**
 * ORDER CONTROLLER ROUTES
 */
@@ -73,6 +72,10 @@ Route::get('/pay_later', 'OrderController@pay_later');
 //Final Step in the Ordering Process
 Route::get('/success', 'OrderController@success');
 
+//send user a text message
+Route::get('/send_sms/{phone}/{message}', 'OrderController@send_sms');
+
+
 
 /**
 * ADMIN DASHBOARD ROUTES
@@ -84,7 +87,8 @@ Route::post('/get_new_orders', 'AdminController@get_new_orders');
 Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
 Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
 Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
-
+Route::get('/alert_deals', 'AdminController@alert_deals');
+Route::get('/alert_hours', 'AdminController@alert_hours');
 
 Route::controller('/', 'BaseController');
 
