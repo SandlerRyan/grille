@@ -150,7 +150,6 @@ $( document ).on( 'click', '.refund', function () {
       type: "post",
       success: function(data){
           // update cart
-
           console.log("order refunded and has been cancelled")
       },
       error:function(){

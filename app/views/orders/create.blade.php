@@ -13,7 +13,7 @@ foreach($orders as $order){
 }
 $response_array['status'] = 'success';    
 $response_array['cart'] =  json_decode($orders);
-echo json_encode($response_array);
+// echo json_encode($response_array);
 ?>
 
 <!-- Global header/footer -->
