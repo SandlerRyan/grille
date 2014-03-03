@@ -59,7 +59,7 @@ class UserController extends \BaseController {
             $user-> save();
 
             $failure = Session::get('failure');
-            return View::make('users.edit', ['user' => $user, 'failure' => $failure]);
+            $this->layout->content = return View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
 
         //else, redirect to checkout page
