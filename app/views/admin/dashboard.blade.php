@@ -2,12 +2,12 @@
     <div class="sb-navbar sb-slide">
     
       <!-- Left Slidebar control -->
-      <div class="sb-toggle-left">
+      <div class="button sb-toggle-left">
         <div class="navicon-line"></div>
         <div class="navicon-line"></div>
         <div class="navicon-line"></div>
       </div>
-          
+
     </div>
     <!-- Left Slidebar -->
     <div class="sb-slidebar sb-left"> 
@@ -44,8 +44,7 @@
       </ul>
 
       
-    </div><!-- /.sb-slidebar .sb-left -->
-
+    </div>
 
 <div class="row">
 
