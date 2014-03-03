@@ -114,7 +114,6 @@ class OrderController extends \BaseController {
     //Show Success Page with appropiate message
     public function success() 
     {   
-
         // make sure this was routed from the payment methods
         $response = Session::get('response');
         if (!$response){ 
@@ -140,7 +139,8 @@ class OrderController extends \BaseController {
                 $response['status'] = "You have successfully paid via Venmo.";
             }
 
-        } else {
+        } 
+        else {
             $transaction = 0;
             $response['status'] = "You have chosen to pay at Grille. You will receive a text when your order is ready";
 
@@ -185,11 +185,9 @@ class OrderController extends \BaseController {
         Cart::destroy();
 
         //send a text message to user to tell them how many orders in front of them
-        $order_id = $order->id;
-        $user_id = Order::where('id', $order_id)->pluck('user_id');
-
-
+        $user_id = Order::where('id', $order->id)->pluck('user_id');
         $name = User::where('id', $user_id)->pluck('preferred_name');
+        
         //$phone = User::where('id', $user_id)->pluck('phone_number');
         $phone = "7734901404";
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)

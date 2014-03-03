@@ -15,22 +15,11 @@
 * USER CONTROLLER ROUTES
 * All called by Ajax from order creation/checkout pages
 */
-// Go here when user clicks login
 Route::get('/login', 'UserController@login');
-
-// Go here when user clicks logout
 Route::get('/logout', 'UserController@logout');
-
-// Go here if the user opts to pay at the register
 Route::get('/return_to', 'UserController@return_to');
-
-// Called by ajax to add phone number of a user to databse
 Route::get('/add_phone/{phone}', 'UserController@add_phone');
-
-//post to store updated user info
 Route::get('/edit_user/{id}', 'UserController@edit_user');
-
-//post to store updated user info
 Route::get('/edit_test', 'UserController@edit_test');
 
 
@@ -38,22 +27,11 @@ Route::get('/edit_test', 'UserController@edit_test');
 * CART CONTROLLER ROUTES
 * All called by Ajax from order creation/checkout pages
 */
-// Route called by ajax to increment an item (passes item id as argument)
 Route::get('/increment/{id}', 'CartController@increment');
-
-// Route called by ajax to decrement an item
 Route::get('/decrement/{id}', 'CartController@decrement');
-
-// Route called by ajax to add an addon and associate it with an item
 Route::get('/increment_addon/{addon_id}/{item_id}', 'CartController@increment_addon');
-
-// Route called by ajax to remove an addon
 Route::get('/decrement_addon/{addon_id}/{item_id}', 'CartController@decrement_addon');
-
-// Route called by ajax to empty a cart
 Route::get('/empty_cart', 'CartController@empty_cart');
-
-//Route called by ajax to add a note
 Route::get('/add_note/{id}/{note}', 'CartController@add_note');
 
 
@@ -94,6 +72,13 @@ Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
 Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
 Route::get('/alert_deals', 'AdminController@alert_deals');
 Route::get('/alert_hours', 'AdminController@alert_hours');
+
+/**
+* INVENTORY TRACKING ROUTES
+*/
+Route::get('/inventory', 'InventoryController@show');
+
+
 
 Route::controller('/', 'BaseController');
 

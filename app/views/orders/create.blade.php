@@ -1,16 +1,3 @@
-<?php 
-  $item = array('id'=>1, 'name'=>'The Standard', 'quantity'=>2, 'price'=> 3.5, 'addons'=>array());
-  Cart::insert($item);
-  $item = Cart::find(1);
-  $addon = array('id'=>1, 'name'=>'bacon', 'quantity'=>2, 'price'=>1.25, 'addons'=>array());
-  Cart::insert_addon($addon, $item);
-
-  Cart::update_addon($addon['id'], $item, 'quantity', 1);
-  foreach($item->addons as $addon) {
-    var_dump($addon);
-  }
-?>
-
 <!-- Global header/footer -->
 <div id="s">
   <div class="row">
@@ -167,6 +154,4 @@ $(window).scroll(function() {
     stickyNav();  
 	});  
 });  
-
-
 </script>

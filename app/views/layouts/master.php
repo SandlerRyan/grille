@@ -76,10 +76,11 @@
         <div class="large-12 columns">
           <!-- <h2>Eliot Grille</h2> -->
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')){ ?>
-            <ul class="button-group radius even-3">
+            <ul class="button-group radius even-4">
               <li><a class="button" href="/">Home</a></li>
               <li><a class="button" href="/order/create">Menu</a></li>
-              <li><a class="button" href="/admin">Staff</a></li>
+              <li><a class="button" href="/admin">Orders Dashboard</a></li>
+              <li><a class="button" href="/inventory">Inventory</a></li>
 <!--             <li><a class="button" href="#">Russian Blue</a></li>
             <li><a class="button" href="#">Scottish Fold</a></li> -->
           </ul>

@@ -23,10 +23,6 @@ class AdminController extends \BaseController {
 
     }
 
-    public function inventory() {
-        $this->layout->content = View::make('admin.inventory');        
-    }
-
 
     protected function sendPostData($url, $post)
     {
@@ -74,8 +70,6 @@ class AdminController extends \BaseController {
         ));
     }
 
-
-
     public function refund_order($id) {
         $order = Order::find($id);
         if ($order->venmo_id != 0) {
@@ -115,6 +109,7 @@ class AdminController extends \BaseController {
         // return $response_array;
 
     }
+    
     public function mark_as_cooked($id) {
         $order = Order::find($id);
         //alert user that order is ready
