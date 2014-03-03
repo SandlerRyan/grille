@@ -23,17 +23,9 @@
             @if ($item->available) 
               {{ $item->name}} 
 
-                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
-                    <input type="checkbox" />
-                    <span>
-                    Available?
-                      <span>No</span>
-                      <span>Yes</span>
-                    </span>
-
-                    <a></a>
-                  </label>
-
+                <a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
+                  Mark as Unavailable
+                </a>
 
             @else
               {{ $item->name }} 
@@ -168,7 +160,7 @@
 
 
 
-<!-- @foreach($items as $item)
+@foreach($items as $item)
 	
 	@if ($item->available) 
 		{{ $item->name}} - available 
@@ -184,7 +176,7 @@
 		</a>
 	@endif
 	<br/>
-@endforeach -->
+@endforeach
 
 </div>
 
