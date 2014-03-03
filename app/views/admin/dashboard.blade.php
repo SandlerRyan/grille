@@ -1,4 +1,4 @@
-   
+
     <!-- Top Navigation Bar -->
     <div class="sb-navbar sb-slide">
     
@@ -39,6 +39,10 @@
               {{ $item->name }} 
 
 
+            <a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
+              Mark as unavailable
+            </a>
+
                   <label class="switch-light switch-ios" style="width: 100px" onclick="">
                     <input type="checkbox" />
                     <span>
@@ -78,7 +82,7 @@
       <div class="panel" id="order.id">
 
         <!-- <div align="right"><h4>$40.0</h4></div> -->
-        <div style="float:left;"><h4 style="color:green;">Pick-Up</h4></div>
+        <div style="float:left;"><h4>Pick-Up</h4></div>
         <div align="right"><h4>$55.0</h4></div>
 
         <br/>
@@ -172,6 +176,7 @@
 		<a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
 			Mark as unavailable
 		</a>
+
 	@else
 		{{ $item->name }} - unavailable 
 		<a href="javascript:void(0)" class="mark_item_available" id="{{$item->id}}">
