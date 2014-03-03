@@ -105,20 +105,6 @@ class UserController extends \BaseController {
                                           
     }
 
-    public function edit_test()
-    {
-
-        $user = new User();
-        $user->cs50_id = 'testetstest';
-        $user->name = "Ryan Wade Sandler";
-        $user->preferred_name = "Ryan";
-        $user->phone_number = "";
-        $user->email = "SandlerRyan@gmail.com";
-        $user-> save();
-
-        $failure = Session::get('failure');
-        $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
-    }
 
     /* adds user's phone number to the database
     * called by ajax from the success page
