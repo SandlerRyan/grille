@@ -58,6 +58,23 @@ class AdminController extends \BaseController {
         }   
 
     }
+    protected function send_sms($phone, $message)
+    {
+        // this line loads the library 
+        require(app_path().'/config/twilio-php/Services/Twilio.php');
+         
+        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
+        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
+        $client = new Services_Twilio($account_sid, $auth_token); 
+         
+        $client->account->messages->create(array( 
+            'To' => $phone, 
+            'From' => "+18432716240", 
+            'Body' => $message,
+        ));
+    }
+
+
 
     public function refund_order($id) {
         $order = Order::find($id);
@@ -72,7 +89,7 @@ class AdminController extends \BaseController {
                 $order->fulfilled = 2;
                 $order->save();    
             }
-
+        }
         //alert user that order has been refunded
         //TODO - give a reason? next steps?
         $name = User::where('id', $order->user_id)->pluck('preferred_name');
@@ -81,7 +98,7 @@ class AdminController extends \BaseController {
         $message = "Hi " . $name . ", Unfortunately, something went wrong with your order. 
                     We have refunded you completely.";
 
-        send_sms($phone, $message);
+        $this->send_sms($phone, $message);
         return 1;
     }
 
@@ -98,7 +115,18 @@ class AdminController extends \BaseController {
         // return $response_array;
 
     }
+    public function mark_as_cooked($id) {
+        $order = Order::find($id);
+        //alert user that order is ready
+        $name = User::where('id', $order->user_id)->pluck('preferred_name');
+        $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
+        $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
+
+        $this->send_sms($phone, $message);
+
+        return 1;
+    }
     public function mark_as_fulfilled($id) {
         $order = Order::find($id);
         $order->fulfilled = 1;
@@ -110,7 +138,7 @@ class AdminController extends \BaseController {
 
         $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
 
-        send_sms($phone, $message);
+        $this->send_sms($phone, $message);
 
         return 1;
     }
@@ -126,6 +154,7 @@ class AdminController extends \BaseController {
         $item->save();
         return 1;
     }
+
     /**
      * Show the form for creating a new order.
      *
@@ -140,7 +169,7 @@ class AdminController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            send_sms($phone, $message);
+            $this->send_sms($phone, $message);
         }
     }
 
@@ -151,29 +180,11 @@ class AdminController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            send_sms($phone, $message);
+            $this->send_sms($phone, $message);
         }
     }
 
 
 }
 
-
-function send_sms($phone, $message)
-{
-        // this line loads the library 
-
-        require(app_path().'/config/twilio-php/Services/Twilio.php');
-         
-        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
-        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
-        $client = new Services_Twilio($account_sid, $auth_token); 
-         
-        $client->account->messages->create(array( 
-            'To' => $phone, 
-            'From' => "+18432716240", 
-            'Body' => $message,
-        ));
-
-}
 

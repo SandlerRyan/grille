@@ -88,6 +88,7 @@ Route::get('/admin/inventory', 'AdminController@inventory');
 Route::get('/admin/filled_orders', 'AdminController@filled_orders');
 Route::post('/refund_order/{id}', 'AdminController@refund_order');
 Route::post('/get_new_orders', 'AdminController@get_new_orders');
+Route::post('/mark_as_cooked/{id}', 'AdminController@mark_as_cooked');
 Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
 Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
 Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
