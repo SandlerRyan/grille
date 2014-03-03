@@ -10,7 +10,6 @@
 
 	    <hr />
 
-	    <a href="/admin">Admin Login</a>
 	    </div>
 	  </div>
 	  
