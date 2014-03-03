@@ -1,4 +1,3 @@
-
     <!-- Top Navigation Bar -->
     <div class="sb-navbar sb-slide">
     
@@ -21,30 +20,20 @@
           <li>
 
             @if ($item->available) 
-              {{ $item->name}} 
+    
 
-                <a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
-                  Mark as Unavailable
-                </a>
+            <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
+              {{ $item->name}}
+
+            </button>
+
+
 
             @else
+              <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
               {{ $item->name }} 
 
-
-            <a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
-              Mark as unavailable
-            </a>
-
-                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
-                    <input type="checkbox" />
-                    <span>
-                    Available?
-                      <span>No</span>
-                      <span>Yes</span>
-                    </span>
-
-                    <a></a>
-                  </label>
+              </button>
 
             @endif
 
@@ -157,25 +146,6 @@
 
 </ul>
 
-
-
-@foreach($items as $item)
-	
-	@if ($item->available) 
-		{{ $item->name}} - available 
-
-		<a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
-			Mark as unavailable
-		</a>
-
-	@else
-		{{ $item->name }} - unavailable 
-		<a href="javascript:void(0)" class="mark_item_available" id="{{$item->id}}">
-			Mark as available
-		</a>
-	@endif
-	<br/>
-@endforeach
 
 </div>
 
@@ -342,13 +312,17 @@ $('.mark_item_unavailable').click(function() {
 $('.mark_item_available').click(function() {
 	console.log("hello")
 	var url = "/mark_as_available/" + $(this).attr('id');
-
+  var id = $(this).attr('id');
 	$.ajax({
       url: url,
       type: "post",
       success: function(data){
           //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
           console.log("good")
+          
+          $(id).removeClass("alert");
+          $(id).removeClass("success");
+          console.log($(id)); 
       },
       error:function(){
           alert("Sorry, something bad happened.");
