@@ -8,11 +8,19 @@ var getTR = function(rowItems) {
  return "<tr>" + rowItems + "</tr>"; 
 }
 var addButtons = function(order) {
+  if (order.venmo_id != 0) {
   return "<ul class='button-group'>" + 
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" + 
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Picked-Up</a></li>" +
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button alert refund'>Refund Order</a></li>" +
           "</ul>"
+  }
+  else {
+    return "<ul class='button-group'>" + 
+          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" + 
+          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Paid and Picked-Up</a></li>" +
+          "</ul>"
+  }
 }
 
 var AddTable = function(order) {
@@ -87,6 +95,8 @@ return main;
 // get new orders
 $(document).ready(function () {
 get_new_orders();
+available();
+unavailable();
 });
 
 // contacts the server to get new orders every 5000 millisecs
@@ -115,8 +125,7 @@ $( document ).on( 'click', '.cooked', function () {
       type: "post",
       success: function(data){
           // update cart
-          console.log("good")
-          $(this).html("heh");
+          $(this).remove();
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -159,7 +168,8 @@ $( document ).on( 'click', '.refund', function () {
 });
 
 // ajax call to mark an item unavailable when it runs out
-$('.mark_item_unavailable').click(function() {
+function unavailable () {
+  $( document ).on('click', '.mark_item_unavailable', function () {
   console.log("mark unav")
   var id = $(this).attr('id');
   var url = "/mark_as_unavailable/" + id;
@@ -169,42 +179,45 @@ $('.mark_item_unavailable').click(function() {
       type: "post",
       success: function(data){
           //TODO:  MAKE THE DIV GRAY AND CHANGE THE BUTTON TO MARK AVAILABLE
-          id = "#" + id;
-          console.log($(id)); 
-
-          $(id).addClass('alert');
+          id = "#" + id; 
           $(id).removeClass('success');
+          $(id).addClass('alert');
+          $(id).removeClass('mark_item_unavailable');
           $(id).addClass('mark_item_available');
-          // $(id).removeClass('mark_item_unavailable');
+          available ();
+          // $(id).removeClass('mark_item_available');
+          
       },
       error:function(){
           alert("Sorry, something bad happened.");
       }
     });
-});
+  });
+}
 
 // ajax call to mark an item available when it is back in stock
-$('.mark_item_available').click(function() {
-console.log("mark av")
-var url = "/mark_as_available/" + $(this).attr('id');
-var id = $(this).attr('id');
-$.ajax({
-    url: url,
-    type: "post",
-    success: function(data){
-        //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
-        console.log("good")
-        id = "#" + id;
-        $(id).addClass('success');
-        $(id).removeClass('alert');
-        
-        // $(id).removeClass('mark_item_available');
-        $(id).addClass('mark_item_unavailable');
-        
-        console.log($(id)); 
-    },
-    error:function(){
-        alert("Sorry, something bad happened.");
-    }
+function available () {
+  $( document ).on('click', '.mark_item_available', function () {
+  console.log("mark av")
+  var url = "/mark_as_available/" + $(this).attr('id');
+  var id = $(this).attr('id');
+  $.ajax({
+      url: url,
+      type: "post",
+      success: function(data){
+          //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
+          id = "#" + id;
+          $(id).removeClass('alert');
+          $(id).addClass('success');
+          $(id).removeClass('mark_item_available');
+          $(id).addClass('mark_item_unavailable');
+          unavailable ();
+          
+          console.log($(id)); 
+      },
+      error:function(){
+          alert("Sorry, something bad happened.");
+      }
+    });
   });
-});
+}
