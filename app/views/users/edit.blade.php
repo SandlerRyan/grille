@@ -1,6 +1,9 @@
 <table class="box">
-
-
+<div>
+@if($failure)
+    <h5><font color="red">{{$failure}}</font></h5>
+@endif
+</div>
 
 {{ Form::model($user, array('url' => array('/edit_user/' . $user->id), 'method' => 'GET')) }}
 	<p>	{{ Form::label('preferred_name', 'Preferred Name') }}
@@ -17,20 +20,3 @@
 
 </table>
 
-<script>
-//function taken from http://www.w3resource.com/javascript/form/phone-no-validation.php
-$('#submit').click(function (e){
-	var inputtxt = $("#phone").val();
-  	var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;  
-  	if(inputtxt=="1")  
-        {  
-      return true;  
-        }  
-      else  
-        {  
-        alert("Please enter a valid, 10-digit phone number!");  
-        e.preventDefault();
-        return false;  
-       }  
-    });  
-</script>

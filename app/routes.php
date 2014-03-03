@@ -30,9 +30,6 @@ Route::get('/add_phone/{phone}', 'UserController@add_phone');
 //post to store updated user info
 Route::get('/edit_user/{id}', 'UserController@edit_user');
 
-//post to store updated user info
-Route::get('/edit_test/', 'UserController@edit_test');
-
 
 /**
 * CART CONTROLLER ROUTES
@@ -78,8 +75,6 @@ Route::get('/success', 'OrderController@success');
 //send user a text message
 Route::get('/send_sms/{phone}/{message}', 'OrderController@send_sms');
 
-//test route for ryans twilio integration
-Route::get('/order_update', 'OrderController@order_update');
 
 
 //ADMIN DASHBOARD ROUTES

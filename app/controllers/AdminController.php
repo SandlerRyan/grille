@@ -48,8 +48,7 @@ class AdminController extends \BaseController {
         $message = "Hi " . $name . ", Unfortunately, something went wrong with your order. 
                     We have refunded you completely.";
 
-        return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
-
+        send_sms($phone, $message);
 
         return 1;
 
@@ -80,7 +79,7 @@ class AdminController extends \BaseController {
 
         $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
 
-        return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
+        send_sms($phone, $message);
 
         return 1;
     }
@@ -110,7 +109,7 @@ class AdminController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
+            send_sms($phone, $message);
         }
     }
 
@@ -121,7 +120,7 @@ class AdminController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
+            send_sms($phone, $message);
         }
     }
 
@@ -131,3 +130,4 @@ function refundCostViaVenmo($id) {
     //TODO: Send Venmo Payment to the User Phone Number via Venmo Access Token for the Grille
     return 1;
 }
+

@@ -162,14 +162,30 @@ class OrderController extends \BaseController {
 
         // empty the cart
         Cart::destroy();
+
+        //send a text message to user to tell them how many orders in front of them
+        $order_id = $order->id;
+        $user_id = Order::where('id', $order_id)->pluck('user_id');
+
+
+        $name = User::where('id', $user_id)->pluck('preferred_name');
+        //$phone = User::where('id', $user_id)->pluck('phone_number');
+        $phone = "7734901404";
+        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
+                                                ->count();
+        $message = "Hi " . $name . ", your order has been received! There are currently " .
+                    $num_orders . " orders in front of you. See you soon!";
+
+        send_sms($phone,$message);
+
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
-
-
     }
 
-    public function send_sms($phone, $message)
-    {
+}
+
+function send_sms($phone, $message)
+{
         // this line loads the library 
 
         require(app_path().'/config/twilio-php/Services/Twilio.php');
@@ -184,27 +200,5 @@ class OrderController extends \BaseController {
             'Body' => $message,
         ));
 
-        $response = "success";
-        return json_encode($response);
-    }
-
-    //put in success() function...
-    public function order_update()
-    {
-        //send a text message to user to tell them how many orders in front
-        $order_id = 1;
-        $user_id = Order::where('id', $order_id)->pluck('user_id');
-
-
-        $name = User::where('id', $user_id)->pluck('preferred_name');
-        $phone = User::where('id', $user_id)->pluck('phone_number');
-        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
-                                                ->count();
-        $message = "Hi " . $name . ", your order has been received! There are currently " .
-                    $num_orders . " orders in front of you. See you soon!";
-
-        return Redirect::action('OrderController@send_sms', array('phone' => $phone, 'message' => $message));
-
-    }
- 
 }
+
