@@ -71,31 +71,96 @@
 </div>
 
 
-    <div style='width: 300px; height: 300px; background-color: white; border: 1px solid black;float: left; margin-right: 5%; margin-bottom: 5%;' class='order' id='" + 
-      order.id + 
-      "'> 
-      <div id='orderInfo'> 
-        12345
-        <div id='order_user'> 
-          Sample User
-        </div>
-      </div> 
-      <div id='items'>
+<ul class="clearing-thumbs" data-clearing>
 
-        Item 1 <br/> 
-        This is a description
+  <li>
+    <div class="large-12 columns">
+      <div class="panel" id="order.id">
 
-        Item 2 <br/> 
-        This is a description
+        <!-- <div align="right"><h4>$40.0</h4></div> -->
+        <div style="float:left;"><h4 style="color:green;">Pick-Up</h4></div>
+        <div align="right"><h4>$55.0</h4></div>
 
-        Item 3 <br/> 
-        This is a description
+        <br/>
+
+        <h5>John Doe</h5>
+        <h6>ID: 11234567890</h6>
+
+        <table>
+          <thead>
+            <tr>
+              <th width="150">Item</th>
+              <th width="150">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Hamburger</td>
+            <td>No meat please</td>
+          </tr>
+          <tr>
+            <td>French fries</td>
+            <td>Baked, not fried</td>
+          </tr>
+        </tbody>
+        </table>
+
+          <ul class="button-group">
+            <li><a href="#" class="small button success">Cooked</a></li>
+            <li><a href="#" class="small button success">Paid and Picked-Up</a></li>
+          </ul>
+
+          <br/>
 
       </div>
-      <a href='javascript:void(0)' class='completed' id="1234">Mark As Complete</a><br/>
-      <a href='javascript:void(0)' class='refund' id="1234">Refund Order</a> 
-
     </div>
+  </li>
+
+  <li>
+    <div class="large-12 columns">
+      <div class="panel" id="order.id">
+
+        <div style="float:left;"><img border="0" src="/img/venmo.png" width="90px"></div>
+        <div align="right"><h4>$55.0</h4></div>
+
+        <br/>
+
+
+        <h5>John Doe</h5>
+        <h6>ID: 11234567890</h6>
+
+        <table>
+          <thead>
+            <tr>
+              <th width="150">Item</th>
+              <th width="150">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>Hamburger</td>
+            <td>No meat please</td>
+          </tr>
+          <tr>
+            <td>French fries</td>
+            <td>Baked, not fried</td>
+          </tr>
+        </tbody>
+        </table>
+
+          <ul class="button-group">
+            <li><a href="#" class="small button success">Cooked</a></li>
+            <li><a href="#" class="small button success">Picked-Up</a></li>
+            <li><a href="#" class="small button alert">Refund Order</a></li>
+          </ul>
+
+          <br/>
+
+      </div>
+    </div>
+  </li>
+
+</ul>
 
 
 
