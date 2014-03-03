@@ -294,15 +294,22 @@ $( document ).on( 'click', '.refund', function () {
 
 
 $('.mark_item_unavailable').click(function() {
-	console.log("hello")
-	var url = "/mark_as_unavailable/" + $(this).attr('id');
+	console.log("mark unav")
+  var id = $(this).attr('id');
+	var url = "/mark_as_unavailable/" + id;
 
 	$.ajax({
       url: url,
       type: "post",
       success: function(data){
           //TODO:  MAKE THE DIV GRAY AND CHANGE THE BUTTON TO MARK AVAILABLE
-          console.log("good")
+          id = "#" + id;
+          console.log($(id)); 
+
+          $(id).addClass('alert');
+          $(id).removeClass('success');
+          $(id).addClass('mark_item_available');
+          // $(id).removeClass('mark_item_unavailable');
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -310,7 +317,7 @@ $('.mark_item_unavailable').click(function() {
     });
 })
 $('.mark_item_available').click(function() {
-	console.log("hello")
+	console.log("mark av")
 	var url = "/mark_as_available/" + $(this).attr('id');
   var id = $(this).attr('id');
 	$.ajax({
@@ -319,9 +326,13 @@ $('.mark_item_available').click(function() {
       success: function(data){
           //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
           console.log("good")
+          id = "#" + id;
+          $(id).addClass('success');
+          $(id).removeClass('alert');
           
-          $(id).removeClass("alert");
-          $(id).removeClass("success");
+          // $(id).removeClass('mark_item_available');
+          $(id).addClass('mark_item_unavailable');
+          
           console.log($(id)); 
       },
       error:function(){
