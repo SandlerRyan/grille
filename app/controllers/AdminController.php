@@ -140,17 +140,18 @@ class AdminController extends \AdminBaseController {
 
         return 1;
     }
+
     public function mark_as_unavailable($id) {
         $item = Item::find($id);
         $item->available = 0;
         $item->save();
-        return 1;
+        return json_encode($item);
     }
     public function mark_as_available($id) {
         $item = Item::find($id);
         $item->available = 1;
         $item->save();
-        return 1;
+        return json_encode($item);
     }
 
     /**
