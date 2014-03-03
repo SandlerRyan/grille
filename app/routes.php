@@ -30,6 +30,9 @@ Route::get('/add_phone/{phone}', 'UserController@add_phone');
 //post to store updated user info
 Route::get('/edit_user/{id}', 'UserController@edit_user');
 
+//post to store updated user info
+Route::get('/edit_test', 'UserController@edit_test');
+
 
 /**
 * CART CONTROLLER ROUTES

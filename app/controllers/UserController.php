@@ -59,7 +59,7 @@ class UserController extends \BaseController {
             $user-> save();
 
             $failure = Session::get('failure');
-            $this->layout->content = return View::make('users.edit', ['user' => $user, 'failure' => $failure]);
+            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
 
         //else, redirect to checkout page
@@ -103,6 +103,21 @@ class UserController extends \BaseController {
             return Redirect::to('/return_to')->with('failure', $failure);
         }
                                           
+    }
+
+    public function edit_test()
+    {
+
+        $user = new User();
+        $user->cs50_id = 'testetstest';
+        $user->name = "Ryan Wade Sandler";
+        $user->preferred_name = "Ryan";
+        $user->phone_number = "";
+        $user->email = "SandlerRyan@gmail.com";
+        $user-> save();
+
+        $failure = Session::get('failure');
+        $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
     }
 
     /* adds user's phone number to the database
