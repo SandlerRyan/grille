@@ -21,22 +21,57 @@ class AdminController extends \BaseController {
         $this->layout->content = View::make('admin.filled', ['orders' => $orders]);
 
     }
+    public function inventory() {
+        $this->layout->content = View::make('admin.inventory');        
+    }
+
+
+    protected function sendPostData($url, $post)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+        return curl_exec($ch);
+    }
+    protected function refundCostViaVenmo($id) {
+
+        // This function uses the Grille App access token to pay the phone number
+        //of the user that placed the order. 
+        $url = 'https://api.venmo.com/v1/payments';
+        $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
+        $order = Order::find($id);
+        $phone_number = $order->user->phone_number;
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+                "phone" => $phone_number, "note" => "Testing Eliot Grille");
+        $response = $this->sendPostData($url, $data);
+        
+        $venmoJSON = json_decode($response['message'], true);
+        if (array_key_exists('error', $venmoJSON)) 
+        {
+            return 0;
+        } else 
+        {
+            return 1;    
+        }   
+
+    }
     public function refund_order($id) {
         $order = Order::find($id);
         if ($order->venmo_id != 0) {
 
-            if (refundCostViaVenmo($id) != 1) {
+            if ($this->refundCostViaVenmo($id) != 1) {
+                $order->refunded = 1;
+                $order->save();
                 return 0;
+            } else {
+                $order->refunded = 1;
+                $order->fulfilled = 2;
+                $order->save();    
+                return 1;
             }
-
-            $order->fulfilled = 2;
-            $order->save();
-        } else {
-            //Cancel order entirely and mark it as 2 (cancelled)
-            $order->fulfilled = 2;
-            $order->save();
-        }
-        return 1;
+        } 
+        return 0;
 
     }
 
@@ -82,7 +117,4 @@ class AdminController extends \BaseController {
 
 
 }
-function refundCostViaVenmo($id) {
-    //TODO: Send Venmo Payment to the User Phone Number via Venmo Access Token for the Grille
-    return 1;
-}
+

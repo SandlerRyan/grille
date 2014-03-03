@@ -79,11 +79,11 @@ class OrderController extends \BaseController {
     {   
         //Get Access Token from Venmo Response
         $access_token = Input::get('access_token');
-
+        // $phone_number = Session::get('user')->phone_number;
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "malan example");
+            "phone" => "7734901404", "note" => "Testing Eliot Grille");
         $response = $this->sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
@@ -119,10 +119,13 @@ class OrderController extends \BaseController {
             } else {
                 
                 $transaction = $venmoJSON['data']['payment']['id'];
+                $response['status'] = "You have successfully paid via Venmo.";
             }
 
         } else {
             $transaction = 0;
+            $response['status'] = "You have chosen to pay at Grille. You will receive a text when your order is ready";
+
         }
         // create the new order
         $order = new Order();
