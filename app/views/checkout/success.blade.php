@@ -40,7 +40,7 @@
 	<h5><b>ETA:</b> 10 minutes.</h5> 
 
 
-	<form>
+	<!-- <form>
 	  <fieldset>
 	    <legend>Leave your phone number here to get notifications</legend>
 
@@ -50,9 +50,7 @@
 	      <button type="button" class="addPhone">Submit</button>
 	    </label>
 	  </fieldset>
-	</form>
-
-	{{{ $response }}}
+	</form> -->
 
 	<br />
 
