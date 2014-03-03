@@ -30,6 +30,9 @@ Route::get('/add_phone/{phone}', 'UserController@add_phone');
 //post to store updated user info
 Route::get('/edit_user/{id}', 'UserController@edit_user');
 
+//post to store updated user info
+Route::get('/edit_test', 'UserController@edit_test');
+
 
 /**
 * CART CONTROLLER ROUTES
@@ -81,7 +84,8 @@ Route::get('/send_sms/{phone}/{message}', 'OrderController@send_sms');
 * ADMIN DASHBOARD ROUTES
 */
 Route::get('/admin', 'AdminController@dashboard');
-Route::get('/filled_orders', 'AdminController@filled_orders');
+Route::get('/admin/inventory', 'AdminController@inventory');
+Route::get('/admin/filled_orders', 'AdminController@filled_orders');
 Route::post('/refund_order/{id}', 'AdminController@refund_order');
 Route::post('/get_new_orders', 'AdminController@get_new_orders');
 Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
