@@ -97,11 +97,11 @@ class OrderController extends \BaseController {
     {   
         //Get Access Token from Venmo Response
         $access_token = Input::get('access_token');
-
+        // $phone_number = Session::get('user')->phone_number;
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
         $data = array("access_token" => $access_token, "amount" => 0.01, 
-            "phone" => "7734901404", "note" => "malan example");
+            "phone" => "7734901404", "note" => "Testing Eliot Grille");
         $response = $this->sendPostData($url, $data);
 
         $response_array['status'] = 'venmo';
@@ -137,10 +137,13 @@ class OrderController extends \BaseController {
             } else {
                 
                 $transaction = $venmoJSON['data']['payment']['id'];
+                $response['status'] = "You have successfully paid via Venmo.";
             }
 
         } else {
             $transaction = 0;
+            $response['status'] = "You have chosen to pay at Grille. You will receive a text when your order is ready";
+
         }
         // create the new order
         $order = new Order();
@@ -174,12 +177,49 @@ class OrderController extends \BaseController {
             }
 
         }
+
         // put all the order info into one nice object to pass to the view
         $order_info = Order::with('item_orders')->find($order->id);
+
         // empty the cart
         Cart::destroy();
+
+        //send a text message to user to tell them how many orders in front of them
+        $order_id = $order->id;
+        $user_id = Order::where('id', $order_id)->pluck('user_id');
+
+
+        $name = User::where('id', $user_id)->pluck('preferred_name');
+        //$phone = User::where('id', $user_id)->pluck('phone_number');
+        $phone = "7734901404";
+        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
+                                                ->count();
+        $message = "Hi " . $name . ", your order has been received! There are currently " .
+                    $num_orders . " orders in front of you. See you soon!";
+
+        send_sms($phone,$message);
+
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
     }
- 
+
 }
+
+function send_sms($phone, $message)
+{
+        // this line loads the library 
+
+        require(app_path().'/config/twilio-php/Services/Twilio.php');
+         
+        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
+        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
+        $client = new Services_Twilio($account_sid, $auth_token); 
+         
+        $client->account->messages->create(array( 
+            'To' => $phone, 
+            'From' => "+18432716240", 
+            'Body' => $message,
+        ));
+
+}
+

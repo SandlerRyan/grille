@@ -6,7 +6,7 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
 
     <!-- Set the viewport width to device width for mobile -->
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- For third-generation iPad with high-resolution Retina display: -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="http://foundation.zurb.com/img/favicons/apple-touch-icon-144x144-precomposed.png">
@@ -19,10 +19,32 @@
     <link rel="icon" href="http://foundation.zurb.com/img/favicons/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="http://foundation.zurb.com/docs/assets/normalize.css" />
     <link rel="stylesheet" href="/css/app.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>    
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> 
+
+
+    
+    <!-- Slidebars -->
+    <script src="js/slidebars.min.js"></script>
+
+    <!-- Slidebars CSS -->
+    <link rel="stylesheet" href="/css/slidebars.min.css">
+    
+    <!-- Example Styles -->
+    <link rel="stylesheet" href="/css/example-styles.css"> 
+
+    <link rel="stylesheet" href="/css/slidebars-theme.css"> 
+    <link rel="stylesheet" href="/js/slidebars-theme.js">
+
+
+    <!-- Toggle Switch -->
+    <link rel="stylesheet" href="/css/toggle-switch.css">
+
+
+
     <!-- Responsive Tables -->
     <!-- Included CSS Files -->
     <!-- Combine and Compress These CSS Files -->
@@ -48,6 +70,7 @@
           <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
         </div>
       </div>
+
 
       <nav class="row">
         <div class="large-12 columns">
@@ -96,6 +119,41 @@
         </div> 
       </footer>
 
+
+
+
+    <script>
+      (function($) {
+        $(document).ready(function() {
+          var mySlidebars = new $.slidebars();
+          
+          $('.toggle-left').on('click', function() {
+            mySlidebars.toggle('left');
+          });
+          
+          $('.toggle-right').on('click', function() {
+            mySlidebars.toggle('right');
+          });
+          
+          $('.open-left').on('click', function() {
+            mySlidebars.open('left');
+          });
+          
+          $('.open-right').on('click', function() {
+            mySlidebars.open('right');
+          });
+          
+          $('.close').on('click', function() {
+            mySlidebars.close();
+          });
+        });
+      }) (jQuery);
+    </script>
+
+
+
+
     </body>
+
 
 </html>

@@ -4,6 +4,7 @@ class AdminController extends \BaseController {
 
     
     public function dashboard() {
+
         // $orders = Order::where('fulfilled', 0)->get();
         $orders = Order::with('item_orders')->where('fulfilled', 0)->get();
         //  with('item_orders')->get();
@@ -21,23 +22,67 @@ class AdminController extends \BaseController {
         $this->layout->content = View::make('admin.filled', ['orders' => $orders]);
 
     }
+
+    public function inventory() {
+        $this->layout->content = View::make('admin.inventory');        
+    }
+
+
+    protected function sendPostData($url, $post)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+        return curl_exec($ch);
+    }
+    protected function refundCostViaVenmo($id) {
+
+        // This function uses the Grille App access token to pay the phone number
+        //of the user that placed the order. 
+        $url = 'https://api.venmo.com/v1/payments';
+        $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
+        $order = Order::find($id);
+        $phone_number = $order->user->phone_number;
+        $data = array("access_token" => $access_token, "amount" => 0.01, 
+                "phone" => $phone_number, "note" => "Testing Eliot Grille");
+        $response = $this->sendPostData($url, $data);
+        
+        $venmoJSON = json_decode($response['message'], true);
+        if (array_key_exists('error', $venmoJSON)) 
+        {
+            return 0;
+        } else 
+        {
+            return 1;    
+        }   
+
+    }
+
     public function refund_order($id) {
         $order = Order::find($id);
         if ($order->venmo_id != 0) {
 
-            if (refundCostViaVenmo($id) != 1) {
+            if ($this->refundCostViaVenmo($id) != 1) {
+                $order->refunded = 0;
+                $order->save();
                 return 0;
+            } else {
+                $order->refunded = 1;
+                $order->fulfilled = 2;
+                $order->save();    
             }
 
-            $order->fulfilled = 2;
-            $order->save();
-        } else {
-            //Cancel order entirely and mark it as 2 (cancelled)
-            $order->fulfilled = 2;
-            $order->save();
-        }
-        return 1;
+        //alert user that order has been refunded
+        //TODO - give a reason? next steps?
+        $name = User::where('id', $order->user_id)->pluck('preferred_name');
+        $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
+        $message = "Hi " . $name . ", Unfortunately, something went wrong with your order. 
+                    We have refunded you completely.";
+
+        send_sms($phone, $message);
+        return 1;
     }
 
     public function get_new_orders() {
@@ -59,6 +104,14 @@ class AdminController extends \BaseController {
         $order->fulfilled = 1;
         $order->save();
 
+        //alert user that order is ready
+        $name = User::where('id', $order->user_id)->pluck('preferred_name');
+        $phone = User::where('id', $order->user_id)->pluck('phone_number');
+
+        $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
+
+        send_sms($phone, $message);
+
         return 1;
     }
     public function mark_as_unavailable($id) {
@@ -79,10 +132,48 @@ class AdminController extends \BaseController {
      * @return Response
      */
 
+    //broadcast text message to all subscribers about special deals
+    public function alert_deals ($message) {
+
+        //select all users who are subscribed to deal alerts
+        $users = User::where('deals_notification', 1)->get();
+
+        foreach($users as $user){
+            $phone = $user->phone_number;
+            send_sms($phone, $message);
+        }
+    }
+
+    public function alert_hours ($message) {
+
+        //select all users who are subscribed to hours alerts
+        $users = User::where('hours_notification', 1)->get();
+
+        foreach($users as $user){
+            $phone = $user->phone_number;
+            send_sms($phone, $message);
+        }
+    }
 
 
 }
-function refundCostViaVenmo($id) {
-    //TODO: Send Venmo Payment to the User Phone Number via Venmo Access Token for the Grille
-    return 1;
+
+
+function send_sms($phone, $message)
+{
+        // this line loads the library 
+
+        require(app_path().'/config/twilio-php/Services/Twilio.php');
+         
+        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
+        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
+        $client = new Services_Twilio($account_sid, $auth_token); 
+         
+        $client->account->messages->create(array( 
+            'To' => $phone, 
+            'From' => "+18432716240", 
+            'Body' => $message,
+        ));
+
 }
+
