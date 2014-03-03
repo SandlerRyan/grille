@@ -1,14 +1,15 @@
     <!-- Top Navigation Bar -->
-    <div class="sb-navbar sb-slide">
+    <!-- <div class="sb-navbar sb-slide"> -->
     
       <!-- Left Slidebar control -->
-      <div class="button sb-toggle-left">
+      <div class="button alert sb-toggle-left">
+<!--    <div class="navicon-line"></div>
         <div class="navicon-line"></div>
-        <div class="navicon-line"></div>
-        <div class="navicon-line"></div>
+        <div class="navicon-line"></div> -->
+        In-Stock Side Bar
       </div>
 
-    </div>
+    <!-- </div> -->
     <!-- Left Slidebar -->
     <div class="sb-slidebar sb-left"> 
 

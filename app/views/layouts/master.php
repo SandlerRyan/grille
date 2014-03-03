@@ -75,11 +75,12 @@
               <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
               <li><a href="/logout">Log out</a></li>
               <?php }else{ ?>
-              <li><a href="/login">Login</a></li>
+              <li><a class="button" href="/login">Login</a></li>
               <?php } ?>
             </ul>
         </div>
       </div>
+
 
 
       <nav class="row">
@@ -118,38 +119,6 @@
           </div>
         </div> 
       </footer>
-
-
-
-
-    <script>
-      (function($) {
-        $(document).ready(function() {
-          var mySlidebars = new $.slidebars();
-          
-          $('.toggle-left').on('click', function() {
-            mySlidebars.toggle('left');
-          });
-          
-          $('.toggle-right').on('click', function() {
-            mySlidebars.toggle('right');
-          });
-          
-          $('.open-left').on('click', function() {
-            mySlidebars.open('left');
-          });
-          
-          $('.open-right').on('click', function() {
-            mySlidebars.open('right');
-          });
-          
-          $('.close').on('click', function() {
-            mySlidebars.close();
-          });
-        });
-      }) (jQuery);
-    </script>
-
 
 
 
