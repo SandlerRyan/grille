@@ -36,10 +36,27 @@ class OrderController extends \BaseController {
         // if the user was not authenticated when storing the order, 
         // controller will return here and raise an error
         // SOMETHING MESSED UP HERE WITH SHOWING ERROR ON VIEW
-
-        $err_messages = Session::get('message');
-
         $errors = Session::get('message');
+
+        // validate that all items are still available
+        foreach(Cart::contents() as $item){
+            if(!Item::find($item->id)['available']){
+                Cart::destroy();
+                return Redirect::to('/order/create')->with('message',
+                    'Sorry! An item has gone out of stock during your ordering process.
+                    Please redo your order.');
+            }
+
+            // now check associated addons
+            foreach($item->addons as $addon){
+                if(!Addon::find($addon->id)['available']){
+                    Cart::destroy();
+                    return Redirect::to('/order/create')->with('message',
+                        'Sorry! An item has gone out of stock during your ordering process.
+                        Please redo your order.');
+                }
+            }
+        }
 
         // if cart is not empty, get the total
         $total = Cart::total_with_addons();
@@ -50,7 +67,8 @@ class OrderController extends \BaseController {
         }
 
         // TODO: more error checking on the exact value of items
-        $this->layout->content = View::make('checkout.index', ['err_messages' => $errors, 'user'=>Session::get('user')]);
+        $this->layout->content = View::make('checkout.index', 
+            ['err_messages' => $errors, 'user'=>Session::get('user')]);
     }
 
     //Function to Make POST Requests with Data  

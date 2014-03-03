@@ -1,18 +1,14 @@
 // Ajax call to add item
 $(".addItem").click(function(){
-  var id = this.id;
+  var id = this.id.split('-')[1];
   url = "/increment/" + id;
   $.ajax({
       url: url,
       type: "get",
       success: function(data){
           var data = JSON.parse(data);
-          // if (data.redirect) {
-          //   // data.redirect contains the string URL to redirect to
-          //   window.lc = data.redirect;
-          // }
-          //update counter
           containerId = "#value-" + id;
+          //update counter
           var qty = $(containerId).text();
           $(containerId).text(parseInt(qty) + 1);
           //update cart footer
@@ -29,7 +25,7 @@ $(".addItem").click(function(){
 
 // Ajax call to remove item
 $(".removeItem").click(function(){
-  var id = this.id;
+  var id = this.id.split('-')[1];
   url = "/decrement/" + id;
   $.ajax({
       url: url,
@@ -66,8 +62,8 @@ $(".removeItem").click(function(){
 // Ajax call to add an addon
 $(".addAddon").click(function(){
   var info = this.id.split("-");
-  var addon_id = info[0];
-  var item_id = info[1];
+  var addon_id = info[1];
+  var item_id = info[2];
   $.ajax({
       url: '/increment_addon/' + addon_id + '/' + item_id,
       type: 'get',
@@ -76,9 +72,11 @@ $(".addAddon").click(function(){
         // the back end will return success but will not update the cart, 
         // so do not update counters
         var data = JSON.parse(data); 
+
+        // check that there are not more addons than items
         if (data.validated == true) {
-          // update counter
           containerID = '#value-' + addon_id + '-' + item_id;
+          // update counter
           var qty = $(containerID).text();
           $(containerID).text(parseInt(qty) + 1);
           // update cart footer
@@ -96,8 +94,8 @@ $(".addAddon").click(function(){
 // Ajax call to remove an addon
 $(".removeAddon").click(function(){
   var info = this.id.split("-");
-  var addon_id = info[0];
-  var item_id = info[1];
+  var addon_id = info[1];
+  var item_id = info[2];
   $.ajax({
       url: '/decrement_addon/' + addon_id + '/' + item_id,
       type: 'get',
@@ -115,7 +113,6 @@ $(".removeAddon").click(function(){
           var total = data.cart;
           var total =  "$" + total;
           $("#totalPrice").html(total);
-
       },
       error: function(){
           alert("failure");
