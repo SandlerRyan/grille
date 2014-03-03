@@ -81,6 +81,22 @@ class OrderController extends \BaseController {
         return curl_exec($ch);
     }
 
+    protected function send_sms($phone, $message)
+    {
+        // this line loads the library 
+        require(app_path().'/config/twilio-php/Services/Twilio.php');
+         
+        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
+        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
+        $client = new Services_Twilio($account_sid, $auth_token); 
+         
+        $client->account->messages->create(array( 
+            'To' => $phone, 
+            'From' => "+18432716240", 
+            'Body' => $message,
+        ));
+    }
+
     //User has decided to Pay Later.
     public function pay_later()
     {
@@ -147,7 +163,6 @@ class OrderController extends \BaseController {
         }
         // create the new order
         $order = new Order();
-        // CHECK BACK ON THIS after Ryan's CS50ID implementation!!
         $order->user_id = Session::get('user')->id;
         $order->grille_id = $this->GRILLE_ID;
         $order->cost = Cart::total_with_addons();
@@ -187,15 +202,13 @@ class OrderController extends \BaseController {
         //send a text message to user to tell them how many orders in front of them
         $user_id = Order::where('id', $order->id)->pluck('user_id');
         $name = User::where('id', $user_id)->pluck('preferred_name');
-        
         //$phone = User::where('id', $user_id)->pluck('phone_number');
-        $phone = "7734901404";
-        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order_id)
+        $phone = "7734901404";  // hardcoded to ryan's number for now
+        $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order->id)
                                                 ->count();
         $message = "Hi " . $name . ", your order has been received! There are currently " .
                     $num_orders . " orders in front of you. See you soon!";
-
-        send_sms($phone,$message);
+        $this->send_sms($phone,$message);
 
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'], 
             'order' => $order_info]);
@@ -203,21 +216,4 @@ class OrderController extends \BaseController {
 
 }
 
-function send_sms($phone, $message)
-{
-        // this line loads the library 
-
-        require(app_path().'/config/twilio-php/Services/Twilio.php');
-         
-        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
-        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
-        $client = new Services_Twilio($account_sid, $auth_token); 
-         
-        $client->account->messages->create(array( 
-            'To' => $phone, 
-            'From' => "+18432716240", 
-            'Body' => $message,
-        ));
-
-}
 

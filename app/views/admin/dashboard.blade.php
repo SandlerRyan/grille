@@ -1,4 +1,3 @@
-   
     <!-- Top Navigation Bar -->
     <div class="sb-navbar sb-slide">
     
@@ -21,34 +20,20 @@
           <li>
 
             @if ($item->available) 
-              {{ $item->name}} 
+    
 
-                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
-                    <input type="checkbox" />
-                    <span>
-                    Available?
-                      <span>No</span>
-                      <span>Yes</span>
-                    </span>
+            <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
+              {{ $item->name}}
 
-                    <a></a>
-                  </label>
+            </button>
+
 
 
             @else
+              <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
               {{ $item->name }} 
 
-
-                  <label class="switch-light switch-ios" style="width: 100px" onclick="">
-                    <input type="checkbox" />
-                    <span>
-                    Available?
-                      <span>No</span>
-                      <span>Yes</span>
-                    </span>
-
-                    <a></a>
-                  </label>
+              </button>
 
             @endif
 
@@ -78,7 +63,7 @@
       <div class="panel" id="order.id">
 
         <!-- <div align="right"><h4>$40.0</h4></div> -->
-        <div style="float:left;"><h4 style="color:green;">Pick-Up</h4></div>
+        <div style="float:left;"><h4>Pick-Up</h4></div>
         <div align="right"><h4>$55.0</h4></div>
 
         <br/>
@@ -158,28 +143,7 @@
       </div>
     </div>
   </li>
-
 </ul>
-
-
-
-<!-- @foreach($items as $item)
-	
-	@if ($item->available) 
-		{{ $item->name}} - available 
-
-		<a href="javascript:void(0)" class="mark_item_unavailable" id="{{$item->id}}">
-			Mark as unavailable
-		</a>
-	@else
-		{{ $item->name }} - unavailable 
-		<a href="javascript:void(0)" class="mark_item_available" id="{{$item->id}}">
-			Mark as available
-		</a>
-	@endif
-	<br/>
-@endforeach -->
-
 </div>
 
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>

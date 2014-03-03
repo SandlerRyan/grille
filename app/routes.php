@@ -40,22 +40,16 @@ Route::get('/add_note/{id}/{note}', 'CartController@add_note');
 */
 // The default CRUD for creating, destroying, editing, orders
 Route::resource('order', 'OrderController');
-
 // Go to checkout after all menu items have been added to cart
 Route::get('/checkout', 'OrderController@checkout');
-
 //URL that Venmo redirects to when authentication is complete
 Route::get('/authenticate_venmo', 'OrderController@authenticatePayment');
-
 // Go here if the user opts to pay at the register
 Route::get('/pay_later', 'OrderController@pay_later');
-
 //Final Step in the Ordering Process
 Route::get('/success', 'OrderController@success');
-
 //send user a text message
 Route::get('/send_sms/{phone}/{message}', 'OrderController@send_sms');
-
 
 
 /**

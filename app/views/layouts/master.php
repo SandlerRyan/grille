@@ -69,6 +69,16 @@
         <div class="large-12 columns">
           <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
         </div>
+        <div class="large-6 columns">
+            <ul class="inline-list right">
+              <?php if(Session::has('user')){ ?>
+              <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
+              <li><a href="/logout">Log out</a></li>
+              <?php }else{ ?>
+              <li><a href="/login">Login</a></li>
+              <?php } ?>
+            </ul>
+        </div>
       </div>
 
 
@@ -79,7 +89,7 @@
             <ul class="button-group radius even-4">
               <li><a class="button" href="/">Home</a></li>
               <li><a class="button" href="/order/create">Menu</a></li>
-              <li><a class="button" href="/admin">Orders Dashboard</a></li>
+              <li><a class="button" href="/admin">Orders</a></li>
               <li><a class="button" href="/inventory">Inventory</a></li>
 <!--             <li><a class="button" href="#">Russian Blue</a></li>
             <li><a class="button" href="#">Scottish Fold</a></li> -->
@@ -104,17 +114,6 @@
           <div class="row">
             <div class="large-6 columns">
               <p>© 2014 Eliot Grille</p>
-            </div>
-            <div class="large-6 columns">
-              <ul class="inline-list right">
-                <li><a href="/">Home</a></li>
-                <li><a href="/order/create">Menu</a></li>
-                <?php if(Session::has('user')){ ?>
-                <li><a href="/logout">Log out</a></li>
-                <?php }else{ ?>
-                <li><a href="/login">Login</a></li>
-                <?php } ?>
-              </ul>
             </div>
           </div>
         </div> 
