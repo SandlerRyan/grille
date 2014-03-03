@@ -23,6 +23,7 @@ class CreateOrderTable extends Migration {
 
 			$table->string('venmo_id', 19)->nullable();	// if null, user hasn't paid yet
 			$table->boolean('fulfilled');	// checked off when the user picks up their food
+			$table->boolean('refunded')->default(0);
             $table->decimal('cost');
             $table->timestamps();
          });

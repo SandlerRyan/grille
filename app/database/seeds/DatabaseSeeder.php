@@ -156,37 +156,47 @@ class HourTableSeeder extends Seeder
 	{
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 0,
-							'open_time' => '00:00:00',
+							'open_time' => '22:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 1,
-							'open_time' => '00:00:00',
+							'open_time' => '22:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 2,
-							'open_time' => '00:00:00',
+							'open_time' => '22:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 3,
-							'open_time' => '00:00:00',
+							'open_time' => '22:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 4,
-							'open_time' => '00:00:00',
+							'open_time' => '23:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 5,
 							'open_time' => '00:00:00',
+							'close_time' => '02:29:59'
+							));
+		Hour::create(array(	'grille_id' => 1,
+							'day_of_week' => 5,
+							'open_time' => '23:30:00',
 							'close_time' => '11:59:59'
 							));
 		Hour::create(array(	'grille_id' => 1,
 							'day_of_week' => 6,
 							'open_time' => '00:00:00',
+							'close_time' => '02:29:59'
+							));
+		Hour::create(array(	'grille_id' => 1,
+							'day_of_week' => 6,
+							'open_time' => '22:30:00',
 							'close_time' => '11:59:59'
 							));
 	}
@@ -422,19 +432,104 @@ class InventoryTableSeeder extends Seeder
 	{
 		Inventory::create(array(	'id' => 1,
 									'name' => 'Burgers',
-									'description' => 'Ground beef',
-									'quantity' => 50,
-									'units' => 'patties'));
+									'description' => '53 patties per case',
+									'quantity' => 1,
+									'units' => 'cases'));
 		Inventory::create(array(	'id' => 2,
-									'name' => 'Fries',
-									'description' => 'Sliced potatoes',
-									'quantity' => 15,
+									'name' => 'Sweet potato fries',
+									'description' => '2.5lb bags',
+									'quantity' => 6,
 									'units' => 'bags'));
 		Inventory::create(array(	'id' => 3,
 									'name' => 'Root Beer',
-									'description' => '',
-									'quantity' => 23,
-									'units' => 'Liters'));
+									'description' => '24 bottles per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 4,
+									'name' => 'Mozarella Sticks',
+									'description' => '2lb per bag',
+									'quantity' => 6,
+									'units' => 'bags'));
+		Inventory::create(array(	'id' => 5,
+									'name' => 'Chicken Tenders',
+									'description' => '5lb per bag',
+									'quantity' => 2,
+									'units' => 'bags'));
+		Inventory::create(array(	'id' => 6,
+									'name' => 'Hamburger buns',
+									'description' => 'Six buns per bag',
+									'quantity' => 6,
+									'units' => '8 bags'));
+		Inventory::create(array(	'id' => 7,
+									'name' => 'Ketchup',
+									'description' => '24 bottles per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 8,
+									'name' => 'Diet Root beer',
+									'description' => '24 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 9,
+									'name' => 'Marinara Sauce',
+									'description' => '96 packets per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 10,
+									'name' => 'Vanilla ice cream',
+									'description' => '3-gallon tubs',
+									'quantity' => 1,
+									'units' => 'tubs'));
+		Inventory::create(array(	'id' => 11,
+									'name' => 'Mint chocolate chip ice cream',
+									'description' => '3-gallon tubs',
+									'quantity' => 1,
+									'units' => 'tubs'));
+		Inventory::create(array(	'id' => 12,
+									'name' => 'Oreo ice cream',
+									'description' => '3-gallon tubs',
+									'quantity' => 1,
+									'units' => 'tubs'));
+		Inventory::create(array(	'id' => 13,
+									'name' => 'Milk',
+									'description' => '20 cartons per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 14,
+									'name' => 'Napkins',
+									'description' => '8 bags of 500 in a case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 15,
+									'name' => 'Gloves',
+									'description' => '4 boxes of 100 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 16,
+									'name' => 'Trays',
+									'description' => '4 bags of 250 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 17,
+									'name' => '16oz cups',
+									'description' => '696 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 18,
+									'name' => 'Souffle cups',
+									'description' => '10 boxes of 250 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 19,
+									'name' => '12oz cups',
+									'description' => '15 bags of 57 per case',
+									'quantity' => 1,
+									'units' => 'cases'));
+		Inventory::create(array(	'id' => 20,
+									'name' => 'American cheese',
+									'description' => '160 slices per case',
+									'quantity' => 1,
+									'units' => 'cases'));
 	}
 }
 
