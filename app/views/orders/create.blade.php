@@ -1,6 +1,5 @@
-
 <!-- Global header/footer -->
-<div id="s">
+<!-- <div id="sickyFooter">
   <div class="row">
     <div class="large-12 columns">
       <div class="panel">
@@ -13,7 +12,22 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+   <div class="stickyFooter">
+      <div class="row">
+        <div class="large-12 columns">
+          <div class="panel">
+            <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
+            <ul class="button-group round even-2">
+              <li><button id="checkout" class="button success round" disabled>Checkout</button></li>
+              <li><button id="clearCart" class="button alert round">Clear Cart</button></li>
+            </ul>
+            <br/>
+          </div>
+        </div>
+      </div>
+   </div>
 
 <!-- Main body of menu -->
 <div class="row">
@@ -124,15 +138,15 @@
    });
 
   $(document).ready(function() {  
-  	var stickyNavTop = $('#s').offset().top;  
+  	var stickyNavTop = $('#sickyFooter').offset().top;  
   	  
   	var stickyNav = function() {  
     	var scrollTop = $(window).scrollTop();  
     	       
     	if (scrollTop > stickyNavTop) {   
-    	    $('#s').addClass('sticky');  
+    	    $('#sickyFooter').addClass('sticky');  
     	} else {  
-    	    $('#s').removeClass('sticky');   
+    	    $('#sickyFooter').removeClass('sticky');   
     	}  
   
 
