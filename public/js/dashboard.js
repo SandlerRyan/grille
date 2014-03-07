@@ -118,14 +118,14 @@ function get_new_orders() {
 
 // ajax call to indicate item has been cooked and send text to user
 $( document ).on( 'click', '.cooked', function () {
-    console.log($(this).attr('id'))
+    var id = $(this).attr('id');
     var url = "/mark_as_cooked/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
           // update cart
-          $(this).remove();
+          $('#' + id).attr('disabled','disabled');
       },
       error:function(){
           alert("Sorry, something bad happened.");
