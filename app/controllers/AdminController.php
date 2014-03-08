@@ -2,7 +2,7 @@
 
 class AdminController extends \AdminBaseController {
 
-    
+
     public function dashboard() {
 
         // $orders = Order::where('fulfilled', 0)->get();
@@ -14,6 +14,7 @@ class AdminController extends \AdminBaseController {
         $this->layout->content = View::make('admin.dashboard', ['orders' => $orders, 'items' => $items]);
 
     }
+
     public function filled_orders() {
         $orders = Order::with('item_orders')->where('fulfilled', '!=', 1)->get();
         foreach($orders as $order){
@@ -23,7 +24,6 @@ class AdminController extends \AdminBaseController {
 
     }
 
-
     protected function sendPostData($url, $post)
     {
         $ch = curl_init($url);
@@ -32,42 +32,28 @@ class AdminController extends \AdminBaseController {
         curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
         return curl_exec($ch);
     }
+
     protected function refundCostViaVenmo($id) {
 
         // This function uses the Grille App access token to pay the phone number
-        //of the user that placed the order. 
+        //of the user that placed the order.
         $url = 'https://api.venmo.com/v1/payments';
         $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
         $order = Order::find($id);
         $phone_number = $order->user->phone_number;
-        $data = array("access_token" => $access_token, "amount" => 0.01, 
+        $data = array("access_token" => $access_token, "amount" => 0.01,
                 "phone" => $phone_number, "note" => "Testing Eliot Grille!!");
         $response = $this->sendPostData($url, $data);
-        
+
         // $venmoJSON = json_decode($response['message'], true);
-        // if (array_key_exists('error', $venmoJSON)) 
+        // if (array_key_exists('error', $venmoJSON))
         // {
         //     return 0;
-        // } else 
+        // } else
         // {
-        //     return 1;    
-        // }   
+        //     return 1;
+        // }
 
-    }
-    protected function send_sms($phone, $message)
-    {
-        // this line loads the library 
-        require(app_path().'/config/twilio-php/Services/Twilio.php');
-         
-        $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
-        $auth_token = '9b04babfc8f329f90f4f432926eaa007';
-        $client = new Services_Twilio($account_sid, $auth_token); 
-         
-        $client->account->messages->create(array( 
-            'To' => $phone, 
-            'From' => "+18432716240", 
-            'Body' => $message,
-        ));
     }
 
     public function refund_order($id) {
@@ -81,7 +67,7 @@ class AdminController extends \AdminBaseController {
             // } else {
             //     // $order->refunded = 1;
             //     $order->fulfilled = 2;
-            //     $order->save();    
+            //     $order->save();
             // }
         }
         //alert user that order has been refunded
@@ -89,7 +75,7 @@ class AdminController extends \AdminBaseController {
         // $name = User::where('id', $order->user_id)->pluck('preferred_name');
         // $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
-        // $message = "Hi " . $name . ", Unfortunately, something went wrong with your order. 
+        // $message = "Hi " . $name . ", Unfortunately, something went wrong with your order.
         //             We have refunded you completely.";
 
         // $this->send_sms($phone, $message);
@@ -108,11 +94,11 @@ class AdminController extends \AdminBaseController {
             $item['addons'] = $item_addons;
           }
         }
-        $response_array['status'] = 'success';    
+        $response_array['status'] = 'success';
         $response_array['cart'] =  json_decode($orders);
-        return json_encode($response_array);  
+        return json_encode($response_array);
     }
-    
+
     public function mark_as_cooked($id) {
         $order = Order::find($id);
         //alert user that order is ready
@@ -121,7 +107,7 @@ class AdminController extends \AdminBaseController {
 
         $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
 
-        $this->send_sms($phone, $message);
+        Sms::send_sms($phone, $message);
 
         return 1;
     }
@@ -136,7 +122,7 @@ class AdminController extends \AdminBaseController {
 
         $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
 
-        $this->send_sms($phone, $message);
+        Sms::send_sms($phone, $message);
 
         return 1;
     }
@@ -168,7 +154,7 @@ class AdminController extends \AdminBaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            $this->send_sms($phone, $message);
+            Sms::send_sms($phone, $message);
         }
     }
 
@@ -179,7 +165,7 @@ class AdminController extends \AdminBaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            $this->send_sms($phone, $message);
+            Sms::send_sms($phone, $message);
         }
     }
 

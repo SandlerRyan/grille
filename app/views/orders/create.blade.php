@@ -34,11 +34,11 @@
     @foreach($items as $item)
     <?php //get item quantity
         $this_item = Cart::find($item->id);
-        $qty = ($this_item ? $this_item->quantity : 0); ?> 
-    
+        $qty = ($this_item ? $this_item->quantity : 0); ?>
+
     <tr class="{{ $item->id }}">
       <td>
-          <b>{{{ $item->name }}}</b> 
+          <b>{{{ $item->name }}}</b>
           @if(!$item->available) <i>(unavailable)</i>@endif
           <br/>
           {{{ $item->description}}}
@@ -56,12 +56,12 @@
                       @if(!$item->available || !$addon->available) disabled @endif>+</button>
                   </td>
                   <td>
-                    <?php 
+                    <?php
                       if ($this_item){
                       $this_addon = Cart::find_addon($addon->id, $this_item);
                       $addon_qty = ($this_addon ? $this_addon->quantity : 0);
                       }
-                      else $addon_qty = 0; 
+                      else $addon_qty = 0;
                     ?>
                     <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
                   </td>
@@ -83,9 +83,9 @@
           </td>
           <td>
             <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
-          </td>          
+          </td>
           <td>
-            <button type="button" class="removeItem" id="remove-{{ $item->id }}" 
+            <button type="button" class="removeItem" id="remove-{{ $item->id }}"
               @if(!$item->available) disabled @endif> - </button>
       	  </td>
           <td>
@@ -120,30 +120,30 @@
   // enable the checkout button whenver there are items in the cart
    $(SUBMIT_BUTTON).click(function () {
       $(this).attr('disabled', 'disabled');
-      window.location = '/checkout';
+      window.location = '/order/checkout';
    });
 
-  $(document).ready(function() {  
-  	var stickyNavTop = $('#s').offset().top;  
-  	  
-  	var stickyNav = function() {  
-    	var scrollTop = $(window).scrollTop();  
-    	       
-    	if (scrollTop > stickyNavTop) {   
-    	    $('#s').addClass('sticky');  
-    	} else {  
-    	    $('#s').removeClass('sticky');   
-    	}  
-  
+  $(document).ready(function() {
+  	var stickyNavTop = $('#s').offset().top;
 
-  };  
-    
-  stickyNav();  
-    
-  $(window).scroll(function() {  
-      stickyNav();  
-  	}); 
-     
-  });  
+  	var stickyNav = function() {
+    	var scrollTop = $(window).scrollTop();
+
+    	if (scrollTop > stickyNavTop) {
+    	    $('#s').addClass('sticky');
+    	} else {
+    	    $('#s').removeClass('sticky');
+    	}
+
+
+  };
+
+  stickyNav();
+
+  $(window).scroll(function() {
+      stickyNav();
+  	});
+
+  });
 
 </script>

@@ -9,7 +9,7 @@ class UserController extends \BaseController {
         if (Session::has('user'))
         {
             // TODO: redirect to most recent page
-            return Redirect::to('/checkout');  
+            return Redirect::to('/order/checkout');
         }
 
         // else redirect user to CS50 ID
@@ -24,12 +24,12 @@ class UserController extends \BaseController {
 
         if (Session::has('user'))
             Session::forget('user');
-        return Redirect::to('/');  
+        Auth::logout();
+        return Redirect::to('/');
     }
 
     public function return_to()
     {
-
         // configuration
         require_once(app_path().'/config/id.php');
 
@@ -67,10 +67,11 @@ class UserController extends \BaseController {
         {
             $user = User::where('cs50_id', $current_user['identity'])->get()[0];
             Session::put('user', $user);
-            return Redirect::to('/checkout');
-        }   
+            Auth::loginUsingId($user->id);
+            return Redirect::to('/order/checkout');
+        }
     }
- 
+
     public function edit_user($id)
     {
         //check to make sure phone number in correct format
@@ -95,14 +96,14 @@ class UserController extends \BaseController {
                                                                 'deals_notification' => $deals_notification));
             Session::put('user', User::findorfail($id));
             // TODO: redirect to most recent page
-            return Redirect::to('/checkout');    
+            return Redirect::to('/order/checkout');
         }
         else
         {
             $failure = 'Please enter a 10-digit phone number';
-            return Redirect::to('/return_to')->with('failure', $failure);
+            return Redirect::to('/user/return_to')->with('failure', $failure);
         }
-                                          
+
     }
 
 
@@ -113,7 +114,7 @@ class UserController extends \BaseController {
     {
         $user = Session::get('user');
         if (!$user){
-            return Redirect::to('/checkout')->with('message','Could not add phone number. User not logged in');
+            return Redirect::to('/order/checkout')->with('message','Could not add phone number. User not logged in');
         }
         $user_info = User::findorfail($user->id);
         $user_info->phone_number = $phone;

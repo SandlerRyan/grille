@@ -1,6 +1,6 @@
     <!-- Top Navigation Bar -->
     <!-- <div class="sb-navbar sb-slide"> -->
-    
+
       <!-- Left Slidebar control -->
       <div class="button alert sb-toggle-left">
 <!--    <div class="navicon-line"></div>
@@ -11,7 +11,7 @@
 
     <!-- </div> -->
     <!-- Left Slidebar -->
-    <div class="sb-slidebar sb-left"> 
+    <div class="sb-slidebar sb-left">
 
       <!-- Lists in Slidebars -->
       <ul class="sb-menu">
@@ -20,8 +20,8 @@
         @foreach($items as $item)
           <li>
 
-            @if ($item->available) 
-    
+            @if ($item->available)
+
 
             <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
               {{ $item->name}}
@@ -32,19 +32,19 @@
 
             @else
               <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
-              {{ $item->name }} 
+              {{ $item->name }}
 
               </button>
 
             @endif
 
           </li>
-      
+
         @endforeach
 
       </ul>
 
-      
+
     </div>
 
 <div class="row">

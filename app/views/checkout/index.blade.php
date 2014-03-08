@@ -4,7 +4,7 @@
 		<h5><font color="red">{{$err_messages}}</font></h5>
 	@endif
     <div class="large-12 columns">
-    
+
       <div class="panel">
 
 	<h3>Order Details</h3>
@@ -49,42 +49,19 @@
 
 <div class="result">
 </div>
-
-<!-- THESE ARE YOUR ORDER DETAILS!
-
-@foreach(Cart::contents() as $item)
-{{$item->name}}<br/>
-{{$item->price}}<br/>
-{{$item->quantity}}<br/><br/> -->
-
-<!-- @endforeach -->
-
-
-
-	<!-- <div id="totalPrice"><b>Total</b>: ${{Cart::total()}}</div> -->
-	<!-- <div class="large-3 large-centered columns"> -->
-<!-- 	<a class="button success round" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a>
-<a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&
-	scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
-
-	<a class="button success round" href="/pay_later">Pay At Grille</a> -->
-
-	<!-- <br/> -->
-
-
-
 <br/>
 
-  
-  
+
+
 @if (Session::has('user'))
 	<ul class="button-group round even-2">
-          <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a></li>
-          <li><a class="button success" href="/pay_later">Pay At Pick-Up</a></li>
+          <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&
+          	scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a></li>
+          <li><a class="button success" href="/order/pay_later">Pay At Pick-Up</a></li>
     </ul>
 @else
 	<ul class="">
-          <li><a class="button success" href="/login">Log In To Proceed</a></li>
+          <li><a class="button success" href="/user/login">Log In To Proceed</a></li>
     </ul>
 @endif
 
@@ -119,7 +96,7 @@ function add_note ()
 				// replace with the note and an "edit note"
 				console.log('success');
 				$("#" + id).replaceWith(
-					'<button type="button" class="editNote" id="' + id + 
+					'<button type="button" class="editNote" id="' + id +
 					'">Edit Note</button>');
 				$(containerID).replaceWith(
 					'<p id="text-' + id + '">' + value + '</p>');
@@ -138,10 +115,10 @@ function edit_note ()
 		containerID = "#text-" + id;
 		var value = $(containerID).text();
 		$("#" + id).replaceWith(
-			'<button type="button" class="addNote" id="' + id + 
+			'<button type="button" class="addNote" id="' + id +
 			'">Submit Note</buton>');
 		$(containerID).replaceWith(
-			'<input type="text" class="note" id="text-' + id + 
+			'<input type="text" class="note" id="text-' + id +
 			'" value="' + value + '" maxlength="250"/>');
 		// attach the add note handler to the new DOM element
 		add_note();
