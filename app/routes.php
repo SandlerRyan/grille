@@ -89,11 +89,17 @@ Route::group(array('before' => 'auth|manager'), function ()
 	Route::resource('/db', 'DBController');
 });
 
-// Chron job meant to be run every 10 minutes
+/**
+* ROUTE TO CHECK GRILLE OPENING
+* Chron job meant to be run every 10 minutes
+* Eventually this will be changed from a url to an artisan command
+*/
 Route::get('/check_open/cron/run/c68pd2s4e363221a3064e8807da20s1sf', function () {
 	$grille_id = 1;
 	$manager = User::where('grille_id', $grille_id)->where('privileges', 'manager')->get()[0];
 	$hours = Hour::where('grille_id', $grille_id)->get();
+
+	date_default_timezone_set('America/New_York');
 	$now = new DateTime();
 	$is_open = Grille::find($grille_id)->open_now;
 
@@ -109,14 +115,14 @@ Route::get('/check_open/cron/run/c68pd2s4e363221a3064e8807da20s1sf', function ()
 		if ($is_open) {
 			if ($close < $now && $now < $close->add($interval)) {
 				$message = 'NOTICE: The grille is listed as open outside of regular hours.';
-				Sms::send_sms($manager->phone_number);
+				Sms::send_sms($manager->phone_number, $message);
 			}
 		}
 		// send text alert if hours say grille should have opened within last 15 minutes
 		else {
 			if ($open < $now && $now < $open->add($interval)) {
 				$message = 'NOTICE: The grille is listed as closed outside of regular hours.';
-				Sms::send_sms($manager->phone_number);
+				Sms::send_sms($manager->phone_number, $message);
 			}
 		}
 	}
