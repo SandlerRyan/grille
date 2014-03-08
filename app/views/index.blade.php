@@ -1,12 +1,3 @@
-<?php
-$hour = Hour::where('grille_id',1)->get()[0]->open_time;
-$dt = new DateTime($hour);
-$interval = new DateInterval('PT15M');
-// var_dump($interval);
-// var_dump($dt->add($interval));
-// echo $dt->format('H-i');;
-?>
-
 	<!-- First Band (Slider) -->
 
 	  <div class="row">
