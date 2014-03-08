@@ -79,6 +79,8 @@ Route::group(array('prefix' => 'admin', 'before' => 'auth|staff'), function ()
 Route::group(array('prefix' => 'inventory', 'before' => 'auth|staff'), function()
 {
 	Route::get('/', 'InventoryController@index');
+	Route::get('/increment/{id}', 'InventoryController@increment');
+	Route::get('/decrement/{id}', 'InventoryController@decrement');
 });
 
 /**
