@@ -58,6 +58,7 @@ Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 /**
 * ADMIN DASHBOARD ROUTES
 */
+
 Route::group(array('prefix' => 'admin', 'before' => 'auth|staff'), function ()
 {
 	Route::get('/', 'AdminController@dashboard');
