@@ -11,10 +11,6 @@ $(".addItem").click(function(){
           //update counter
           var qty = $(containerId).text();
           $(containerId).text(parseInt(qty) + 1);
-          //update cart footer
-          var total = "$" + data.cart;
-          $("#totalPrice").html(total);
-          $(SUBMIT_BUTTON).removeAttr('disabled');
       },
       error:function(){
           alert("failure");

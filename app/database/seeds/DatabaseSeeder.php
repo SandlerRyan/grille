@@ -60,71 +60,11 @@ class UnseedTables extends Seeder
 	}
 }
 
-class UserTableSeeder extends Seeder 
+class UserTableSeeder extends Seeder
 {
-	public function run() 
+	public function run()
 	{
 		User::create(array(	'id' => 1,
-							'cs50_id' => 'random_string',
-							'name' => 'Ian Boothby',
-							'preferred_name' => 'Ian',
-							'phone_number' => '6159183416',
-							'email' => 'iboothby@college.harvard.edu',
-							'hours_notification' => 0,
-							'deals_notification' => 0,
-							'privileges' => 'admin'
-							));
-		User::create(array(	'id' => 2,
-							'cs50_id' => 'random_string',
-							'name' => 'Nuseir Yassin',
-							'preferred_name' => 'Nuesir',
-							'phone_number' => '7734901404',
-							'email' => 'nyassin@college.harvard.edu',
-							'hours_notification' => 1,
-							'deals_notification' => 1,
-							'privileges' => 'admin'
-							));
-		User::create(array(	'id' => 3,
-							'cs50_id' => 'random_string',
-							'name' => 'Ryan Sandler',
-							'preferred_name' => 'Ryan',
-							'phone_number' => '9122578777',
-							'email' => 'ryansandler@college.harvard.edu',
-							'hours_notification' => 1,
-							'deals_notification' => 0,
-							'privileges' => 'admin'
-							));
-		User::create(array(	'id' => 4,
-							'cs50_id' => 'random_string',
-							'name' => 'Vladimir Bok',
-							'preferred_name' => 'Vlad',
-							'phone_number' => '6179391419',
-							'email' => 'vladimirbok@college.harvard.edu',
-							'hours_notification' => 0,
-							'deals_notification' => 1,
-							'privileges' => 'admin'
-							));
-		User::create(array(	'id' => 5,
-							'cs50_id' => 'random_string',
-							'name' => 'Daniel Broudy',
-							'preferred_name' => 'Danny',
-							'phone_number' => '2063847537',
-							'email' => 'broudy@college.harvard.edu',
-							'hours_notification' => 0,
-							'deals_notification' => 0,
-							'privileges' => 'user'
-							));
-		User::create(array(	'id' => 6,
-							'cs50_id' => 'random_string',
-							'name' => 'Jamie Law-Smith',
-							'preferred_name' => 'Jamie',
-							'phone_number' => '6172305842',
-							'email' => 'jlaw-smith@college.harvard.edu',
-							'hours_notification' => 0,
-							'deals_notification' => 0,
-							'privileges' => 'admin'
-							));
-		User::create(array(	'id' => 7,
 							'cs50_id' => 'random_string',
 							'name' => 'Peter Bang',
 							'preferred_name' => 'Peter',
@@ -138,7 +78,7 @@ class UserTableSeeder extends Seeder
 	}
 }
 
-class GrilleTableSeeder extends Seeder 
+class GrilleTableSeeder extends Seeder
 {
 	public function run()
 	{
@@ -209,7 +149,7 @@ class CategoryTableSeeder extends Seeder
 		Category::create(array(	'id' => 1,
 								'name' => 'Grilled Cheeses'));
 		Category::create(array(	'id' => 2,
-								'name' => 'Burgers'));		
+								'name' => 'Burgers'));
 		Category::create(array(	'id' => 3,
 								'name' => 'Fries and Friends'));
 		Category::create(array(	'id' => 4,
@@ -268,7 +208,7 @@ class ItemTableSeeder extends Seeder
 							'grille_id' => 1,
 							'description' => 'Fontina and bacon on white bread',
 							'available' => 1
-							));		
+							));
 		Item::create(array(	'id' => 7,
 							'name' => 'Hamburger',
 							'price' => 4.75,
