@@ -4,7 +4,9 @@ class InventoryController extends \BaseController {
 
     public function show() 
     {
-        $this->layout->content = View::make('inventory.index');        
+
+    	$items = Inventory::all();
+        $this->layout->content = View::make('inventory.index', ['items' => $items]);        
     }
 
 }

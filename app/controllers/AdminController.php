@@ -40,8 +40,8 @@ class AdminController extends \AdminBaseController {
         $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
         $order = Order::find($id);
         $phone_number = $order->user->phone_number;
-        $data = array("access_token" => $access_token, "amount" => 0.01, 
-                "phone" => $phone_number, "note" => "Testing Eliot Grille!!");
+        $data = array("access_token" => $access_token, "amount" => 0.06, 
+                "phone" => $phone_number, "note" => "Delicious Hamburger refund!");
         $response = $this->sendPostData($url, $data);
         
         // $venmoJSON = json_decode($response['message'], true);
