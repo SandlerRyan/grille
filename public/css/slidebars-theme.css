@@ -173,7 +173,8 @@ span.sb-caret { /* Caret Down */
 	left: auto;
 	right: auto;
 	z-index: 1000;
-	background-color: #219AEB; /* Bar colour. */
+	/*background-color: #219AEB; *//* Bar colour. */
+	background-color: #FFF;
 }
 
 html.sb-android .sb-navbar {

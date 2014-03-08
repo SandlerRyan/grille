@@ -103,56 +103,47 @@
 <!-- cart.js handles all ajax calls to the cart -->
 <script type="text/javascript" src="{{ URL::asset('js/cart.js') }}"></script>
 <script>
- 
-  //  $(window).bind("load", function () {
-  //     var footer = $("#footer");
-  //     var pos = footer.position();
-  //     var height = $(window).height();
-  //     height = height - pos.top;
-  //     height = height - footer.height();
-  //     if (height > 0) {
-  //         footer.css({
-  //             'margin-top': height + 'px'
-  //         });
-  //     }
-  // });
 
-var SUBMIT_BUTTON = '#checkout';
+  var SUBMIT_BUTTON = '#checkout';
 
-// Set the checkout button status when the page is loaded
-$(document).ready(function () {
-  // initialize the button as disabled
-  // remove dollar sign from total
-  var total = $('#totalPrice').text().substr(2);
-  if (parseInt(total) != 0) {
-    $(SUBMIT_BUTTON).removeAttr('disabled');
-  }
-});
+  // Set the checkout button status when the page is loaded
+  $(document).ready(function () {
+    // initialize the button as disabled
+    // remove dollar sign from total
+    var total = $('#totalPrice').text().substr(2);
+    if (parseInt(total) != 0) {
+      $(SUBMIT_BUTTON).removeAttr('disabled');
+    }
+  });
 
 
-// enable the checkout button whenver there are items in the cart
- $(SUBMIT_BUTTON).click(function () {
-    $(this).attr('disabled', 'disabled');
-    window.location = '/checkout';
- });
+  // enable the checkout button whenver there are items in the cart
+   $(SUBMIT_BUTTON).click(function () {
+      $(this).attr('disabled', 'disabled');
+      window.location = '/checkout';
+   });
 
-$(document).ready(function() {  
-	var stickyNavTop = $('#s').offset().top;  
-	  
-	var stickyNav = function() {  
-  	var scrollTop = $(window).scrollTop();  
-  	       
-  	if (scrollTop > stickyNavTop) {   
-  	    $('#s').addClass('sticky');  
-  	} else {  
-  	    $('#s').removeClass('sticky');   
-  	}  
+  $(document).ready(function() {  
+  	var stickyNavTop = $('#s').offset().top;  
+  	  
+  	var stickyNav = function() {  
+    	var scrollTop = $(window).scrollTop();  
+    	       
+    	if (scrollTop > stickyNavTop) {   
+    	    $('#s').addClass('sticky');  
+    	} else {  
+    	    $('#s').removeClass('sticky');   
+    	}  
+  
+
   };  
-  
-stickyNav();  
-  
-$(window).scroll(function() {  
-    stickyNav();  
-	});  
-});  
+    
+  stickyNav();  
+    
+  $(window).scroll(function() {  
+      stickyNav();  
+  	}); 
+     
+  });  
+
 </script>
