@@ -12,7 +12,8 @@
 		"moltin/laravel-cart": "dev-master",
 		"aheissenberger/foundation": "dev-master",
 		"zurb/foundation": "dev-master",
-		"twilio/sdk": "dev-master"
+		"twilio/sdk": "dev-master",
+		"liebig/cron": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

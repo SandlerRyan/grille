@@ -9,7 +9,10 @@ class BaseController extends Controller {
      */
     public function getIndex()
     {
-        $this->layout->content = View::make('index');
+        $errors = Session::get('message');
+
+        $this->layout->content = View::make('index',
+            ['err_messages' => $errors]);
     }
 
     /**

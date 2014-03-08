@@ -23,20 +23,20 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 
-    
+
     <!-- Slidebars -->
     <script src="js/slidebars.min.js"></script>
 
     <!-- Slidebars CSS -->
     <link rel="stylesheet" href="/css/slidebars.min.css">
-    
-    <!-- Example Styles -->
-    <link rel="stylesheet" href="/css/example-styles.css"> 
 
-    <link rel="stylesheet" href="/css/slidebars-theme.css"> 
+    <!-- Example Styles -->
+    <link rel="stylesheet" href="/css/example-styles.css">
+
+    <link rel="stylesheet" href="/css/slidebars-theme.css">
     <link rel="stylesheet" href="/js/slidebars-theme.js">
 
 
@@ -77,18 +77,24 @@
             </ul>
         </div>
       </div> -->
-
+          <?php if(Session::get('user')->privileges == 'manager'){ ?>
             <ul class="button-group radius even-3">
               <li><a class="button" href="/admin">Orders</a></li>
-              <li><a class="button" href="#">Inventory</a></li>
+              <li><a class="button" href="/inventory">Inventory</a></li>
               <li><a class="button" href="#">Admin Portal</a></li>
             </ul>
+          <?php } else { ?>
+            <ul class="button-group radius even-2">
+              <li><a class="button" href="/admin">Orders</a></li>
+              <li><a class="button" href="/inventory">Inventory</a></li>
+            </ul>
+          <?php } ?>
 
     <!-- End Header and Nav -->
 
 
 
-           <?= $content; ?> 
+           <?= $content; ?>
 
 
 
@@ -101,7 +107,7 @@
               <p>© 2014 Eliot Grille</p>
             </div>
           </div>
-        </div> 
+        </div>
       </footer>
 
 
@@ -109,23 +115,23 @@
       (function($) {
         $(document).ready(function() {
           var mySlidebars = new $.slidebars();
-          
+
           $('.toggle-left').on('click', function() {
             mySlidebars.toggle('left');
           });
-          
+
           $('.toggle-right').on('click', function() {
             mySlidebars.toggle('right');
           });
-          
+
           $('.open-left').on('click', function() {
             mySlidebars.open('left');
           });
-          
+
           $('.open-right').on('click', function() {
             mySlidebars.open('right');
           });
-          
+
           $('.close').on('click', function() {
             mySlidebars.close();
           });

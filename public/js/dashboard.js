@@ -5,19 +5,19 @@ var getTD = function(itemName) {
   return "<td>" + itemName + "</td>";
 }
 var getTR = function(rowItems) {
- return "<tr>" + rowItems + "</tr>"; 
+ return "<tr>" + rowItems + "</tr>";
 }
 var addButtons = function(order) {
   if (order.venmo_id != 0) {
-  return "<ul class='button-group'>" + 
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" + 
+  return "<ul class='button-group'>" +
+          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Picked-Up</a></li>" +
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button alert refund'>Refund Order</a></li>" +
           "</ul>"
   }
   else {
-    return "<ul class='button-group'>" + 
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" + 
+    return "<ul class='button-group'>" +
+          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
           "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Paid and Picked-Up</a></li>" +
           "</ul>"
   }
@@ -32,9 +32,9 @@ var AddTable = function(order) {
       item.addons.forEach(function(addon) {
         rows += getTR(getTD("&emsp; <i>+" + addon.name + "</i>") + getTD(addon.pivot.quantity) + getTD(" "));
       })
-  }) 
+  })
   rows = "<tbody>" + rows + "<tbody>"
-  head =  "<thead><tr>" + 
+  head =  "<thead><tr>" +
           "<th width='120'>Item</th><th width='80'>Quantity</th>" +
           "<th width='150'>Notes</th></tr></thead>"
   var content = head + rows;
@@ -42,9 +42,9 @@ var AddTable = function(order) {
 }
 
 var addMainWrapper = function(content, orderID) {
-    return "<li><div class='large-12 columns'>" + 
+    return "<li><div class='large-12 columns'>" +
            "<div class='panel' id='" + orderID + "'>" +
-           content + 
+           content +
            "</div>" +
            "</li></div>";
 }
@@ -52,16 +52,16 @@ var addVenmoHeader= function(order) {
   return "<div style='float:left;'><img border='0'" +
           "src='/img/venmo.png' width='90px'></div>" +
           "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" + 
-          "<h5>" + order.user.name + "</h5>" + 
+          "<br/>" +
+          "<h5>" + order.user.name + "</h5>" +
           "<h6>ID:" + order.id + "</h6>";
 }
 var addPickUpHeader = function(order) {
   return "<div style='float:left;'><h4>Pick-Up</h4>" +
           "</div>" +
           "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" + 
-          "<h5>" + order.user.name + "</h5>" + 
+          "<br/>" +
+          "<h5>" + order.user.name + "</h5>" +
           "<h6>ID:" + order.id + "</h6>";
 }
 
@@ -104,13 +104,13 @@ function get_new_orders() {
   var feedback =
   $.ajax({
       type: "POST",
-      url: "/get_new_orders",
+      url: "/admin/get_new_orders",
       async: false
   }).complete(function(data){
     data = JSON.parse(data.responseText);
     $("#show_orders").html("");
     html = generate_html_content(data);
-    
+
     $(".clearing-thumbs").html(html);
       setTimeout(function(){get_new_orders();}, 5000);
   });
@@ -118,14 +118,14 @@ function get_new_orders() {
 
 // ajax call to indicate item has been cooked and send text to user
 $( document ).on( 'click', '.cooked', function () {
-    console.log($(this).attr('id'))
-    var url = "/mark_as_cooked/" + $(this).attr('id');
+    var id = $(this).attr('id');
+    var url = "/admin/mark_as_cooked/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
           // update cart
-          $(this).remove();
+          $('#' + id).attr('disabled','disabled');
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -133,10 +133,10 @@ $( document ).on( 'click', '.cooked', function () {
     });
 });
 
-// ajax call to indicate that item has been picked up and order is fulfilled  
+// ajax call to indicate that item has been picked up and order is fulfilled
 $( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
-    var url = "/mark_as_fulfilled/" + $(this).attr('id');
+    var url = "/admin/mark_as_fulfilled/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
@@ -153,7 +153,7 @@ $( document ).on( 'click', '.picked', function () {
 // ajax call to refund users who have paid with venmo
 $( document ).on( 'click', '.refund', function () {
     console.log($(this).attr('id'))
-    var url = "/refund_order/" + $(this).attr('id');
+    var url = "/admin/refund_order/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
@@ -172,21 +172,21 @@ function unavailable () {
   $( document ).on('click', '.mark_item_unavailable', function () {
   console.log("mark unav")
   var id = $(this).attr('id');
-  var url = "/mark_as_unavailable/" + id;
+  var url = "/admin/mark_as_unavailable/" + id;
 
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
           //TODO:  MAKE THE DIV GRAY AND CHANGE THE BUTTON TO MARK AVAILABLE
-          id = "#" + id; 
+          id = "#" + id;
           $(id).removeClass('success');
           $(id).addClass('alert');
           $(id).removeClass('mark_item_unavailable');
           $(id).addClass('mark_item_available');
           available ();
           // $(id).removeClass('mark_item_available');
-          
+
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -199,7 +199,7 @@ function unavailable () {
 function available () {
   $( document ).on('click', '.mark_item_available', function () {
   console.log("mark av")
-  var url = "/mark_as_available/" + $(this).attr('id');
+  var url = "/admin/mark_as_available/" + $(this).attr('id');
   var id = $(this).attr('id');
   $.ajax({
       url: url,
@@ -212,8 +212,8 @@ function available () {
           $(id).removeClass('mark_item_available');
           $(id).addClass('mark_item_unavailable');
           unavailable ();
-          
-          console.log($(id)); 
+
+          console.log($(id));
       },
       error:function(){
           alert("Sorry, something bad happened.");

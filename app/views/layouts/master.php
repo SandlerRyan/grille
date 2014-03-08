@@ -23,20 +23,20 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
-    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> 
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 
-    
+
     <!-- Slidebars -->
     <script src="js/slidebars.min.js"></script>
 
     <!-- Slidebars CSS -->
     <link rel="stylesheet" href="/css/slidebars.min.css">
-    
-    <!-- Example Styles -->
-    <link rel="stylesheet" href="/css/example-styles.css"> 
 
-    <link rel="stylesheet" href="/css/slidebars-theme.css"> 
+    <!-- Example Styles -->
+    <link rel="stylesheet" href="/css/example-styles.css">
+
+    <link rel="stylesheet" href="/css/slidebars-theme.css">
     <link rel="stylesheet" href="/js/slidebars-theme.js">
 
 
@@ -73,9 +73,9 @@
             <ul class="inline-list right">
               <?php if(Session::has('user')){ ?>
               <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
-              <li><a href="/logout">Log out</a></li>
+              <li><a href="/user/logout">Log out</a></li>
               <?php }else{ ?>
-              <li><a class="button" href="/login">Login</a></li>
+              <li><a class="button" href="/user/login">Login</a></li>
               <?php } ?>
             </ul>
         </div>
@@ -85,11 +85,10 @@
         <div class="large-12 columns">
           <!-- <h2>Eliot Grille</h2> -->
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')){ ?>
-            <ul class="button-group radius even-4">
+            <ul class="button-group radius even-3">
               <li><a class="button" href="/">Home</a></li>
               <li><a class="button" href="/order/create">Menu</a></li>
-              <li><a class="button" href="/admin">Orders</a></li>
-              <li><a class="button" href="/inventory">Inventory</a></li>
+              <li><a class="button" href="/admin">Staff</a></li>
 <!--             <li><a class="button" href="#">Russian Blue</a></li>
             <li><a class="button" href="#">Scottish Fold</a></li> -->
           </ul>
@@ -101,10 +100,10 @@
           <?php } ?>
         </div>
       </nav>
-      
+
     <!-- End Header and Nav -->
 
-           <?= $content; ?> 
+           <?= $content; ?>
 
       <!-- Footer -->
       <footer class="row">
@@ -115,7 +114,7 @@
               <p>© 2014 Eliot Grille</p>
             </div>
           </div>
-        </div> 
+        </div>
       </footer>
 
 

@@ -1,7 +1,7 @@
 // Ajax call to add item
 $(".addItem").click(function(){
   var id = this.id.split('-')[1];
-  url = "/cart/increment/" + id;
+  url = "/increment/" + id;
   $.ajax({
       url: url,
       type: "get",
@@ -11,10 +11,6 @@ $(".addItem").click(function(){
           //update counter
           var qty = $(containerId).text();
           $(containerId).text(parseInt(qty) + 1);
-          //update cart footer
-          var total = "$" + data.cart;
-          $("#totalPrice").html(total);
-          $(SUBMIT_BUTTON).removeAttr('disabled');
       },
       error:function(){
           alert("failure");
@@ -26,7 +22,7 @@ $(".addItem").click(function(){
 // Ajax call to remove item
 $(".removeItem").click(function(){
   var id = this.id.split('-')[1];
-  url = "/cart/decrement/" + id;
+  url = "/decrement/" + id;
   $.ajax({
       url: url,
       type: "get",
@@ -35,9 +31,9 @@ $(".removeItem").click(function(){
           containerId = "#value-" + id;
           var qty = $(containerId).text();
           if (qty > 0) {
-            $(containerId).text(parseInt(qty) - 1);
+            $(containerId).text(parseInt(qty) - 1);  
           } else {
-            $(containerId).text(0);
+            $(containerId).text(0);  
           }
           //update cart and gray out checkout button if total is zero
           var data = JSON.parse(data);
@@ -65,13 +61,13 @@ $(".addAddon").click(function(){
   var addon_id = info[1];
   var item_id = info[2];
   $.ajax({
-      url: '/cart/increment_addon/' + addon_id + '/' + item_id,
+      url: '/increment_addon/' + addon_id + '/' + item_id,
       type: 'get',
       success: function(data){
         // if there are fewer items than the addon you're trying to add
-        // the back end will return success but will not update the cart,
+        // the back end will return success but will not update the cart, 
         // so do not update counters
-        var data = JSON.parse(data);
+        var data = JSON.parse(data); 
 
         // check that there are not more addons than items
         if (data.validated == true) {
@@ -97,16 +93,16 @@ $(".removeAddon").click(function(){
   var addon_id = info[1];
   var item_id = info[2];
   $.ajax({
-      url: '/cart/decrement_addon/' + addon_id + '/' + item_id,
+      url: '/decrement_addon/' + addon_id + '/' + item_id,
       type: 'get',
       success: function(data){
           // update counter
           containerID = "#value-" + addon_id + '-' + item_id;
           var qty = $(containerID).text();
           if (qty > 0) {
-            $(containerID).text(parseInt(qty) - 1);
+            $(containerID).text(parseInt(qty) - 1);  
           } else {
-            $(containerID).text(0);
+            $(containerID).text(0);  
           }
           //update cart and gray out checkout button if total is zero
           var data = JSON.parse(data);
@@ -123,7 +119,7 @@ $(".removeAddon").click(function(){
 
 // Ajax call to clear cart and zero out item totals
 $("#clearCart").click(function() {
-  var url = "/cart/empty_cart";
+  var url = "/empty_cart";
   $.ajax({
     url: url,
     type: "get",
@@ -133,7 +129,7 @@ $("#clearCart").click(function() {
         var total = data.cart;
         var total =  "$" + total;
         $("#totalPrice").html(total);
-
+        
         // clear all quantity values without having to refresh the page
         $(".itemQuantity").each(function(i, obj){
           $(obj).text(0);
