@@ -5,6 +5,10 @@ class UserController extends \BaseController {
     public function login()
     {
         require_once(app_path().'/config/id.php');
+
+        //store url in session
+        Session::put('redirect', URL::full());
+        
         // if user is already logged in, redirect to index.php
         if (Session::has('user'))
         {
