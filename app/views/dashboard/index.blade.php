@@ -1,3 +1,46 @@
+    <!-- End Header and Nav -->
+      <div class="button alert sb-toggle-left">
+        In-Stock Side Bar
+      </div>
+
+    <!-- </div> -->
+    <!-- Left Slidebar -->
+    <div class="sb-slidebar sb-left">
+
+      <!-- Lists in Slidebars -->
+      <ul class="sb-menu">
+
+
+        @foreach($items as $item)
+          <li>
+
+            @if ($item->available)
+
+
+            <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
+              {{ $item->name}}
+
+            </button>
+            
+            @else
+              <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
+              {{ $item->name }}
+
+              </button>
+
+            @endif
+
+          </li>
+
+        @endforeach
+
+      </ul>
+
+
+    </div>
+
+
+
 <div class="row">
 
 
@@ -49,10 +92,13 @@
                    <tbody>
                       <%
                         _.each(order.item_orders, function(item) {
+                          ////////////////////
+                          console.log(item);
+                          ////////////////////
                       %>
-                          <tr>
+                        <tr>
                            <td><%= item.name %></td>
-                           <td><%= item.id %></td>
+                           <td><%= item.quantity %></td>
                            <td><%= item.notes %></td>
                         </tr>
 

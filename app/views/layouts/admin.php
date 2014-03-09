@@ -76,19 +76,6 @@
             </ul>
           <?php } ?>
 
-    <!-- End Header and Nav -->
-          <div class="button alert sb-toggle-left">
-        In-Stock Side Bar
-      </div>
-
-    <!-- </div> -->
-    <!-- Left Slidebar -->
-    <div class="sb-slidebar sb-left">
-
-
-
-    </div>
-
 
     <!-- content  -->
     <?= $content; ?>
