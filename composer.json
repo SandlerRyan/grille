@@ -39,6 +39,9 @@
 			"php artisan key:generate"
 		]
 	},
+	"require-dev": {
+    	"phpunit/phpunit": "3.7.*"
+ 	 },
 	"config": {
 		"preferred-install": "dist"
 	},
