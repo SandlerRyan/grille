@@ -41,11 +41,12 @@ class AdminController extends \AdminBaseController {
         $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
         $order = Order::find($id);
         $phone_number = $order->user->phone_number;
+        $note = "Your money for order " . $id . " has been refunded.";
         $data = array("access_token" => $access_token, "amount" => 0.04,
-                "phone" => $phone_number, "note" => "Delicious Hamssburgssser re22fund!!", "audience" => "private");
+                "phone" => $phone_number, "note" => $note, "audience" => "private");
         $response = $this->sendPostData($url, $data);
 
-        $venmoJSON = json_decode($response['message'], true);
+        // $venmoJSON = json_decode($response['message'], true);
         return 1;
         // if (array_key_exists('error', $venmoJSON))
         // {
