@@ -56,7 +56,7 @@
 @if (Session::has('user'))
 	<ul class="button-group round even-2">
           <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Use Venmo</a></li>
-          <li><a class="button success" href="/pay_later">Pay At Pick-Up</a></li>
+          <li><a class="button success" href="/order/pay_later">Pay At Pick-Up</a></li>
     </ul>
 @else
 	<ul class="">
