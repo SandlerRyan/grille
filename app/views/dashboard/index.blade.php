@@ -27,9 +27,7 @@
               {{ $item->name}}
 
             </button>
-
-
-
+            
             @else
               <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
               {{ $item->name }}

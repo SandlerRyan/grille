@@ -41,11 +41,12 @@ class AdminController extends \AdminBaseController {
         $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
         $order = Order::find($id);
         $phone_number = $order->user->phone_number;
-        $data = array("access_token" => $access_token, "amount" => 0.06,
-                "phone" => $phone_number, "note" => "Delicious Hamburger refund!");
+        $data = array("access_token" => $access_token, "amount" => 0.04,
+                "phone" => $phone_number, "note" => "Delicious Hamssburgssser re22fund!!", "audience" => "private");
         $response = $this->sendPostData($url, $data);
 
-        // $venmoJSON = json_decode($response['message'], true);
+        $venmoJSON = json_decode($response['message'], true);
+        return 1;
         // if (array_key_exists('error', $venmoJSON))
         // {
         //     return 0;
@@ -58,27 +59,33 @@ class AdminController extends \AdminBaseController {
 
     public function refund_order($id) {
         $order = Order::find($id);
+        // $response_array = array();
+
         if ($order->venmo_id != 0) {
-            $this->refundCostViaVenmo($id);
-            // if ($this->refundCostViaVenmo($id) != 1) {
-            //     // $order->refunded = 0;
-            //     $order->save();
-            //     // return 0;
-            // } else {
-            //     // $order->refunded = 1;
-            //     $order->fulfilled = 2;
-            //     $order->save();
-            // }
+            if ($this->refundCostViaVenmo($id) == 1) {
+                // $response_array['status'] = 'error';
+                // $response_array['message'] = 'Something went wrong';
+                // $order->refunded = 0;
+                // $order->save();
+                return 1;
+                // return 0;
+            } else {
+                // $order->refunded = 1;
+                $order->fulfilled = 0;
+                $order->save();
+                return 0;
+            }
         }
+        
         //alert user that order has been refunded
         //TODO - give a reason? next steps?
         // $name = User::where('id', $order->user_id)->pluck('preferred_name');
         // $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
-        // $message = "Hi " . $name . ", Unfortunately, something went wrong with your order.
-        //             We have refunded you completely.";
+        // $message = "Hi " . $name . ", Unfortunately, something went wrong with your order.We have refunded you completely.";
 
-        // $this->send_sms($phone, $message);
+        // Sms::send_sms($phone, $message);
+
         return 1;
     }
 

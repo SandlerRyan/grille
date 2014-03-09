@@ -112,7 +112,7 @@ function get_new_orders() {
     html = generate_html_content(data);
 
     $(".clearing-thumbs").html(html);
-      setTimeout(function(){get_new_orders();}, 5000);
+      setTimeout(function(){get_new_orders();}, 50000);
   });
 }
 
@@ -120,12 +120,15 @@ function get_new_orders() {
 $( document ).on( 'click', '.cooked', function () {
     var id = $(this).attr('id');
     var url = "/dashboard/mark_as_cooked/" + $(this).attr('id');
+    var element = $(this);
   $.ajax({
       url: url,
       type: "post",
-      success: function(data){
+      success: function(){
           // update cart
-          $('#' + id).attr('disabled','disabled');
+          console.log("cooked")
+          $(element).closest('li').text("Sent Reminder");
+
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -137,12 +140,14 @@ $( document ).on( 'click', '.cooked', function () {
 $( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
     var url = "/dashboard/mark_as_fulfilled/" + $(this).attr('id');
+    var element = $(this);
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
           // update cart
           console.log("good")
+          $(element).closest('li').text("This order is complete!");
       },
       error:function(){
           alert("Sorry, something bad happened.");
