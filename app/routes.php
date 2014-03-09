@@ -133,8 +133,3 @@ Route::get('/check_open/cron/run/c68pd2s4e363221a3064e8807da20s1sf', function ()
 });
 
 Route::controller('/', 'BaseController');
-
-
-
-
-
