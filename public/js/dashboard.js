@@ -110,15 +110,15 @@ function get_new_orders(tmpl) {
       url: "/dashboard/get_new_orders",
       async: false
   }).complete(function(data){
+    
     data = JSON.parse(data.responseText);
+    
     $("#show_orders").html("");
+    var compiledtmpl = _.template(tmpl, {orders: data.cart})
+    $("#show_orders").html(compiledtmpl);
 
-    console.log(data.cart);
-    var compiledtmpl = _.template(tmpl, {orders: data.cart[0]})
-    // html = generate_html_content(data);
-    console.log(compiledtmpl)
-    $(".clearing-thumbs").html(compiledtmpl);
-      setTimeout(function(){get_new_orders();}, 5000);
+    //repeat every 5 seconds.
+    setTimeout(function(){get_new_orders(tmpl);}, 5000);
 
   });
 }
@@ -217,15 +217,13 @@ function available () {
       url: url,
       type: "post",
       success: function(data){
-          //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
+          
           id = "#" + id;
           $(id).removeClass('alert');
           $(id).addClass('success');
           $(id).removeClass('mark_item_available');
           $(id).addClass('mark_item_unavailable');
           unavailable ();
-
-          console.log($(id));
       },
       error:function(){
           alert("Sorry, something bad happened.");
