@@ -62,7 +62,6 @@
 
   <body>
 
-
   <!-- <a href="#" class="button [radius round]">Log out</a> -->
 
 
@@ -104,7 +103,11 @@
 
     <!-- End Header and Nav -->
 
-           <?= $content; ?>
+    <div class="row">
+		<h3>404: Page not found</h3>
+	</div>
+
+
 
       <!-- Footer -->
       <footer class="row">
@@ -121,6 +124,4 @@
 
 
     </body>
-
-
 </html>

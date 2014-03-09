@@ -1,33 +1,18 @@
-<!-- Global header/footer -->
-<!-- <div id="sickyFooter">
-  <div class="row">
-    <div class="large-12 columns">
-      <div class="panel">
-        <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
-        <ul class="button-group round even-2">
-          <li><button id="checkout" class="button success round" disabled>Checkout</button></li>
-          <li><button id="clearCart" class="button alert round">Clear Cart</button></li>
-        </ul>
-        <br/>
+<!-- sticky footer -->
+ <div class="stickyFooter">
+    <div class="row">
+      <div class="large-12 columns">
+        <!-- <div class="panel"> -->
+          <h4 class="inline">Your total is: <div id="totalPrice" class="inline"> ${{{Cart::total()}}} </div> </h4>
+          <ul class="button-group round even-2">
+            <li><button id="checkout" class="button success round" disabled>Checkout</button></li>
+            <li><button id="clearCart" class="button alert round">Clear Cart</button></li>
+          </ul>
+          <br/>
+        <!-- </div> -->
       </div>
     </div>
-  </div>
-</div> -->
-
-   <div class="stickyFooter">
-      <div class="row">
-        <div class="large-12 columns">
-          <div class="panel">
-            <h4>Your total is: <div id="totalPrice"> ${{{Cart::total()}}} </div> </h4>
-            <ul class="button-group round even-2">
-              <li><button id="checkout" class="button success round" disabled>Checkout</button></li>
-              <li><button id="clearCart" class="button alert round">Clear Cart</button></li>
-            </ul>
-            <br/>
-          </div>
-        </div>
-      </div>
-   </div>
+ </div>
 
 <!-- Main body of menu -->
 <div class="row">
@@ -48,11 +33,11 @@
     @foreach($items as $item)
     <?php //get item quantity
         $this_item = Cart::find($item->id);
-        $qty = ($this_item ? $this_item->quantity : 0); ?> 
-    
+        $qty = ($this_item ? $this_item->quantity : 0); ?>
+
     <tr class="{{ $item->id }}">
       <td>
-          <b>{{{ $item->name }}}</b> 
+          <b>{{{ $item->name }}}</b>
           @if(!$item->available) <i>(unavailable)</i>@endif
           <br/>
           {{{ $item->description}}}
@@ -70,12 +55,12 @@
                       @if(!$item->available || !$addon->available) disabled @endif>+</button>
                   </td>
                   <td>
-                    <?php 
+                    <?php
                       if ($this_item){
                       $this_addon = Cart::find_addon($addon->id, $this_item);
                       $addon_qty = ($this_addon ? $this_addon->quantity : 0);
                       }
-                      else $addon_qty = 0; 
+                      else $addon_qty = 0;
                     ?>
                     <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
                   </td>
@@ -97,9 +82,9 @@
           </td>
           <td>
             <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
-          </td>          
+          </td>
           <td>
-            <button type="button" class="removeItem" id="remove-{{ $item->id }}" 
+            <button type="button" class="removeItem" id="remove-{{ $item->id }}"
               @if(!$item->available) disabled @endif> - </button>
       	  </td>
           <td>
@@ -134,30 +119,7 @@
   // enable the checkout button whenver there are items in the cart
    $(SUBMIT_BUTTON).click(function () {
       $(this).attr('disabled', 'disabled');
-      window.location = '/checkout';
+      window.location = '/order/checkout';
    });
-
-  $(document).ready(function() {  
-  	var stickyNavTop = $('#sickyFooter').offset().top;  
-  	  
-  	var stickyNav = function() {  
-    	var scrollTop = $(window).scrollTop();  
-    	       
-    	if (scrollTop > stickyNavTop) {   
-    	    $('#sickyFooter').addClass('sticky');  
-    	} else {  
-    	    $('#sickyFooter').removeClass('sticky');   
-    	}  
-  
-
-  };  
-    
-  stickyNav();  
-    
-  $(window).scroll(function() {  
-      stickyNav();  
-  	}); 
-     
-  });  
 
 </script>

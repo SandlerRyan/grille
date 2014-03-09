@@ -1,20 +1,22 @@
-	 
 	<!-- First Band (Slider) -->
-	 
+
 	  <div class="row">
 	    <div class="large-12 columns">
+    	  @if($err_messages)
+		    <h5><font color="red">{{$err_messages}}</font></h5>
+		  @endif
 	    <div id="slider">
 	      <img class="mainImg" src="/img/hamburger2.png" />
 	    </div>
-	    
+
 
 	    <hr />
 
 	    </div>
 	  </div>
-	  
+
 	<!-- Three-up Content Blocks -->
-	 
+
 <!-- <div class="row">
 
 	    <div class="large-4 columns">
@@ -31,14 +33,14 @@
 	    </div> -->
 
 <!-- 	    <div class="large-3 columns">
-	      <img src="/img/map.png" />	
+	      <img src="/img/map.png" />
 	      <h4>Where to find us?</h4>
 	      <p>
 	      	The Eliot Grille, also known as "Inferno", is located in the basement of Eliot House, 101 Dunster Street.
 	      </p>
 	    </div> -->
-	    
-	    
+
+
 	    <!-- <div class="large-1 columns"> -->
 	      <!-- <img src="http://placehold.it/400x300&text=[img]" />
 	      <h4>This is a content section.</h4>
@@ -46,12 +48,12 @@
 	    </div> -->
 	    <!-- </div> -->
 
-	    
+
 	<!-- Call to Action Panel -->
 	<div class="row">
 		<div class="large-4 columns"></div>
 	    <div class="large-4 columns">
-	    
+
 	      <!-- <div class="panel"> -->
 	        <!-- <h4>See the menu</h4> -->
 	        <!-- <div class="row"> -->
@@ -63,8 +65,8 @@
 	          <!-- </div> -->
 	        <!-- </div> -->
 	      <!-- </div> -->
-	      
+
 	    </div>
 	    <div class="large-4 columns"></div>
 	  </div>
-	 
+

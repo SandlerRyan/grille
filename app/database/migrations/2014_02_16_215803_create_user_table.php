@@ -13,9 +13,9 @@ class CreateUserTable extends Migration {
 	public function up()
 	{
 		Schema::create('users', function($table)
-		{	
+		{
 			// primary key is unique 84-char URL yielded by CS50ID,
-			// derived from HUID 
+			// derived from HUID
 			$table->increments('id');
 			$table->string('cs50_id',84);
 			$table->string('name');
@@ -24,7 +24,7 @@ class CreateUserTable extends Migration {
 			$table->string('email');	// TODO: need to look up how @college emails are handled for graduates
 			$table->boolean('hours_notification')->default(0);	// text notifications
 			$table->boolean('deals_notification')->default(0);
-			$table->enum('privileges', array('user','staff','manager','admin'))->default('user');
+			$table->enum('privileges', array('user','staff','manager', 'admin'))->default('user');
 
 			// if user is associated with a grille as a staff or manager
 			$table->integer('grille_id')->unsigned()->nullable()->default(NULL);

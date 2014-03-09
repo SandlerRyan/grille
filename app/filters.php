@@ -13,7 +13,30 @@
 
 App::before(function($request)
 {
-	//
+	// filter for whether or not the grille is open
+	Route::filter('open', function()
+	{
+		if(Grille::find(1)->open_now == 0) {
+			return Redirect::to('/')->with('message',
+				'The grille is not open at this time.');
+		}
+	});
+
+	Route::filter('staff', function()
+	{
+		if(Session::get('user')->privileges == 'user') {
+			return Redirect::to('/')->with('message',
+				'You do not have sufficient privileges to access this page');
+		}
+	});
+
+	Route::filter('manager', function()
+	{
+		if(Session::get('user')->privileges != ('manager' || 'admin')) {
+			return Redirect::to('/admin')->with('message',
+				'You do not have sufficient privileges to access this page');
+		}
+	});
 });
 
 
@@ -35,7 +58,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
+	if (Auth::guest()) return Redirect::guest('user/login');
 });
 
 

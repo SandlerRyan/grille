@@ -11,17 +11,17 @@
 
 
 <table>
-{{ Form::model($user, array('url' => array('/edit_user/' . $user->id), 'method' => 'GET')) }}
+{{ Form::model($user, array('url' => array('/user/edit_user/' . $user->id), 'method' => 'GET')) }}
 	<div class="row collapse">
 		<div class="large-4 columns">
 			{{ Form::label('preferred_name', 'Preferred Name') }}
-			{{ Form::text('preferred_name') }} 
+			{{ Form::text('preferred_name') }}
 		</div>
 	</div>
 	<div class="row collapse">
 		<div class="large-4 columns">
 			{{ Form::label('phone_number', 'Phone Number') }}
-			{{ Form::text('phone_number', '', array('placeholder'=>"(XXX) XXX-XXXX", 'required')) }} 
+			{{ Form::text('phone_number', '', array('placeholder'=>"(XXX) XXX-XXXX", 'required')) }}
 		</div>
 	</div>
 
@@ -34,10 +34,10 @@
     		{{ Form::checkbox('hours_notification', '', array('type'=>'checkbox', 'id'=>'checkbox1'))}}
 			{{ Form::label('hours_notification_label', 'Update me about special hours',
 									array('for'=>'checkbox1')) }}
-			
+
 			<br/>
 			{{Form::checkbox('deals_notification', '', array('type'=>'checkbox','id'=>'checkbox2'))}}
-			{{ Form::label('deals_notification_label', 'Update me about deals and discounts', 
+			{{ Form::label('deals_notification_label', 'Update me about deals and discounts',
 										array('for'=>'checkbox2')) }}
 
 
