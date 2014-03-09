@@ -62,21 +62,7 @@
 
   <body>
 
-<!--       <div class="row">
-        <div class="large-12 columns">
-          <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
-        </div>
-        <div class="large-6 columns">
-            <ul class="inline-list right">
-              <?php if(Session::has('user')){ ?>
-              <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
-              <li><a href="/logout">Log out</a></li>
-              <?php }else{ ?>
-              <li><a href="/login">Login</a></li>
-              <?php } ?>
-            </ul>
-        </div>
-      </div> -->
+
           <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
             <ul class="button-group radius even-3">
               <li><a class="button" href="/dashboard">Orders</a></li>
@@ -91,10 +77,49 @@
           <?php } ?>
 
     <!-- End Header and Nav -->
+          <div class="button alert sb-toggle-left">
+        In-Stock Side Bar
+      </div>
+
+    <!-- </div> -->
+    <!-- Left Slidebar -->
+    <div class="sb-slidebar sb-left">
+
+      <!-- Lists in Slidebars -->
+      <ul class="sb-menu">
 
 
+        @foreach($items as $item)
+          <li>
 
-           <?= $content; ?>
+            @if ($item->available)
+
+
+            <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
+              {{ $item->name}}
+
+            </button>
+            
+            @else
+              <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
+              {{ $item->name }}
+
+              </button>
+
+            @endif
+
+          </li>
+
+        @endforeach
+
+      </ul>
+
+
+    </div>
+
+
+    <!-- content  -->
+    <?= $content; ?>
 
 
 
