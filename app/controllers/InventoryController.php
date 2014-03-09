@@ -1,6 +1,6 @@
 <?php
 
-class InventoryController extends \BaseController {
+class InventoryController extends \AdminBaseController {
 
     public function index()
     {
