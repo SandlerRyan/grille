@@ -1,3 +1,4 @@
+# ignore these files
 /bootstrap/compiled.php
 /vendor
 composer.phar
@@ -6,3 +7,7 @@ composer.lock
 .env.php
 .DS_Store
 Thumbs.db
+
+# but not these files
+!/vendor/frozennode/administrator/src/config/administrator.php
+!/vendor/moltin/cart/src/Moltin/Cart/Cart.php
