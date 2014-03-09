@@ -20,7 +20,6 @@
     <tr class="{{ $item->id }}">
       <td>
           <b>{{{ $item->name }}}</b> 
-          <!-- @if(!$item->available) <i>(unavailable)</i>@endif -->
           <br/>
           {{{ $item->description}}}
           </td>
@@ -42,7 +41,7 @@
 
 </div>
 
-<!-- cart.js handles all ajax calls to the cart -->
+<!-- inventory.js handles all ajax calls to the cart -->
 <script type="text/javascript" src="{{ URL::asset('js/inventory.js') }}"></script>
 <script>
  
