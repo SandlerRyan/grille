@@ -77,11 +77,11 @@
             </ul>
         </div>
       </div> -->
-          <?php if(Session::get('user')->privileges == 'manager'){ ?>
+          <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
             <ul class="button-group radius even-3">
               <li><a class="button" href="/dashboard">Orders</a></li>
               <li><a class="button" href="/inventory">Inventory</a></li>
-              <li><a class="button" href="#">Admin Portal</a></li>
+              <li><a class="button" href="/admin">Admin Portal</a></li>
             </ul>
           <?php } else { ?>
             <ul class="button-group radius even-2">

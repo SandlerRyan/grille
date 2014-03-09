@@ -89,7 +89,7 @@
             <ul class="button-group radius even-3">
               <li><a class="button" href="/">Home</a></li>
               <li><a class="button" href="/order/create">Menu</a></li>
-              <li><a class="button" href="/admin">Staff</a></li>
+              <li><a class="button" href="/dashboard">Staff</a></li>
 <!--             <li><a class="button" href="#">Russian Blue</a></li>
             <li><a class="button" href="#">Scottish Fold</a></li> -->
           </ul>
