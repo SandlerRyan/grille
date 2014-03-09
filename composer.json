@@ -13,7 +13,7 @@
 		"aheissenberger/foundation": "dev-master",
 		"zurb/foundation": "dev-master",
 		"twilio/sdk": "dev-master",
-		"liebig/cron": "dev-master"
+		"frozennode/administrator": "dev-master"
 	},
 	"autoload": {
 		"classmap": [

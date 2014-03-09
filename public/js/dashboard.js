@@ -104,7 +104,7 @@ function get_new_orders() {
   var feedback =
   $.ajax({
       type: "POST",
-      url: "/admin/get_new_orders",
+      url: "/dashboard/get_new_orders",
       async: false
   }).complete(function(data){
     data = JSON.parse(data.responseText);
@@ -119,7 +119,7 @@ function get_new_orders() {
 // ajax call to indicate item has been cooked and send text to user
 $( document ).on( 'click', '.cooked', function () {
     var id = $(this).attr('id');
-    var url = "/admin/mark_as_cooked/" + $(this).attr('id');
+    var url = "/dashboard/mark_as_cooked/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
@@ -136,7 +136,7 @@ $( document ).on( 'click', '.cooked', function () {
 // ajax call to indicate that item has been picked up and order is fulfilled
 $( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
-    var url = "/admin/mark_as_fulfilled/" + $(this).attr('id');
+    var url = "/dashboard/mark_as_fulfilled/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
@@ -153,7 +153,7 @@ $( document ).on( 'click', '.picked', function () {
 // ajax call to refund users who have paid with venmo
 $( document ).on( 'click', '.refund', function () {
     console.log($(this).attr('id'))
-    var url = "/admin/refund_order/" + $(this).attr('id');
+    var url = "/dashboard/refund_order/" + $(this).attr('id');
   $.ajax({
       url: url,
       type: "post",
@@ -172,7 +172,7 @@ function unavailable () {
   $( document ).on('click', '.mark_item_unavailable', function () {
   console.log("mark unav")
   var id = $(this).attr('id');
-  var url = "/admin/mark_as_unavailable/" + id;
+  var url = "/dashboard/mark_as_unavailable/" + id;
 
   $.ajax({
       url: url,
@@ -199,7 +199,7 @@ function unavailable () {
 function available () {
   $( document ).on('click', '.mark_item_available', function () {
   console.log("mark av")
-  var url = "/admin/mark_as_available/" + $(this).attr('id');
+  var url = "/dashboard/mark_as_available/" + $(this).attr('id');
   var id = $(this).attr('id');
   $.ajax({
       url: url,

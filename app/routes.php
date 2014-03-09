@@ -59,7 +59,7 @@ Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 * ADMIN DASHBOARD ROUTES
 */
 
-Route::group(array('prefix' => 'admin', 'before' => 'auth|staff'), function ()
+Route::group(array('prefix' => 'dashboard', 'before' => 'auth|staff'), function ()
 {
 	Route::get('/', 'AdminController@dashboard');
 	Route::get('/filled_orders', 'AdminController@filled_orders');
@@ -81,15 +81,6 @@ Route::group(array('prefix' => 'inventory', 'before' => 'auth|staff'), function(
 	Route::get('/', 'InventoryController@index');
 	Route::get('/increment/{id}', 'InventoryController@increment');
 	Route::get('/decrement/{id}', 'InventoryController@decrement');
-});
-
-/**
-* DB ADMIN INTERFACE ROUTES
-* ACCESSIBLE ONLY TO MANAGERS
-*/
-Route::group(array('before' => 'auth|manager'), function ()
-{
-	Route::resource('/db', 'DBController');
 });
 
 /**
