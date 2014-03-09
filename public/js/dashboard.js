@@ -111,12 +111,11 @@ function get_new_orders(tmpl) {
       async: false
   }).complete(function(data){
     data = JSON.parse(data.responseText);
-    
     $("#show_orders").html("");
-    console.log(data);
-    var compiledtmpl = _.template(tmpl, {orders: data})
+    console.log(data.cart);
+    var compiledtmpl = _.template(tmpl, {orders: data.cart[0]})
     // html = generate_html_content(data);
-
+    console.log(compiledtmpl)
     $(".clearing-thumbs").html(compiledtmpl);
       setTimeout(function(){get_new_orders();}, 5000);
   });
