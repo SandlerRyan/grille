@@ -103,8 +103,8 @@
 
     <!-- End Header and Nav -->
 
-    <div class="row">
-		<h3>404: Page not found</h3>
+  <div class="row">
+		<h1>404: Page not found</h1>
 	</div>
 
 

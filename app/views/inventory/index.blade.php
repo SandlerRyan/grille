@@ -4,6 +4,7 @@
 <h3> Admin Inventory Management </h3>
 <br/>
 
+
 <!-- Main body of Inventory Tracking -->
 <div class="row">
 
