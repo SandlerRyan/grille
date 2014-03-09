@@ -11,7 +11,7 @@ class AdminController extends \AdminBaseController {
 
         $items = Item::where('grille_id', 1)->get();
 
-        $this->layout->content = View::make('admin.dashboard', ['orders' => $orders, 'items' => $items]);
+        $this->layout->content = View::make('dashboard.index', ['orders' => $orders, 'items' => $items]);
 
     }
 
@@ -20,7 +20,7 @@ class AdminController extends \AdminBaseController {
         foreach($orders as $order){
             $order->user;
         }
-        $this->layout->content = View::make('admin.filled', ['orders' => $orders]);
+        $this->layout->content = View::make('dashboard.filled', ['orders' => $orders]);
 
     }
 
@@ -41,7 +41,7 @@ class AdminController extends \AdminBaseController {
         $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
         $order = Order::find($id);
         $phone_number = $order->user->phone_number;
-        $data = array("access_token" => $access_token, "amount" => 0.06, 
+        $data = array("access_token" => $access_token, "amount" => 0.06,
                 "phone" => $phone_number, "note" => "Delicious Hamburger refund!");
         $response = $this->sendPostData($url, $data);
 
