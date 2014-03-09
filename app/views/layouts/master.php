@@ -63,6 +63,29 @@
   <body>
 
 
+
+  <div id="stickyHeader">
+      <div  class="row">
+        <!-- <div class="large-12 columns"> -->
+        <h4 class="inline">
+        <a class="" href="/">Eliot Grille</a></li>
+        </h4>
+
+
+          <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')) { ?>
+              <a class="" href="/order/create">Menu</a>
+              <a class="" href="/dashboard">Staff</a>
+          </ul>
+          <?php } else{ ?>
+              <a class="" href="/order/create">Menu</a>
+            </ul>
+          <?php } ?>
+          <a class="" href="/user/login">Login</a>
+
+      </div>
+  </div>
+
+
   <!-- <a href="#" class="button [radius round]">Log out</a> -->
 
 
@@ -82,16 +105,13 @@
         </div>
       </div>
 
-      <nav class="row">
+<!--       <nav class="row">
         <div class="large-12 columns">
-          <!-- <h2>Eliot Grille</h2> -->
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')){ ?>
             <ul class="button-group radius even-3">
               <li><a class="button" href="/">Home</a></li>
               <li><a class="button" href="/order/create">Menu</a></li>
               <li><a class="button" href="/dashboard">Staff</a></li>
-<!--             <li><a class="button" href="#">Russian Blue</a></li>
-            <li><a class="button" href="#">Scottish Fold</a></li> -->
           </ul>
           <?php }else{ ?>
             <ul class="button-group radius even-2">
@@ -100,7 +120,7 @@
             </ul>
           <?php } ?>
         </div>
-      </nav>
+      </nav> -->
 
     <!-- End Header and Nav -->
 
