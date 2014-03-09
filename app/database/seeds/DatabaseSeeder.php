@@ -94,50 +94,59 @@ class HourTableSeeder extends Seeder
 {
 	public function run()
 	{
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 1,
+							'grille_id' => 1,
 							'day_of_week' => 0,
 							'open_time' => '22:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 2,
+							'grille_id' => 1,
 							'day_of_week' => 1,
 							'open_time' => '22:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 3,
+							'grille_id' => 1,
 							'day_of_week' => 2,
 							'open_time' => '22:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 4,
+							'grille_id' => 1,
 							'day_of_week' => 3,
 							'open_time' => '22:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 5,
+							'grille_id' => 1,
 							'day_of_week' => 4,
 							'open_time' => '23:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 6,
+							'grille_id' => 1,
 							'day_of_week' => 5,
 							'open_time' => '00:00:00',
 							'close_time' => '02:29:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 7,
+							'grille_id' => 1,
 							'day_of_week' => 5,
 							'open_time' => '23:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 8,
+							'grille_id' => 1,
 							'day_of_week' => 6,
 							'open_time' => '00:00:00',
 							'close_time' => '02:29:59'
 							));
-		Hour::create(array(	'grille_id' => 1,
+		Hour::create(array(	'id' => 9,
+							'grille_id' => 1,
 							'day_of_week' => 6,
 							'open_time' => '22:30:00',
-							'close_time' => '11:59:59'
+							'close_time' => '23:59:59'
 							));
 	}
 }
@@ -147,13 +156,17 @@ class CategoryTableSeeder extends Seeder
 	public function run ()
 	{
 		Category::create(array(	'id' => 1,
-								'name' => 'Grilled Cheeses'));
+								'name' => 'Grilled Cheeses',
+								'grille_id' => 1));
 		Category::create(array(	'id' => 2,
-								'name' => 'Burgers'));
+								'name' => 'Burgers',
+								'grille_id' => 1));
 		Category::create(array(	'id' => 3,
-								'name' => 'Fries and Friends'));
+								'name' => 'Fries and Friends',
+								'grille_id' => 1));
 		Category::create(array(	'id' => 4,
-								'name' => 'Drinks and Desserts'));
+								'name' => 'Drinks and Desserts',
+								'grille_id' => 1));
 	}
 }
 

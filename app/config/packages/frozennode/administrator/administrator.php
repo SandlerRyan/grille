@@ -55,6 +55,7 @@ return array(
 			'users',
 			'categories',
 			'items',
+			'hours',
 			),
 
 	/**
