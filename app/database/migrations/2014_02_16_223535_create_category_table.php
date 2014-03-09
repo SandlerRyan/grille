@@ -16,6 +16,9 @@ class CreateCategoryTable extends Migration {
  		{
  			$table->increments('id');
  			$table->string('name');
+
+ 			$table->integer('grille_id')->unsigned();
+ 			$table->foreign('grille_id')->references('id')->on('grilles');
 		});
 	}
 

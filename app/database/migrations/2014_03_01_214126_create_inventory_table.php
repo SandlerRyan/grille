@@ -12,12 +12,12 @@ class CreateInventoryTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('inventories', function($table) 
+		Schema::create('inventories', function($table)
 		{
 			$table->increments('id');
 			$table->string('name');
 			$table->string('description');
-			$table->decimal('quantity')->unsigned();
+			$table->integer('quantity')->unsigned();
 			$table->string('units');		// e.g. pounds, bags, boxes, etc.
 			$table->timestamps();
 		});

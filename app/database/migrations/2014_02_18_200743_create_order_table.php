@@ -22,8 +22,10 @@ class CreateOrderTable extends Migration {
 			$table->foreign('grille_id')->references('id')->on('grilles');
 
 			$table->string('venmo_id', 19)->nullable();	// if null, user hasn't paid yet
+			$table->boolean('cooked')->default(0);
 			$table->boolean('fulfilled');	// checked off when the user picks up their food
 			$table->boolean('refunded')->default(0);
+			$table->boolean('cancelled')->default(0);
             $table->decimal('cost');
             $table->timestamps();
          });

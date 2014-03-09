@@ -1,3 +1,26 @@
+<?php
+// get the hours of the grille
+$grille_id = 1;
+$hours = Hour::where('grille_id', $grille_id)->get();
+$hourlist = array();
+
+// reformat all hours as an array with each day of the week as a key
+// and all open and close times as values
+foreach($hours as $hour)
+{
+	if(array_key_exists($hour->day_of_week, $hourlist)) {
+		array_push($hourlist[$hour->day_of_week], array(
+											'open' => $hour->open_time,
+											'close' => $hour->close_time));
+	}
+	else {
+		$hourlist[$hour->day_of_week] = array(0 => array(
+											'open' => $hour->open_time,
+											'close' => $hour->close_time));
+	}
+}
+
+?>
 	<!-- First Band (Slider) -->
 
 	  <div class="row">
@@ -6,7 +29,6 @@
 		    <h5><font color="red">{{$err_messages}}</font></h5>
 		  @endif
 	    <div id="slider">
-	      <img class="mainImg" src="/img/hamburger2.png" />
 	    </div>
 
 
