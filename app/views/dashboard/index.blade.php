@@ -145,3 +145,14 @@
 </div>
 
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
+
+<script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<script id="tmpl-orders" type="text/template">
+  
+  <ul class="clearing-thumbs" data-clearing="">
+        <%= orders %>
+            
+
+
+  
+</script>
