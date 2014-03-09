@@ -109,6 +109,7 @@ return array(
 		'Moltin\Cart\CartServiceProvider',
 		// 'GrilleCartServiceProvider',
 		'Aheissenberger\Foundation\FoundationServiceProvider',
+		 'Frozennode\Administrator\AdministratorServiceProvider',
 
 	),
 

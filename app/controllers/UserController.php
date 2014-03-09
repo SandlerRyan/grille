@@ -13,7 +13,7 @@ class UserController extends \BaseController {
         if (Session::has('user'))
         {
             // TODO: redirect to most recent page
-            return Redirect::to('/order/checkout');
+            return Redirect::to('/');
         }
 
         // else redirect user to CS50 ID

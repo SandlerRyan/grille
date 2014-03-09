@@ -32,7 +32,7 @@ App::before(function($request)
 
 	Route::filter('manager', function()
 	{
-		if(Session::get('user')->privileges != 'manager') {
+		if(Session::get('user')->privileges != ('manager' || 'admin')) {
 			return Redirect::to('/admin')->with('message',
 				'You do not have sufficient privileges to access this page');
 		}
