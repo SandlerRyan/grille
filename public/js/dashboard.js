@@ -94,13 +94,16 @@ return main;
 
 // get new orders
 $(document).ready(function () {
-get_new_orders();
+
+var tmpl = $('#tmpl-orders').html();
+
+get_new_orders(tmpl);
 available();
 unavailable();
 });
 
 // contacts the server to get new orders every 5000 millisecs
-function get_new_orders() {
+function get_new_orders(tmpl) {
   var feedback =
   $.ajax({
       type: "POST",
@@ -108,10 +111,13 @@ function get_new_orders() {
       async: false
   }).complete(function(data){
     data = JSON.parse(data.responseText);
+    
     $("#show_orders").html("");
-    html = generate_html_content(data);
+    console.log(data);
+    var compiledtmpl = _.template(tmpl, {orders: data})
+    // html = generate_html_content(data);
 
-    $(".clearing-thumbs").html(html);
+    $(".clearing-thumbs").html(compiledtmpl);
       setTimeout(function(){get_new_orders();}, 5000);
   });
 }
