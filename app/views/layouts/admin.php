@@ -61,6 +61,15 @@
   </head>
 
   <body>
+    <div class="row">
+        <?php if (Grille::find(1)->open_now) { ?>
+          <button class="open button" style="background-color: green; float: right">Close Grille</button>
+        <?php } else { ?>
+          <button class="open button" style="background-color: green; float: right">Open Grille</button>
+        <?php } ?>
+      </button>
+    </div>
+
     <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
       <ul class="button-group radius even-4">
         <li><a class="button" href="/dashboard">Orders</a></li>

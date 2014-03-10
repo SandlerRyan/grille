@@ -71,7 +71,6 @@
         <a class="" href="/">Eliot Grille</a></li>
         </h4>
 
-
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')) { ?>
               <a class="nav-item" href="/order/create">Menu</a>
               <a class="nav-item" href="/dashboard">Staff</a>

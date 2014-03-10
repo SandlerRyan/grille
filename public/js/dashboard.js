@@ -3,11 +3,30 @@
 * and controlling item availability, order status, etc.
 */
 
+// toggles the open/closed state of the grille
+$(document).on('click', '.open', function() {
+  var button = $(this);
+  $.ajax({
+    type: "PUT",
+    url: "/dashboard/toggle_open",
+    success: function(){
+      if ($(button).text() == 'Close Grille') {
+        $(button).text('Open Grille');
+      }
+      else {
+        $(button).text('Close Grille');
+      }
+    },
+    error: function() {
+      alert('Sorry, something bad happened');
+    }
+  });
+});
+
 // contacts the server to get orders every 5000 millisecs
 // tmpl param is _.js template
 // uri param is either get_new_orders, get_cancelled_orders, or get_fulfilled_orders
 function get_orders(tmpl, type) {
-  console.log(type);
   var feedback =
   $.ajax({
       type: "POST",
@@ -16,7 +35,6 @@ function get_orders(tmpl, type) {
   }).complete(function(data){
 
     data = JSON.parse(data.responseText);
-    console.log(data);
     $("#show_orders").html("");
     var compiledtmpl = _.template(tmpl, {orders: data.cart})
     $("#show_orders").html(compiledtmpl);
