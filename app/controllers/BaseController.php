@@ -35,7 +35,7 @@ class BaseController extends Controller {
                     }
                     else
                     {
-                        if ($hour2->day_of_week==$hour->day_of_week + 1 && 
+                        if ($hour2->day_of_week==$hour->day_of_week + 1 &&
                                     $hour2->open_time == "00:00:00")
                         {
                             $hour->close_time = $hour2->close_time;
@@ -44,7 +44,7 @@ class BaseController extends Controller {
 
                 }
             }
-      
+
         }
 
         //remove the duplicate day objects, and reformat values
@@ -87,7 +87,7 @@ class BaseController extends Controller {
                          $hour->day_of_week = $hour->day_of_week;
                 }
             }
-        }   
+        }
 
         //check to see if open now
         date_default_timezone_set('America/New_York');
@@ -95,20 +95,8 @@ class BaseController extends Controller {
         $weekday = date('w', time());
 
         //attempt to pull from database
- 
-        $open = Hour::where('grille_id', $grille_id)->where('day_of_week', $weekday)
-                                                ->where('open_time', '<', $current_time)
-                                                ->where('close_time','>', $current_time)
-                                                ->get();
 
-        if (count($open) > 0)
-        {
-            $open_now = 1;
-        }
-        else
-        {
-            $open_now = 0;
-        }
+        $open_now = Grille::find($grille_id)->open_now;
 
 
         $this->layout->content = View::make('index',

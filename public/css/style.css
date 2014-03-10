@@ -146,6 +146,12 @@ h1#neon-tubing {
     0 0 80px rgba(255,0,84,0.1); 
 }
 
+
+img {
+    -webkit-box-shadow: 2px 2px 2px #7C7C7C;
+    box-shadow: 2px 2px 2px #7C7C7C;
+}
+
 img.displayed {
     display: block;
     margin-left: auto;

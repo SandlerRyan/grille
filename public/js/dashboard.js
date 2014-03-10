@@ -3,33 +3,44 @@
 * and controlling item availability, order status, etc.
 */
 
-// get new orders
-$(document).ready(function () {
-
-var tmpl = $('#tmpl-orders').html();
-
-get_new_orders(tmpl);
-available();
-unavailable();
+// toggles the open/closed state of the grille
+$(document).on('click', '.open', function() {
+  var button = $(this);
+  $.ajax({
+    type: "PUT",
+    url: "/dashboard/toggle_open",
+    success: function(){
+      if ($(button).text() == 'Close Grille') {
+        $(button).text('Open Grille');
+      }
+      else {
+        $(button).text('Close Grille');
+      }
+    },
+    error: function() {
+      alert('Sorry, something bad happened');
+    }
+  });
 });
 
-// contacts the server to get new orders every 5000 millisecs
-function get_new_orders(tmpl) {
+// contacts the server to get orders every 5000 millisecs
+// tmpl param is _.js template
+// uri param is either get_new_orders, get_cancelled_orders, or get_fulfilled_orders
+function get_orders(tmpl, type) {
   var feedback =
   $.ajax({
       type: "POST",
-      url: "/dashboard/get_new_orders",
+      url: "/dashboard/get_orders/" + type,
       async: false
   }).complete(function(data){
 
     data = JSON.parse(data.responseText);
-
     $("#show_orders").html("");
     var compiledtmpl = _.template(tmpl, {orders: data.cart})
     $("#show_orders").html(compiledtmpl);
 
     //repeat every 5 seconds.
-    setTimeout(function(){get_new_orders(tmpl);}, 5000);
+    setTimeout(function(){get_orders(tmpl, type);}, 5000);
 
   });
 }
