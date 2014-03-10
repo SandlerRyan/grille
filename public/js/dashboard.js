@@ -3,33 +3,26 @@
 * and controlling item availability, order status, etc.
 */
 
-// get new orders
-$(document).ready(function () {
-
-var tmpl = $('#tmpl-orders').html();
-
-get_new_orders(tmpl);
-available();
-unavailable();
-});
-
-// contacts the server to get new orders every 5000 millisecs
-function get_new_orders(tmpl) {
+// contacts the server to get orders every 5000 millisecs
+// tmpl param is _.js template
+// uri param is either get_new_orders, get_cancelled_orders, or get_fulfilled_orders
+function get_orders(tmpl, type) {
+  console.log(type);
   var feedback =
   $.ajax({
       type: "POST",
-      url: "/dashboard/get_new_orders",
+      url: "/dashboard/get_orders/" + type,
       async: false
   }).complete(function(data){
 
     data = JSON.parse(data.responseText);
-
+    console.log(data);
     $("#show_orders").html("");
     var compiledtmpl = _.template(tmpl, {orders: data.cart})
     $("#show_orders").html(compiledtmpl);
 
     //repeat every 5 seconds.
-    setTimeout(function(){get_new_orders(tmpl);}, 5000);
+    setTimeout(function(){get_orders(tmpl, type);}, 5000);
 
   });
 }

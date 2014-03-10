@@ -74,13 +74,18 @@
 
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')) { ?>
               <a class="nav-item" href="/order/create">Menu</a>
-              <a class="nav-item" href="/dashboard">Admin Dashboard</a>
+              <a class="nav-item" href="/dashboard">Staff</a>
           </ul>
           <?php } else{ ?>
               <a class="nav-item" href="/order/create">Menu</a>
             </ul>
           <?php } ?>
-          <a class="nav-login button round" href="/user/login">Login</a>
+
+          <?php if (Auth::check()) { ?>
+            <a class="nav-login button round" href="/user/logout">Logout</a>
+          <?php } else { ?>
+            <a class="nav-login button round" href="/user/login">Login</a>
+          <?php } ?>
 
       </div>
   </div>
