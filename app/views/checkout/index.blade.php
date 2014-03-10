@@ -5,46 +5,50 @@
 	@endif
     <div class="large-12 columns">
 
-      <div class="panel">
+     <div class="panel">
 
 	<h3>Order Details</h3>
 
-	<table class="box">
-	<tr>
-		<th>Item</th>
-		<th>Price</th>
-		<th>Quantity</th>
-		<th>Notes</th>
-		<th></th>
-	<tr>
-	@foreach(Cart::contents() as $item)
-	<tr>
-		<td>{{$item->name}}</td>
-		<td>${{$item->price}}</td>
-		<td>{{$item->quantity}}</td>
-		<td>
-			<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
-		</td>
-		<td>
-			<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
-		</td>
-	</tr>
-		@if($item->addons)
+	<table>
+		<thead>
+			<tr>
+				<th>Item</th>
+				<th>Price</th>
+				<th>Quantity</th>
+				<th>Notes</th>
+				<th></th>
+			<tr>
+		</thead>
+		<tbody>
+		@foreach(Cart::contents() as $item)
 		<tr>
-			@foreach($item->addons as $addon)
-				<td> + {{$addon->name}}</td>
-				<td> $ {{$addon->price}}</td>
-				<td>{{$addon->quantity}}</td>
-			@endforeach
+			<td>{{$item->name}}</td>
+			<td>${{$item->price}}</td>
+			<td>{{$item->quantity}}</td>
+			<td>
+				<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
+<!-- 			</td>
+			<td> -->
+				<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
+			</td>
 		</tr>
-		@endif
-	@endforeach
-	<tr>
-		<td></td>
-		<td><h5>Total:</h5></td>
-		<td><h5 id="totalPrice">${{number_format(Cart::total_with_addons(), 2)}}</h5></td>
-		<td></td>
-	</tr>
+			@if($item->addons)
+			<tr>
+				@foreach($item->addons as $addon)
+					<td> + {{$addon->name}}</td>
+					<td> $ {{$addon->price}}</td>
+					<td>{{$addon->quantity}}</td>
+				@endforeach
+			</tr>
+			@endif
+		@endforeach
+		<tr>
+			<td></td>
+			<td><h5>Total:</h5></td>
+			<td><h5 id="totalPrice">${{number_format(Cart::total_with_addons(), 2)}}</h5></td>
+			<td></td>
+		</tr>
+		</tbody>
 	</table>
 
 <div class="result">
@@ -78,7 +82,7 @@
     </ul>
 @else
 	<ul class="">
-          <li><a class="button success" href="/user/login">Log In To Proceed</a></li>
+          <li><a class="button" href="/user/login">Log In To Proceed</a></li>
     </ul>
 @endif
 
