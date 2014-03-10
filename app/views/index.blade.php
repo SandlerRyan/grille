@@ -42,8 +42,12 @@
   	</tbody>
 </table>
 
+<br/>
+
 <div class="row">
 <h4 style="width: 100%; text-align:center;">Where to Find Us</h4>
 <h5 style="width: 100%; text-align:center;">J-Entryway Basement</h5>
   <img class="displayed" src="/img/map.png" />
 </div>
+
+<br />

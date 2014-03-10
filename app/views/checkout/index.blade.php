@@ -1,4 +1,3 @@
-
 <div class="row">
 	@if($err_messages)
 		<h5><font color="red">{{$err_messages}}</font></h5>
