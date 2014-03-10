@@ -73,18 +73,20 @@
 
 	<!-- <br/> -->
 
-<br/>
+<!-- <br/> -->
 
 @if (Session::has('user'))
-	<ul class="button-group round even-2">
-          <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Use Venmo</a></li>
-          <li><a class="button success" href="/order/pay_later">Pay At Pick-Up</a></li>
-    </ul>
+	<!-- <ul class="button-group round even-1"> -->
+    <a class="button round" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Use Venmo</a>
+    <a class="button alert round" href="/order/pay_later">Pay At Pick-Up</a>
+    <!-- </ul> -->
 @else
-	<ul class="">
-          <li><a class="button" href="/user/login">Log In To Proceed</a></li>
-    </ul>
+	<!-- <ul class=""> -->
+    <a class="button" href="/user/login">Log In To Proceed</a>
+    <!-- </ul> -->
 @endif
+
+	<br/>
 
 	</div>
 

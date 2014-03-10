@@ -8,7 +8,9 @@
 			We're open! Check out our <a class="" href="/order/create">menu</a>.
 		</h3>
 	@else
-		<h1 id="neon-tubing">Worry, we're closed :(</h1>
+		<h3 style="width: 100%; text-align:center;">
+			Sorry, we're closed :(
+		</h3>
 	@endif
 </div>
 
