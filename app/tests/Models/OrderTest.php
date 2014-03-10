@@ -1,7 +1,7 @@
 <?php
 
 class OrderTest extends TestCase {
-	public function testphonecorrect()
+	public function testbasicorder()
 	{
 		 // create the new order
         $order = new Order();
