@@ -101,7 +101,7 @@ function add_note ()
 		containerID = "#text-" + id;
 		var value = $(containerID).val();
 		$.ajax({
-			url: "/add_note/" + id + "/" + value,
+			url: "/cart/add_note/" + id + "/" + value,
 			type: "get",
 			error: function(){
 				console.log('error');
