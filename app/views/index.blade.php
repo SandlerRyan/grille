@@ -3,10 +3,13 @@
 
 	  <div class="row">
 	    <div class="large-12 columns">
-	    	@if($open==1)
-	    	<h1>Open</h1>
+    	  @if($err_messages)
+		    <h5><font color="red">{{$err_messages}}</font></h5>
+		  @endif
+	    	@if($open)
+	    	<h4>The grille is now open!</h4>
 	    	@else
-	    	<h1>Closed</h1>
+	    	<h4>The grille is closed--see below for schedule.</h4>
 	    	@endif
 	    	<table class='box'>
 	    	<tr>
@@ -21,17 +24,12 @@
 	      		<td>{{$hour->close_time}}</td>
 	      	</tr>
 	      	@endforeach
-    	  @if($err_messages)
-		    <h5><font color="red">{{$err_messages}}</font></h5>
-		  @endif
-	    <div id="slider">
+	      </table>
 	    </div>
+	  </div>
 
 
 	    <hr />
-
-	    </div>
-	  </div>
 
 	<!-- Three-up Content Blocks -->
 
@@ -79,7 +77,9 @@
 	            <p>Check out our selection of delicious items.</p>
 	          </div> -->
 	          <!-- <div class="row"> -->
+	          @if($open)
 	            <a href="/order/create" class="button alert round"><h4 style="color: white;">I'm hungry!</h4></a>
+	           @endif
 	          <!-- </div> -->
 	        <!-- </div> -->
 	      <!-- </div> -->

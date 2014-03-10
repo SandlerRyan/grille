@@ -97,38 +97,38 @@ class HourTableSeeder extends Seeder
 		Hour::create(array(	'id' => 1,
 							'grille_id' => 1,
 							'day_of_week' => 0,
-							'open_time' => '22:30:00',
-							'close_time' => '23:59:59'
+							'open_time' => '00:00:00',
+							'close_time' => '02:30:00'
 							));
 		Hour::create(array(	'id' => 2,
 							'grille_id' => 1,
-							'day_of_week' => 1,
+							'day_of_week' => 0,
 							'open_time' => '22:30:00',
 							'close_time' => '23:59:59'
 							));
 		Hour::create(array(	'id' => 3,
 							'grille_id' => 1,
-							'day_of_week' => 2,
+							'day_of_week' => 1,
 							'open_time' => '22:30:00',
 							'close_time' => '23:59:59'
 							));
 		Hour::create(array(	'id' => 4,
 							'grille_id' => 1,
-							'day_of_week' => 3,
+							'day_of_week' => 2,
 							'open_time' => '22:30:00',
 							'close_time' => '23:59:59'
 							));
 		Hour::create(array(	'id' => 5,
 							'grille_id' => 1,
-							'day_of_week' => 4,
-							'open_time' => '23:30:00',
+							'day_of_week' => 3,
+							'open_time' => '22:30:00',
 							'close_time' => '23:59:59'
 							));
 		Hour::create(array(	'id' => 6,
 							'grille_id' => 1,
-							'day_of_week' => 5,
-							'open_time' => '00:00:00',
-							'close_time' => '02:29:59'
+							'day_of_week' => 4,
+							'open_time' => '22:30:00',
+							'close_time' => '23:59:59'
 							));
 		Hour::create(array(	'id' => 7,
 							'grille_id' => 1,
@@ -140,7 +140,7 @@ class HourTableSeeder extends Seeder
 							'grille_id' => 1,
 							'day_of_week' => 6,
 							'open_time' => '00:00:00',
-							'close_time' => '02:29:59'
+							'close_time' => '02:30:00'
 							));
 		Hour::create(array(	'id' => 9,
 							'grille_id' => 1,

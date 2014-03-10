@@ -191,8 +191,14 @@ class OrderController extends \BaseController {
         $phone = "6159183416";  // hardcoded to ryan's number for now
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order->id)
                                                 ->count();
-        $message = "Hi " . $name . ", your order has been received! There are currently " .
-                    $num_orders . " orders in front of you. See you soon!";
+        if ($num_orders == 1) {
+            $message = "Hi " . $name . ", your order has been received! There is currently " .
+                    $num_orders . " order in front of you. See you soon!";
+        }
+        else {
+            $message = "Hi " . $name . ", your order has been received! There are currently " .
+                        $num_orders . " orders in front of you. See you soon!";
+        }
         Sms::send_sms($phone,$message);
 
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'],
