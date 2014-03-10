@@ -189,8 +189,8 @@ class OrderController extends \BaseController {
         //send a text message to user to tell them how many orders in front of them
         $user_id = Order::where('id', $order->id)->pluck('user_id');
         $name = User::where('id', $user_id)->pluck('preferred_name');
-        //$phone = User::where('id', $user_id)->pluck('phone_number');
-        $phone = "6159183416";  // hardcoded to ryan's number for now
+        $phone = User::where('id', $user_id)->pluck('phone_number');
+        // $phone = "6159183416";  // hardcoded to ryan's number for now
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order->id)
                         ->where('cancelled', 0)->count();
         if ($num_orders == 1) {

@@ -67,12 +67,15 @@ return array(
 	 */
 	'permission'=> function()
 	{
-		$privileges = false;
+		$allowed = false;
+
 		if (Auth::check()) {
-			if (Session::get('user')->privileges == ('manager' || 'admin'))
-			$privileges = true;
+			$privileges = Session::get('user')->privileges;
+			if ($privileges == 'manager' || $privileges == 'admin') {
+				$allowed = true;
+			}
 		}
-		return ($privileges);
+		return ($allowed);
 	},
 
 	/**
@@ -109,14 +112,14 @@ return array(
 	 *
 	 * @type string
 	 */
-	'login_path' => 'user/login',
+	'login_path' => '/user/login',
 
 	/**
 	 * The logout path is the path where Administrator will send the user when they click the logout link
 	 *
 	 * @type string
 	 */
-	'logout_path' => '/user/logout',
+	'logout_path' => '/',
 
 	/**
 	 * This is the key of the return path that is sent with the redirection to your login_action. Session::get('redirect') will hold the return URL.

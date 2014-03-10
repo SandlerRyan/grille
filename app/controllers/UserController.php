@@ -9,7 +9,12 @@ class UserController extends \BaseController {
         // if user is already logged in, redirect to current page
         if (Session::has('user'))
         {
-            return Redirect::back();
+            try {
+                return Redirect::back();
+            }
+            catch (Exception $e) {
+                return Redirect::to('/');
+            }
         }
 
         // else redirect user to CS50 ID
@@ -31,8 +36,12 @@ class UserController extends \BaseController {
             Session::forget('user');
         Auth::logout();
 
-
-        return Redirect::back();
+        try {
+            return Redirect::back();
+        }
+        catch (Exception $e) {
+            return Redirect::to('/');
+        }
     }
 
     public function return_to()
@@ -123,7 +132,7 @@ class UserController extends \BaseController {
             //log user in
             Session::put('user', $user);
             Auth::loginUsingId($user->id);
-            
+
             //redirect to most recent page
             $url = Session::get('redirect');
             Session::forget('redirect');

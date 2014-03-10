@@ -1,5 +1,7 @@
 <!-- First Band (Slider) -->
-
+@if($err_messages)
+    <h5><font color="red">{{$err_messages}}</font></h5>
+@endif
 <div class="row">
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
@@ -11,14 +13,17 @@
 			We're open! Check out our <a class="" href="/order/create">menu</a>.
 		</h3>
 	@else
-		<h1 id="neon-tubing">Worry, we're closed :(</h1>
+		<h3 style="width: 100%; text-align:center;">
+			Sorry, we're closed :(
+		</h3>
 	@endif
 </div>
 
 
 <!-- <div class="row"> -->
-<table class="box">
-<caption><h4>Hours</h4></caption>
+<h4 style="width: 100%; text-align:center;">Hours</h4>
+<table class="box" style="margin:auto;">
+<!-- <caption><h4>Hours</h4></caption> -->
 	<thead>
     	<tr>
     		<th width="200">Day</th>

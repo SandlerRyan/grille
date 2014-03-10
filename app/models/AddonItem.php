@@ -6,8 +6,8 @@ use LaravelBook\Ardent\Ardent;
     {
 
     	public static $rules = array(
-          'item_id' => 'required, integer',
-          'addon_id' => 'required, integer'
+          'item_id' => 'required|integer',
+          'addon_id' => 'required|integer'
         );
 
     	public $timestamps = false;

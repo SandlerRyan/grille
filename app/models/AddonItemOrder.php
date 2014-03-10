@@ -6,9 +6,9 @@ use LaravelBook\Ardent\Ardent;
     {
 
     	public static $rules = array(
-          'item_order_id' => 'required, integer',
-          'addon_id' => 'required, integer',
-          'quantity' => 'required, integer'
+          'item_order_id' => 'required|integer',
+          'addon_id' => 'required|integer',
+          'quantity' => 'required|integer'
         );
 
     	public $timestamps = false;
