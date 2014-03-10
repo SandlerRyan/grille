@@ -1,6 +1,6 @@
 <?php
 
-    class Order extends Eloquent 
+    class Order extends Eloquent
     {
     	public function user ()
     	{
@@ -9,7 +9,7 @@
 
     	public function item_orders ()
     	{
-    		return $this->belongsToMany('Item','item_orders')->withPivot('quantity','id');
+    		return $this->belongsToMany('Item','item_orders')->withPivot('quantity','id','notes');
     	}
 
         public function grille ()

@@ -1,93 +1,4 @@
 /**
-* Functions for injecting HTML for every new order
-*/
-var getTD = function(itemName) {
-  return "<td>" + itemName + "</td>";
-}
-var getTR = function(rowItems) {
- return "<tr>" + rowItems + "</tr>";
-}
-var addButtons = function(order) {
-  if (order.venmo_id != 0) {
-  return "<ul class='button-group'>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Picked-Up</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button alert refund'>Refund Order</a></li>" +
-          "</ul>"
-  }
-  else {
-    return "<ul class='button-group'>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Paid and Picked-Up</a></li>" +
-          "</ul>"
-  }
-}
-
-var AddTable = function(order) {
-  var rows = ""
-  var head = ""
-  order.item_orders.forEach(function(item) {
-
-      rows += getTR(getTD(item.name) + getTD(item.pivot.quantity) + getTD(item.notes));
-      item.addons.forEach(function(addon) {
-        rows += getTR(getTD("&emsp; <i>+" + addon.name + "</i>") + getTD(addon.pivot.quantity) + getTD(" "));
-      })
-  })
-  rows = "<tbody>" + rows + "<tbody>"
-  head =  "<thead><tr>" +
-          "<th width='120'>Item</th><th width='80'>Quantity</th>" +
-          "<th width='150'>Notes</th></tr></thead>"
-  var content = head + rows;
-  return "<table>" + content + "</table>";
-}
-
-var addMainWrapper = function(content, orderID) {
-    return "<li><div class='large-12 columns'>" +
-           "<div class='panel' id='" + orderID + "'>" +
-           content +
-           "</div>" +
-           "</li></div>";
-}
-var addVenmoHeader= function(order) {
-  return "<div style='float:left;'><img border='0'" +
-          "src='/img/venmo.png' width='90px'></div>" +
-          "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" +
-          "<h5>" + order.user.name + "</h5>" +
-          "<h6>ID:" + order.id + "</h6>";
-}
-var addPickUpHeader = function(order) {
-  return "<div style='float:left;'><h4>Pick-Up</h4>" +
-          "</div>" +
-          "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" +
-          "<h5>" + order.user.name + "</h5>" +
-          "<h6>ID:" + order.id + "</h6>";
-}
-
-// to create new order boxes
-function generate_html_content(data) {
-  var htmlcontent = ""
-  var itemshtml = ""
-  var main = ""
-  data.cart.forEach(function(order) {
-
-    htmlcontent = ""
-    if(order.venmo_id != 0) {
-      htmlcontent += addVenmoHeader(order);
-    } else {
-      htmlcontent += addPickUpHeader(order);
-    }
-    htmlcontent += AddTable(order);
-    htmlcontent += addButtons(order);
-    main += addMainWrapper(htmlcontent, order.id);
-  })
-return main;
-}
-
-
-
-/**
 * AJAX functions for getting new orders
 * and controlling item availability, order status, etc.
 */
@@ -110,9 +21,9 @@ function get_new_orders(tmpl) {
       url: "/dashboard/get_new_orders",
       async: false
   }).complete(function(data){
-    
+
     data = JSON.parse(data.responseText);
-    
+
     $("#show_orders").html("");
     var compiledtmpl = _.template(tmpl, {orders: data.cart})
     $("#show_orders").html(compiledtmpl);
@@ -134,8 +45,7 @@ $( document ).on( 'click', '.cooked', function () {
       success: function(){
           // update cart
           console.log("cooked")
-          $(element).closest('li').text("Sent Reminder");
-
+          $(element).closest('li').text("Cooked!");
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -179,6 +89,25 @@ $( document ).on( 'click', '.refund', function () {
     });
 });
 
+// ajax call to cancel a order if it has not been picked up or if item has run out
+$( document ).on( 'click', '.cancel', function () {
+    console.log($(this).attr('id'))
+    var url = "/dashboard/cancel/" + $(this).attr('id');
+    var element = $(this);
+  $.ajax({
+      url: url,
+      type: "post",
+      success: function(data){
+          // update cart
+          console.log("good")
+          $(element).closest('li').text("Order cancelled!");
+      },
+      error:function(){
+          alert("Sorry, something bad happened.");
+      }
+    });
+});
+
 // ajax call to mark an item unavailable when it runs out
 function unavailable () {
   $( document ).on('click', '.mark_item_unavailable', function () {
@@ -217,7 +146,7 @@ function available () {
       url: url,
       type: "post",
       success: function(data){
-          
+
           id = "#" + id;
           $(id).removeClass('alert');
           $(id).addClass('success');

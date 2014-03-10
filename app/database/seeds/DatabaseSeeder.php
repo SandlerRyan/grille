@@ -327,7 +327,7 @@ class ItemTableSeeder extends Seeder
 							'available' => 1
 							));
 		Item::create(array(	'id' => 20,
-							'name' => 'Vanille Shake',
+							'name' => 'Vanilla Shake',
 							'price' => 3.50,
 							'category_id' => 4,
 							'grille_id' => 1,

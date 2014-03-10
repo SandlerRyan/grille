@@ -101,7 +101,7 @@ class OrderController extends \BaseController {
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
 
-        
+
         $data = array("access_token" => $access_token, "amount" => 0.01,
             "phone" => "7734901404", "note" => "Testing Eliot Grille");
         $response = $this->sendPostData($url, $data);
