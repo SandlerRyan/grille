@@ -7,10 +7,10 @@ use LaravelBook\Ardent\Ardent;
         public $timestamps = false;
 
         public static $rules = array(
-          'name' => 'required, max:255',
+          'name' => 'required|max:255',
           'price' => 'required',
-          'available' => 'required, integer',
-          'grille_id' => 'required,integer'
+          'available' => 'required|integer',
+          'grille_id' => 'required|integer'
         );
 
     	public function grille ()
