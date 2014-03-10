@@ -6,7 +6,7 @@ use LaravelBook\Ardent\Ardent;
     {
 
     	public static $rules = array(
-          'name' => 'required, between:1,255'
+          'name' => 'required|between:1,255'
         );
 
     	public $timestamps = false;
