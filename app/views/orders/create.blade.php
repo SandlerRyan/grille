@@ -5,7 +5,7 @@
         <!-- <div class="panel"> -->
           <h4 class="inline">Your total is: <div id="totalPrice" class="inline"> ${{{Cart::total()}}} </div> </h4>
           <ul class="button-group round even-2">
-            <li><button id="checkout" class="button success" disabled>Checkout</button></li>
+            <li><button id="checkout" class="button" disabled>Checkout</button></li>
             <li><button id="clearCart" class="button alert">Clear Cart</button></li>
           </ul>
           <br/>

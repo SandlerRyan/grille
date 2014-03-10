@@ -73,14 +73,14 @@
 
 
           <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')) { ?>
-              <a class="" href="/order/create">Menu</a>
-              <a class="" href="/dashboard">Staff</a>
+              <a class="nav-item" href="/order/create">Menu</a>
+              <a class="nav-item" href="/dashboard">Admin Dashboard</a>
           </ul>
           <?php } else{ ?>
-              <a class="" href="/order/create">Menu</a>
+              <a class="nav-item" href="/order/create">Menu</a>
             </ul>
           <?php } ?>
-          <a class="" href="/user/login">Login</a>
+          <a class="nav-login button round" href="/user/login">Login</a>
 
       </div>
   </div>
@@ -93,7 +93,7 @@
         <div class="large-12 columns">
           <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
         </div>
-        <div class="large-6 columns">
+<!--         <div class="large-6 columns">
             <ul class="inline-list right">
               <?php if(Session::has('user')){ ?>
               <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
@@ -102,7 +102,7 @@
               <li><a class="button" href="/user/login">Login</a></li>
               <?php } ?>
             </ul>
-        </div>
+        </div> -->
       </div>
 
 <!--       <nav class="row">
