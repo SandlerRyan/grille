@@ -3,15 +3,19 @@
 <div class="row">
 <!-- <div class="large-12 columns"> -->
 	@if($open==1)
-		<h1 id="neon-tubing">Open</h1>
+		<!-- <h1 id="neon-tubing">Open</h1> -->
+		<h3 style="width: 100%; text-align:center;">
+			We're open! Check out our <a class="" href="/order/create">menu</a>.
+		</h3>
 	@else
-		<h1 id="neon-tubing">Closed</h1>
+		<h1 id="neon-tubing">Worry, we're closed :(</h1>
 	@endif
 </div>
 
 
 <!-- <div class="row"> -->
 <table class="box">
+<caption><h4>Hours</h4></caption>
 	<thead>
     	<tr>
     		<th width="200">Day</th>
@@ -35,5 +39,7 @@
   @endif
 
 <div class="row">
+<h4 style="width: 100%; text-align:center;">Where to Find Us</h4>
+<h5 style="width: 100%; text-align:center;">J-Entryway Basement</h5>
   <img class="displayed" src="/img/map.png" />
 </div>

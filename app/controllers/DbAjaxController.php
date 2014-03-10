@@ -31,8 +31,14 @@ class DbAjaxController extends \AdminBaseController {
     {
         $grille_id = 1;
         $grille = Grille::find($grille_id);
-        if ($grille->open_now) $grille->open_now = 0;
-        else $grille->open_now = 1;
+        if ($grille->open_now) {
+            $grille->open_now = 0;
+            $grille->save();
+        }
+        else {
+            $grille->open_now = 1;
+            $grille->save();
+        }
 
         return array('status' => 'success', 'open' => $grille->open_now);
     }

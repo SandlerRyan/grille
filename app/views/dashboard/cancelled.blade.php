@@ -13,8 +13,9 @@
   </div>
   <div class="large-6 columns">
       <ul class="inline-list right">
-        <li><a class="button" href="/dashboard/">See incoming orders</a></li>
-        <li><a class="button" href="/dashboard/filled_orders">See fulfilled orders</a></li>
+        <li><a class="button" style="background-color:gray" href="/dashboard/">Incoming orders</a></li>
+        <li><a class="button" style="background-color:gray" href="/dashboard/filled_orders">Fulfilled orders</a></li>
+        <li><a class="button" style="background-color:gray" href="/dashboard/cancelled_orders">Cancelled orders</a></li>
       </ul>
   </div>
 </div>
