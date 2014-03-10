@@ -17,6 +17,16 @@ class HomeController extends BaseController {
 
 	public function showWelcome()
 	{
+		//for now just hardcode that Eliot grille
+		$grille_id = 1;
+		$hours = Hour::where('grille_id', $grille_id)->get();
+
+		foreach ($hours as $hour)
+		{
+
+			$open = strtotime($hour->open_time);
+			$open = strtotime($hour->close_time);
+		}
 		return View::make('hello');
 	}
 
