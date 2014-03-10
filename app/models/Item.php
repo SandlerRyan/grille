@@ -1,7 +1,16 @@
 <?php
 
-    class Item extends Eloquent 
+use LaravelBook\Ardent\Ardent;
+
+    class Item extends Ardent
     {
+        public static $rules = array(
+            'name' => 'required|min:1',
+            'price' => 'required',
+            'grille_id' => 'required|integer',
+            'category_id' => 'required|integer'
+        );
+        
         public $timestamps = false;
         
     	public function category ()
