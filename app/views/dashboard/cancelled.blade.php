@@ -21,6 +21,19 @@
 
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
 <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
+<script type="text/javascript">
+// get cancelled orders
+$(document).ready(function () {
+
+var tmpl = $('#tmpl-orders').html();
+
+get_orders(tmpl, 'cancelled');
+available();
+unavailable();
+});
+</script>
+
+
 <script id="tmpl-orders" type="text/template">
 
     <ul class="clearing-thumbs" data-clearing>

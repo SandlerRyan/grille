@@ -1,4 +1,3 @@
-
 <!-- First Band (Slider) -->
 
 <div class="row">

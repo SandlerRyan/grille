@@ -5,7 +5,7 @@ class UserController extends \BaseController {
     public function login()
     {
         require_once(app_path().'/config/id.php');
-        
+
         // if user is already logged in, redirect to current page
         if (Session::has('user'))
         {
@@ -29,7 +29,8 @@ class UserController extends \BaseController {
 
         if (Session::has('user'))
             Session::forget('user');
-        
+        Auth::logout();
+
 
         return Redirect::back();
     }
@@ -55,7 +56,7 @@ class UserController extends \BaseController {
             $full = $current_user["fullname"];
             $split = explode(' ',trim($full));
             $first = $split[0];
-           
+
             $user = array("cs50_id"=> $current_user["identity"],
                             "fullname" => $current_user["fullname"],
                             "preferred_name" => $first,
@@ -102,7 +103,7 @@ class UserController extends \BaseController {
             //strip any punctuation from phone number, if exists
             $phone = str_replace(array("-",".","(",")"," "), "", Input::get('phone_number'));
 
-          
+
             //create user based on session data and input
             $pending = Session::get('pending_user');
 
@@ -118,10 +119,10 @@ class UserController extends \BaseController {
 
             //remove pending user from session
             Session::forget('pending_user');
-            
+
             //log user in
             Session::put('user', $user);
-            
+
             //redirect to most recent page
             $url = Session::get('redirect');
             Session::forget('redirect');
