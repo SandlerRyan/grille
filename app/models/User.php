@@ -2,8 +2,20 @@
 
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
+use LaravelBook\Ardent\Ardent;
 
-class User extends Eloquent implements UserInterface, RemindableInterface {
+class User extends Ardent implements UserInterface, RemindableInterface {
+
+	/**
+	 * Ardent validation rules
+	 */
+	public static $rules = array(
+	  'cs50_id' => 'required',
+	  'name' => 'required',
+	  'preferred_name' => 'required',
+	  'phone_number' => 'regex:"^\d{10}$"',
+	  'email' => 'required|email'
+	);
 
 	/**
 	 * The database table used by the model.

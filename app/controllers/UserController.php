@@ -58,6 +58,7 @@ class UserController extends \BaseController {
             $user->cs50_id = $current_user["identity"];
             $user->name = $current_user["fullname"];
             $user->preferred_name = $first;
+            //may not need to do this
             $user->phone_number = "";
             $user->email = $current_user["email"];
             $user-> save();

@@ -2,6 +2,24 @@
 
 	  <div class="row">
 	    <div class="large-12 columns">
+	    	@if($open==1)
+	    	<h1>Open</h1>
+	    	@else
+	    	<h1>Closed</h1>
+	    	@endif
+	    	<table class='box'>
+	    	<tr>
+	    		<th>Day</th>
+	    		<th>Opens</th>
+	    		<th>Closes</th>
+    		</tr>
+	      	@foreach($hours as $hour)
+	      	<tr>
+	      		<td>{{$hour->day_of_week}}</td>
+	      		<td>{{$hour->open_time}}</td>
+	      		<td>{{$hour->close_time}}</td>
+	      	</tr>
+	      	@endforeach
     	  @if($err_messages)
 		    <h5><font color="red">{{$err_messages}}</font></h5>
 		  @endif

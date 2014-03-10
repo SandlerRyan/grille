@@ -13,7 +13,8 @@
 		"aheissenberger/foundation": "dev-master",
 		"zurb/foundation": "dev-master",
 		"twilio/sdk": "dev-master",
-		"frozennode/administrator": "dev-master"
+		"frozennode/administrator": "dev-master",
+		"laravelbook/ardent": "dev-master"
 	},
 	"autoload": {
 		"classmap": [
