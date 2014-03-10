@@ -28,7 +28,7 @@
 
 
     <!-- Slidebars -->
-    <script src="js/slidebars.min.js"></script>
+    <script src="/js/slidebars.min.js"></script>
 
     <!-- Slidebars CSS -->
     <link rel="stylesheet" href="/css/slidebars.min.css">
@@ -61,40 +61,24 @@
   </head>
 
   <body>
-
-<!--       <div class="row">
-        <div class="large-12 columns">
-          <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
-        </div>
-        <div class="large-6 columns">
-            <ul class="inline-list right">
-              <?php if(Session::has('user')){ ?>
-              <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
-              <li><a href="/logout">Log out</a></li>
-              <?php }else{ ?>
-              <li><a href="/login">Login</a></li>
-              <?php } ?>
-            </ul>
-        </div>
-      </div> -->
-          <?php if(Session::get('user')->privileges == 'manager'){ ?>
-            <ul class="button-group radius even-3">
-              <li><a class="button" href="/dashboard">Orders</a></li>
-              <li><a class="button" href="/inventory">Inventory</a></li>
-              <li><a class="button" href="#">Admin Portal</a></li>
-            </ul>
-          <?php } else { ?>
-            <ul class="button-group radius even-2">
-              <li><a class="button" href="/dashboard">Orders</a></li>
-              <li><a class="button" href="/inventory">Inventory</a></li>
-            </ul>
-          <?php } ?>
-
-    <!-- End Header and Nav -->
+    <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
+      <ul class="button-group radius even-4">
+        <li><a class="button" href="/dashboard">Orders</a></li>
+        <li><a class="button" href="/inventory">Inventory</a></li>
+        <li><a class="button" href="/admin">Admin</a></li>
+        <li><a class="button" href="/">Home</a></li>
+      </ul>
+    <?php } else { ?>
+      <ul class="button-group radius even-3">
+        <li><a class="button" href="/dashboard">Orders</a></li>
+        <li><a class="button" href="/inventory">Inventory</a></li>
+        <li><a class="button" href="/">Main Site</a></li>
+      </ul>
+    <?php } ?>
 
 
-
-           <?= $content; ?>
+    <!-- content  -->
+    <?= $content; ?>
 
 
 

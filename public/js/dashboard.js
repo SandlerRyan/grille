@@ -1,118 +1,36 @@
 /**
-* Functions for injecting HTML for every new order
-*/
-var getTD = function(itemName) {
-  return "<td>" + itemName + "</td>";
-}
-var getTR = function(rowItems) {
- return "<tr>" + rowItems + "</tr>";
-}
-var addButtons = function(order) {
-  if (order.venmo_id != 0) {
-  return "<ul class='button-group'>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Picked-Up</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button alert refund'>Refund Order</a></li>" +
-          "</ul>"
-  }
-  else {
-    return "<ul class='button-group'>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success cooked'>Cooked</a></li>" +
-          "<li><a href='javascript:void(0)' id='" + order.id + "' class='small button success picked'>Paid and Picked-Up</a></li>" +
-          "</ul>"
-  }
-}
-
-var AddTable = function(order) {
-  var rows = ""
-  var head = ""
-  order.item_orders.forEach(function(item) {
-
-      rows += getTR(getTD(item.name) + getTD(item.pivot.quantity) + getTD(item.notes));
-      item.addons.forEach(function(addon) {
-        rows += getTR(getTD("&emsp; <i>+" + addon.name + "</i>") + getTD(addon.pivot.quantity) + getTD(" "));
-      })
-  })
-  rows = "<tbody>" + rows + "<tbody>"
-  head =  "<thead><tr>" +
-          "<th width='120'>Item</th><th width='80'>Quantity</th>" +
-          "<th width='150'>Notes</th></tr></thead>"
-  var content = head + rows;
-  return "<table>" + content + "</table>";
-}
-
-var addMainWrapper = function(content, orderID) {
-    return "<li><div class='large-12 columns'>" +
-           "<div class='panel' id='" + orderID + "'>" +
-           content +
-           "</div>" +
-           "</li></div>";
-}
-var addVenmoHeader= function(order) {
-  return "<div style='float:left;'><img border='0'" +
-          "src='/img/venmo.png' width='90px'></div>" +
-          "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" +
-          "<h5>" + order.user.name + "</h5>" +
-          "<h6>ID:" + order.id + "</h6>";
-}
-var addPickUpHeader = function(order) {
-  return "<div style='float:left;'><h4>Pick-Up</h4>" +
-          "</div>" +
-          "<div align='right'><h4>$" + order.cost + "</h4></div>"+
-          "<br/>" +
-          "<h5>" + order.user.name + "</h5>" +
-          "<h6>ID:" + order.id + "</h6>";
-}
-
-// to create new order boxes
-function generate_html_content(data) {
-  var htmlcontent = ""
-  var itemshtml = ""
-  var main = ""
-  data.cart.forEach(function(order) {
-
-    htmlcontent = ""
-    if(order.venmo_id != 0) {
-      htmlcontent += addVenmoHeader(order);
-    } else {
-      htmlcontent += addPickUpHeader(order);
-    }
-    htmlcontent += AddTable(order);
-    htmlcontent += addButtons(order);
-    main += addMainWrapper(htmlcontent, order.id);
-  })
-return main;
-}
-
-
-
-/**
 * AJAX functions for getting new orders
 * and controlling item availability, order status, etc.
 */
 
 // get new orders
 $(document).ready(function () {
-get_new_orders();
+
+var tmpl = $('#tmpl-orders').html();
+
+get_new_orders(tmpl);
 available();
 unavailable();
 });
 
 // contacts the server to get new orders every 5000 millisecs
-function get_new_orders() {
+function get_new_orders(tmpl) {
   var feedback =
   $.ajax({
       type: "POST",
       url: "/dashboard/get_new_orders",
       async: false
   }).complete(function(data){
-    data = JSON.parse(data.responseText);
-    $("#show_orders").html("");
-    html = generate_html_content(data);
 
-    $(".clearing-thumbs").html(html);
-      setTimeout(function(){get_new_orders();}, 5000);
+    data = JSON.parse(data.responseText);
+
+    $("#show_orders").html("");
+    var compiledtmpl = _.template(tmpl, {orders: data.cart})
+    $("#show_orders").html(compiledtmpl);
+
+    //repeat every 5 seconds.
+    setTimeout(function(){get_new_orders(tmpl);}, 5000);
+
   });
 }
 
@@ -120,12 +38,14 @@ function get_new_orders() {
 $( document ).on( 'click', '.cooked', function () {
     var id = $(this).attr('id');
     var url = "/dashboard/mark_as_cooked/" + $(this).attr('id');
+    var element = $(this);
   $.ajax({
       url: url,
       type: "post",
-      success: function(data){
+      success: function(){
           // update cart
-          $('#' + id).attr('disabled','disabled');
+          console.log("cooked")
+          $(element).closest('li').text("Cooked!");
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -137,12 +57,14 @@ $( document ).on( 'click', '.cooked', function () {
 $( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
     var url = "/dashboard/mark_as_fulfilled/" + $(this).attr('id');
+    var element = $(this);
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
           // update cart
           console.log("good")
+          $(element).closest('li').text("This order is complete!");
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -163,6 +85,25 @@ $( document ).on( 'click', '.refund', function () {
       },
       error:function(){
           alert("Sorry, something went wrong.");
+      }
+    });
+});
+
+// ajax call to cancel a order if it has not been picked up or if item has run out
+$( document ).on( 'click', '.cancel', function () {
+    console.log($(this).attr('id'))
+    var url = "/dashboard/cancel/" + $(this).attr('id');
+    var element = $(this);
+  $.ajax({
+      url: url,
+      type: "post",
+      success: function(data){
+          // update cart
+          console.log("good")
+          $(element).closest('li').text("Order cancelled!");
+      },
+      error:function(){
+          alert("Sorry, something bad happened.");
       }
     });
 });
@@ -205,15 +146,13 @@ function available () {
       url: url,
       type: "post",
       success: function(data){
-          //TODO: REMOVE GRAY FROM BUTTON AND CHANGE THE BUTTON TO MARK UNAVAILABLE
+
           id = "#" + id;
           $(id).removeClass('alert');
           $(id).addClass('success');
           $(id).removeClass('mark_item_available');
           $(id).addClass('mark_item_unavailable');
           unavailable ();
-
-          console.log($(id));
       },
       error:function(){
           alert("Sorry, something bad happened.");

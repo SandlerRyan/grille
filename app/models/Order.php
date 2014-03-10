@@ -3,6 +3,7 @@
 use LaravelBook\Ardent\Ardent;
 
     class Order extends Ardent
+
     {
         /**
          * Ardent validation rules
@@ -34,7 +35,7 @@ use LaravelBook\Ardent\Ardent;
 
     	public function item_orders ()
     	{
-    		return $this->belongsToMany('Item','item_orders')->withPivot('quantity','id');
+    		return $this->belongsToMany('Item','item_orders')->withPivot('quantity','id','notes');
     	}
 
         public function grille ()

@@ -49,14 +49,32 @@
 
 <div class="result">
 </div>
+
+<!-- THESE ARE YOUR ORDER DETAILS!
+
+@foreach(Cart::contents() as $item)
+{{$item->name}}<br/>
+{{$item->price}}<br/>
+{{$item->quantity}}<br/><br/> -->
+
+<!-- @endforeach -->
+
+	<!-- <div id="totalPrice"><b>Total</b>: ${{Cart::total()}}</div> -->
+	<!-- <div class="large-3 large-centered columns"> -->
+<!-- 	<a class="button success round" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Pay with Venmo</a>
+<a href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&
+	scope=make_payments%20access_profile&response_type=token">Pay with Venmo</button>
+
+	<a class="button success round" href="/pay_later">Pay At Grille</a> -->
+
+	<!-- <br/> -->
+
 <br/>
-
-
 
 @if (Session::has('user'))
 	<ul class="button-group round even-2">
           <li><a class="button success" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">Use Venmo</a></li>
-          <li><a class="button success" href="/pay_later">Pay At Pick-Up</a></li>
+          <li><a class="button success" href="/order/pay_later">Pay At Pick-Up</a></li>
     </ul>
 @else
 	<ul class="">
@@ -83,7 +101,7 @@ function add_note ()
 		containerID = "#text-" + id;
 		var value = $(containerID).val();
 		$.ajax({
-			url: "/add_note/" + id + "/" + value,
+			url: "/cart/add_note/" + id + "/" + value,
 			type: "get",
 			error: function(){
 				console.log('error');
