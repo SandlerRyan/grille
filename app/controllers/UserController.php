@@ -122,7 +122,8 @@ class UserController extends \BaseController {
 
             //log user in
             Session::put('user', $user);
-
+            Auth::loginUsingId($user->id);
+            
             //redirect to most recent page
             $url = Session::get('redirect');
             Session::forget('redirect');
