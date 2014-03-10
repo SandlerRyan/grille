@@ -1,13 +1,13 @@
 <?php
 
-class AdminController extends \AdminBaseController {
+class DashboardController extends \AdminBaseController {
 
 
     public function dashboard() {
 
         // $orders = Order::where('fulfilled', 0)->get();
-        $orders = Order::with('item_orders')->where('fulfilled', 0)->get();
-        //  with('item_orders')->get();
+        $orders = Order::with('item_orders')->where('fulfilled', 0)
+            ->where('cancelled', 0)->get();
 
         $items = Item::where('grille_id', 1)->get();
 
@@ -16,11 +16,20 @@ class AdminController extends \AdminBaseController {
     }
 
     public function filled_orders() {
-        $orders = Order::with('item_orders')->where('fulfilled', '!=', 1)->get();
+        $orders = Order::with('item_orders')->where('fulfilled', 1)->get();
         foreach($orders as $order){
             $order->user;
         }
         $this->layout->content = View::make('dashboard.filled', ['orders' => $orders]);
+
+    }
+
+    public function cancelled_orders() {
+        $orders = Order::with('item_orders')->where('cancelled', 1)->get();
+        foreach($orders as $order){
+            $order->user;
+        }
+        $this->layout->content = View::make('dashboard.cancelled', ['orders' => $orders]);
 
     }
 
@@ -77,7 +86,7 @@ class AdminController extends \AdminBaseController {
                 return 0;
             }
         }
-        
+
         //alert user that order has been refunded
         //TODO - give a reason? next steps?
         // $name = User::where('id', $order->user_id)->pluck('preferred_name');
@@ -91,7 +100,8 @@ class AdminController extends \AdminBaseController {
     }
 
     public function get_new_orders() {
-        $orders = Order::with('item_orders')->where('fulfilled', 0)->get();
+        $orders = Order::with('item_orders')->where('fulfilled', 0)->
+            where('cancelled', 0)->get();
         foreach($orders as $order){
             // add user info
             $order->user;
@@ -109,6 +119,8 @@ class AdminController extends \AdminBaseController {
 
     public function mark_as_cooked($id) {
         $order = Order::find($id);
+        $order->cooked = 1;
+        $order->save();
         //alert user that order is ready
         $name = User::where('id', $order->user_id)->pluck('preferred_name');
         $phone = User::where('id', $order->user_id)->pluck('phone_number');
@@ -124,11 +136,28 @@ class AdminController extends \AdminBaseController {
         $order->fulfilled = 1;
         $order->save();
 
-        //alert user that order is ready
+        // alert user that order is ready
         $name = User::where('id', $order->user_id)->pluck('preferred_name');
         $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
-        $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
+        $message = "Hi " . $name . ", your order is closed! Enjoy the food!";
+
+        Sms::send_sms($phone, $message);
+
+        return 1;
+    }
+
+    public function cancel($id) {
+        $order = Order::find($id);
+        $order->cancelled = 1;
+        $order->save();
+
+        // alert user their order has been cancelled
+        $name = User::where('id', $order->user_id)->pluck('preferred_name');
+        $phone = User::where('id', $order->user_id)->pluck('phone_number');
+
+        $message = "Hi " . $name . ", something went wrong and your order (no. "
+            . $order->id . ") has been cancelled. Sorry!";
 
         Sms::send_sms($phone, $message);
 
@@ -149,7 +178,7 @@ class AdminController extends \AdminBaseController {
     }
 
     /**
-     * Show the form for creating a new order.
+     * Show the form for creating a text alert.
      *
      * @return Response
      */

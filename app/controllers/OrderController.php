@@ -101,7 +101,7 @@ class OrderController extends \BaseController {
         // Create Payment and Charge the User
         $url = 'https://api.venmo.com/v1/payments';
 
-        
+
         $data = array("access_token" => $access_token, "amount" => 0.01,
             "phone" => "7734901404", "note" => "Testing Eliot Grille");
         $response = $this->sendPostData($url, $data);
@@ -191,8 +191,14 @@ class OrderController extends \BaseController {
         $phone = "6159183416";  // hardcoded to ryan's number for now
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order->id)
                                                 ->count();
-        $message = "Hi " . $name . ", your order has been received! There are currently " .
-                    $num_orders . " orders in front of you. See you soon!";
+        if ($num_orders == 1) {
+            $message = "Hi " . $name . ", your order has been received! There is currently " .
+                    $num_orders . " order in front of you. See you soon!";
+        }
+        else {
+            $message = "Hi " . $name . ", your order has been received! There are currently " .
+                        $num_orders . " orders in front of you. See you soon!";
+        }
         Sms::send_sms($phone,$message);
 
         $this->layout->content = View::make('checkout.success', ['response' => $response['status'],

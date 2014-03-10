@@ -5,16 +5,21 @@ class UserController extends \BaseController {
     public function login()
     {
         require_once(app_path().'/config/id.php');
-        // if user is already logged in, redirect to index.php
+        
+        // if user is already logged in, redirect to current page
         if (Session::has('user'))
         {
-            // TODO: redirect to most recent page
-            return Redirect::to('/');
+            return Redirect::back();
         }
 
         // else redirect user to CS50 ID
         else
+        {
+            //store url in session
+            Session::put('redirect', URL::previous());
+
             return Redirect::to(CS50::getLoginUrl(TRUST_ROOT, RETURN_TO));
+        }
     }
 
     public function logout()
@@ -24,8 +29,9 @@ class UserController extends \BaseController {
 
         if (Session::has('user'))
             Session::forget('user');
-        Auth::logout();
-        return Redirect::to('/');
+        
+
+        return Redirect::back();
     }
 
     public function return_to()
@@ -49,31 +55,36 @@ class UserController extends \BaseController {
             $full = $current_user["fullname"];
             $split = explode(' ',trim($full));
             $first = $split[0];
+           
+            $user = array("cs50_id"=> $current_user["identity"],
+                            "fullname" => $current_user["fullname"],
+                            "preferred_name" => $first,
+                            "email" => $current_user["email"]);
 
-            $user = new User();
-            $user->cs50_id = $current_user["identity"];
-            $user->name = $current_user["fullname"];
-            $user->preferred_name = $first;
-            $user->phone_number = "";
-            $user->email = $current_user["email"];
-            $user-> save();
+            //put user in the session
+            Session::put('pending_user', $user);
 
             $failure = Session::get('failure');
-            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
+            $this->layout->content = View::make('users.edit', ['pending_user' => $user, 'failure' => $failure]);
         }
 
-        //else, redirect to checkout page
+        //else, redirect to intended page
         else
         {
             $user = User::where('cs50_id', $current_user['identity'])->get()[0];
             Session::put('user', $user);
             Auth::loginUsingId($user->id);
-            return Redirect::to('/order/checkout');
+
+            $url = Session::get('redirect');
+            Session::forget('redirect');
+            return Redirect::to($url);
         }
     }
 
-    public function edit_user($id)
+
+    public function edit_user()
     {
+
         //check to make sure phone number in correct format
         $number = Input::get('phone_number');
 
@@ -82,26 +93,45 @@ class UserController extends \BaseController {
 
         if (preg_match ($pattern, $number))
         {
+            $pending = Session::get('pending_user');
+
             // Input doesn't return zero for unchecked boxes, so change these to zero
             $hours_notification = (Input::get('hours_notification') ? 1 : 0);
             $deals_notification = (Input::get('deals_notification') ? 1 : 0);
 
             //strip any punctuation from phone number, if exists
-            $phone = str_replace(array("-","."), "", Input::get('phone_number'));
+            $phone = str_replace(array("-",".","(",")"," "), "", Input::get('phone_number'));
 
-            //update table with user's preferred name and phone number
-            DB::table('users')->where('id',$id)->update(array('preferred_name' => Input::get('preferred_name'),
-                                                                'phone_number' => $phone,
-                                                                'hours_notification' => $hours_notification,
-                                                                'deals_notification' => $deals_notification));
-            Session::put('user', User::findorfail($id));
-            // TODO: redirect to most recent page
-            return Redirect::to('/order/checkout');
+          
+            //create user based on session data and input
+            $pending = Session::get('pending_user');
+
+            $user = new User();
+            $user->cs50_id = $pending["cs50_id"];
+            $user->name = $pending["fullname"];
+            $user->preferred_name = Input::get('preferred_name');
+            $user->email = $pending["email"];
+            $user->phone_number = $phone;
+            $user->hours_notification = $hours_notification;
+            $user->deals_notification = $deals_notification;
+            $user->save();
+
+            //remove pending user from session
+            Session::forget('pending_user');
+            
+            //log user in
+            Session::put('user', $user);
+            
+            //redirect to most recent page
+            $url = Session::get('redirect');
+            Session::forget('redirect');
+            return Redirect::to($url);
         }
         else
         {
             $failure = 'Please enter a 10-digit phone number';
-            return Redirect::to('/user/return_to')->with('failure', $failure);
+            $user = Session::get('pending_user');
+            $this->layout->content = View::make('users.edit', ['pending_user' => $user, 'failure' => $failure]);
         }
 
     }

@@ -21,8 +21,7 @@ Route::group(array('prefix' => 'user'), function()
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/return_to', 'UserController@return_to');
 	Route::get('/add_phone/{phone}', 'UserController@add_phone');
-	Route::get('/edit_user/{id}', 'UserController@edit_user');
-	Route::get('/edit_test', 'UserController@edit_test');
+	Route::get('/edit_user', 'UserController@edit_user');
 });
 
 /**
@@ -58,19 +57,22 @@ Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 /**
 * ADMIN DASHBOARD ROUTES
 */
-
 Route::group(array('prefix' => 'dashboard', 'before' => 'auth|staff'), function ()
 {
-	Route::get('/', 'AdminController@dashboard');
-	Route::get('/filled_orders', 'AdminController@filled_orders');
-	Route::post('/refund_order/{id}', 'AdminController@refund_order');
-	Route::post('/get_new_orders', 'AdminController@get_new_orders');
-	Route::post('/mark_as_cooked/{id}', 'AdminController@mark_as_cooked');
-	Route::post('/mark_as_fulfilled/{id}', 'AdminController@mark_as_fulfilled');
-	Route::post('/mark_as_unavailable/{id}', 'AdminController@mark_as_unavailable');
-	Route::post('/mark_as_available/{id}', 'AdminController@mark_as_available');
-	Route::get('/alert_deals', 'AdminController@alert_deals');
-	Route::get('/alert_hours', 'AdminController@alert_hours');
+	Route::get('/', 'DashboardController@dashboard');
+	Route::get('/filled_orders', 'DashboardController@filled_orders');
+	Route::get('/cancelled_orders', 'DashboardController@cancelled_orders');
+
+	Route::post('/refund_order/{id}', 'DashboardController@refund_order');
+	Route::post('/get_new_orders', 'DashboardController@get_new_orders');
+	Route::post('/mark_as_cooked/{id}', 'DashboardController@mark_as_cooked');
+	Route::post('/mark_as_fulfilled/{id}', 'DashboardController@mark_as_fulfilled');
+	Route::post('/mark_as_unavailable/{id}', 'DashboardController@mark_as_unavailable');
+	Route::post('/mark_as_available/{id}', 'DashboardController@mark_as_available');
+	Route::post('/cancel/{id}', 'DashboardController@cancel');
+
+	Route::get('/alert_deals', 'DashboardController@alert_deals');
+	Route::get('/alert_hours', 'DashboardController@alert_hours');
 });
 
 /**

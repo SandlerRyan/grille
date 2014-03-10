@@ -1,5 +1,5 @@
 <div class="row">
-<h3>Filled Orders</h3>
+<h3>Cancelled Orders</h3>
 <br/>
 
 <div id="show_orders">
@@ -14,7 +14,7 @@
   <div class="large-6 columns">
       <ul class="inline-list right">
         <li><a class="button" href="/dashboard/">See incoming orders</a></li>
-        <li><a class="button" href="/dashboard/cancelled_orders">See cancelled orders</a></li>
+        <li><a class="button" href="/dashboard/filled_orders">See fulfilled orders</a></li>
       </ul>
   </div>
 </div>
@@ -30,9 +30,8 @@
         %>
         <li>
           <div class="large-12 columns">
-             <div class="panel" id="<%= order.id %>">
-
-	          <div style="float:left;"><h4 style="color: green; font-weight: 200;">Filled</h4></div>
+            <div class="panel" id="<%= order.id %>">
+              <div style="float:left;"><h4 style="color:red; font-weight: 200;">Cancelled</h4></div>
 
                 <div align="right">
                    <h4>$<%= order.cost %></h4>

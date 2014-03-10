@@ -28,7 +28,7 @@
 
 
     <!-- Slidebars -->
-    <script src="js/slidebars.min.js"></script>
+    <script src="/js/slidebars.min.js"></script>
 
     <!-- Slidebars CSS -->
     <link rel="stylesheet" href="/css/slidebars.min.css">
@@ -61,20 +61,20 @@
   </head>
 
   <body>
-
-
-          <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
-            <ul class="button-group radius even-3">
-              <li><a class="button" href="/dashboard">Orders</a></li>
-              <li><a class="button" href="/inventory">Inventory</a></li>
-              <li><a class="button" href="/admin">Admin Portal</a></li>
-            </ul>
-          <?php } else { ?>
-            <ul class="button-group radius even-2">
-              <li><a class="button" href="/dashboard">Orders</a></li>
-              <li><a class="button" href="/inventory">Inventory</a></li>
-            </ul>
-          <?php } ?>
+    <?php if(Session::get('user')->privileges == ('manager'||'admin')){ ?>
+      <ul class="button-group radius even-4">
+        <li><a class="button" href="/dashboard">Orders</a></li>
+        <li><a class="button" href="/inventory">Inventory</a></li>
+        <li><a class="button" href="/admin">Admin</a></li>
+        <li><a class="button" href="/">Home</a></li>
+      </ul>
+    <?php } else { ?>
+      <ul class="button-group radius even-3">
+        <li><a class="button" href="/dashboard">Orders</a></li>
+        <li><a class="button" href="/inventory">Inventory</a></li>
+        <li><a class="button" href="/">Main Site</a></li>
+      </ul>
+    <?php } ?>
 
 
     <!-- content  -->
