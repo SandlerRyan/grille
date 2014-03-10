@@ -80,9 +80,18 @@ body {
   padding-bottom: 3px;
   border-bottom: solid white 2px;
   background-color: #55bcff;
-  -webkit-box-shadow: 0px 5px 15px 0px #bfbfbf;
-  box-shadow: 0px 5px 15px 0px #bfbfbf;
+/*  -webkit-box-shadow: 0px 5px 15px 0px #bfbfbf;
+  box-shadow: 0px 5px 15px 0px #bfbfbf;*/
   height: 50px;
+
+    z-index: 99;
+     padding-top: 5px;
+     padding-bottom: 3px;
+     background: white;
+     border-top: solid white 2px;
+     /*background-color: #89D4DF;*/
+     -webkit-box-shadow: 0px -5px 15px 0px #bfbfbf;
+     box-shadow: 0px -5px 15px 0px #bfbfbf;
 }
 
 .inline {
