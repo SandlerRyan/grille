@@ -21,7 +21,7 @@
 	<div class="row collapse">
 		<div class="large-4 columns">
 			{{ Form::label('phone_number', 'Phone Number') }}
-			{{ Form::text('phone_number', '', array('placeholder'=>"(XXX) XXX-XXXX", 'required')) }}
+			{{ Form::text('phone_number', '', array('placeholder'=>"XXX.XXX.XXXX", 'required')) }}
 		</div>
 	</div>
 
