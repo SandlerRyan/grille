@@ -1,6 +1,9 @@
 <!-- First Band (Slider) -->
 
 <div class="row">
+  @if($err_messages)
+    <h5><font color="red">{{$err_messages}}</font></h5>
+  @endif
 <!-- <div class="large-12 columns"> -->
 	@if($open==1)
 		<!-- <h1 id="neon-tubing">Open</h1> -->
@@ -33,10 +36,6 @@
       	@endforeach
   	</tbody>
 </table>
-
-  @if($err_messages)
-    <h5><font color="red">{{$err_messages}}</font></h5>
-  @endif
 
 <div class="row">
 <h4 style="width: 100%; text-align:center;">Where to Find Us</h4>

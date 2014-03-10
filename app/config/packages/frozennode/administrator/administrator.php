@@ -67,11 +67,12 @@ return array(
 	 */
 	'permission'=> function()
 	{
+		$privileges = false;
 		if (Auth::check()) {
-			$privileges = Session::get('user')->privileges == ('manager' || 'admin');
+			if (Session::get('user')->privileges == ('manager' || 'admin'))
+			$privileges = true;
 		}
-		else $privileges = false;
-		return (Auth::check() && $privileges);
+		return ($privileges);
 	},
 
 	/**
