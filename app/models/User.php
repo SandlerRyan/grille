@@ -11,10 +11,12 @@ class User extends Ardent implements UserInterface, RemindableInterface {
 	 */
 	public static $rules = array(
 	  'cs50_id' => 'required',
-	  'name' => 'required',
-	  'preferred_name' => 'required',
-	  'phone_number' => 'regex:"^\d{10}$"',
-	  'email' => 'required|email'
+	  'name' => 'required|min:1',
+	  'preferred_name' => 'required|min:1',
+	  'phone_number' => 'required|regex:"^\d{10}$"',
+	  'email' => 'required|email',
+	  'hours_notification' => 'required',
+	  'deals_notification' => 'required'
 	);
 
 	/**
