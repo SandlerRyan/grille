@@ -21,8 +21,7 @@ Route::group(array('prefix' => 'user'), function()
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/return_to', 'UserController@return_to');
 	Route::get('/add_phone/{phone}', 'UserController@add_phone');
-	Route::get('/edit_user/{id}', 'UserController@edit_user');
-	Route::get('/edit_test', 'UserController@edit_test');
+	Route::get('/edit_user', 'UserController@edit_user');
 });
 
 /**
