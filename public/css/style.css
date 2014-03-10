@@ -104,49 +104,6 @@ body {
   margin-right:auto;
 }
 
-
-
-/*http://codepen.io/dudleystorey/pen/xJkhG*/
-@font-face{
-  font-family:'Neon80sRegular';
-  src: url('//demosthenes.info/assets/fonts/neon-webfont.woff') format('woff'), 
-  url('/assets/fonts/neon-webfont.ttf') format('truetype');
-  font-weight:normal;
-  font-style:normal;
-}
-
-h1#neon-tubing {
-  padding: 6rem;
-  text-align: center;
-  color: rgba(255,200,200,0.8);
-  font-family: Neon80s, sans-serif;
-  font-size: 11rem; letter-spacing: 2rem;
-  background: url(brick-wall-texture-faded.jpg);
-  background-size: cover;
-}
-
-h1#neon-tubing { 
-  margin: 0;
-  font-weight: 100;
-/*  background-image: radial-gradient(ellipse farthest-corner,rgba(0,0,0,0),rgba(0,0,0,0)),
-    url(//demosthenes.info/assets/images/brick-wall-texture-faded.jpg);*/
-  background-color: gray;
-  text-align: center;
-  font-family: Neon80sRegular, sans-serif;
-  color: #fee;
-  padding: 4rem;
-  text-transform: uppercase;
-  font-size: 6rem; 
-  letter-spacing: 2rem;
-  animation: neonspark 1s 3s forwards;
-  text-shadow: 
-    0 0 20px rgba(255,0,84,0.6),
-    0 0 40px rgba(255,0,84,0.4),
-    0 0 60px rgba(255,0,84,0.2),
-    0 0 80px rgba(255,0,84,0.1); 
-}
-
-
 img {
     -webkit-box-shadow: 2px 2px 2px #7C7C7C;
     box-shadow: 2px 2px 2px #7C7C7C;
@@ -168,4 +125,3 @@ padding-left: 2em;
   float: right;
 
 }
-
