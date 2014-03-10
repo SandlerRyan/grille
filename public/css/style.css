@@ -92,6 +92,9 @@ body {
      /*background-color: #89D4DF;*/
      -webkit-box-shadow: 0px -5px 15px 0px #bfbfbf;
      box-shadow: 0px -5px 15px 0px #bfbfbf;
+
+
+    padding: 10px;
 }
 
 .inline {
