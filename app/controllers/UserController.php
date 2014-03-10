@@ -63,6 +63,9 @@ class UserController extends \BaseController {
             $user->email = $current_user["email"];
             $user-> save();
 
+            //put user in the session
+            Session::put('pending_user', $user);
+
             $failure = Session::get('failure');
             $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
@@ -73,9 +76,10 @@ class UserController extends \BaseController {
             $user = User::where('cs50_id', $current_user['identity'])->get()[0];
             Session::put('user', $user);
             Auth::loginUsingId($user->id);
-            return Redirect::to('/order/checkout');
+            return Redirect::to('/order/create');
         }
     }
+
 
     public function edit_user($id)
     {
@@ -92,7 +96,7 @@ class UserController extends \BaseController {
             $deals_notification = (Input::get('deals_notification') ? 1 : 0);
 
             //strip any punctuation from phone number, if exists
-            $phone = str_replace(array("-","."), "", Input::get('phone_number'));
+            $phone = str_replace(array("-",".","(",")"," "), "", Input::get('phone_number'));
 
             //update table with user's preferred name and phone number
             DB::table('users')->where('id',$id)->update(array('preferred_name' => Input::get('preferred_name'),
@@ -101,12 +105,13 @@ class UserController extends \BaseController {
                                                                 'deals_notification' => $deals_notification));
             Session::put('user', User::findorfail($id));
             // TODO: redirect to most recent page
-            return Redirect::to('/order/checkout');
+            return Redirect::to('/order/create');
         }
         else
         {
             $failure = 'Please enter a 10-digit phone number';
-            return Redirect::to('/user/return_to')->with('failure', $failure);
+            $user = Session::get('pending_user');
+            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
 
     }
