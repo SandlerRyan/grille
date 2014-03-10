@@ -80,7 +80,7 @@
             </ul>
           <?php } ?>
 
-          <?php if (Auth::check()) { ?>
+          <?php if (Session::has('user')) { ?>
             <a class="nav-login button round" href="/user/logout">Logout</a>
           <?php } else { ?>
             <a class="nav-login button round" href="/user/login">Login</a>
