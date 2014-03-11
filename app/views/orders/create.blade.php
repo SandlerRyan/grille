@@ -1,3 +1,4 @@
+@section('content')
 <!-- sticky footer -->
  <div class="stickyFooter">
     <div class="row">
@@ -94,15 +95,16 @@
       @endforeach
     </table>
   @endforeach
-
 </div>
 
 <div id="result"></div>
 
+@stop
+
+@section('additional_static')
 <!-- cart.js handles all ajax calls to the cart -->
 <script type="text/javascript" src="{{ URL::asset('js/cart.js') }}"></script>
 <script>
-
   var SUBMIT_BUTTON = '#checkout';
 
   // Set the checkout button status when the page is loaded
@@ -115,7 +117,6 @@
     }
   });
 
-
   // enable the checkout button whenver there are items in the cart
    $(SUBMIT_BUTTON).click(function () {
       $(this).attr('disabled', 'disabled');
@@ -123,3 +124,4 @@
    });
 
 </script>
+@stop

@@ -67,7 +67,7 @@ class OrderController extends \BaseController {
         }
 
         // TODO: more error checking on the exact value of items
-        $this->layout->content = View::make('checkout.index',
+        $this->layout->content = View::make('orders.checkout',
             ['err_messages' => $errors, 'user'=>Session::get('user')]);
     }
 
@@ -203,7 +203,7 @@ class OrderController extends \BaseController {
         }
         Sms::send_sms($phone,$message);
 
-        $this->layout->content = View::make('checkout.success', ['response' => $response['status'],
+        $this->layout->content = View::make('orders.success', ['response' => $response['status'],
             'order' => $order_info]);
     }
 

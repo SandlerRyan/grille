@@ -1,12 +1,11 @@
-
+@section('content')
 <div class="row">
-<h3> Admin Inventory Management </h3>
-<br/>
-
+  <h3> Admin Inventory Management </h3>
+  <br/>
+</div>
 
 <!-- Main body of Inventory Tracking -->
 <div class="row">
-
     <table>
       <tr>
         <th width="200">Item</th>
@@ -16,10 +15,10 @@
         <th width="50">Units</th>
       </tr>
     @foreach($items as $item)
-    
+
     <tr class="{{ $item->id }}">
       <td>
-          <b>{{{ $item->name }}}</b> 
+          <b>{{{ $item->name }}}</b>
           <br/>
           {{{ $item->description}}}
           </td>
@@ -28,7 +27,7 @@
           </td>
           <td>
             <div class="itemQuantity" id="value-{{ $item->id }}">{{ $item->quantity }}</div>
-          </td>          
+          </td>
           <td>
             <button type="button" class="removeItem" id="remove-{{ $item->id }}">-</button>
       	  </td>
@@ -38,15 +37,10 @@
         </tr>
       @endforeach
     </table>
-
 </div>
+@stop
 
+@section('additional_static')
 <!-- inventory.js handles all ajax calls to the cart -->
 <script type="text/javascript" src="{{ URL::asset('js/inventory.js') }}"></script>
-<script>
- 
-</script>
-
-</div>
-
-</div>
+@stop

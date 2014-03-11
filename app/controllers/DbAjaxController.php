@@ -49,15 +49,15 @@ class DbAjaxController extends \AdminBaseController {
         {
             case 'new':
                 $orders = Order::with('item_orders')->where('fulfilled', 0)->
-                    where('cancelled', 0)->get();
+                    where('cancelled', 0)->orderBy('created_at', 'desc')->get();
                 break;
             case 'fulfilled':
                 $orders = Order::with('item_orders')->where('fulfilled', 1)->
-                    where('cancelled', 0)->get();
+                    where('cancelled', 0)->orderBy('created_at', 'desc')->get();
                 break;
             case 'cancelled':
                 $orders = Order::with('item_orders')->where('fulfilled', 0)->
-                    where('cancelled', 1)->get();
+                    where('cancelled', 1)->orderBy('created_at', 'desc')->get();
                 break;
             default:
                 return array('status' => 'error');
@@ -67,11 +67,17 @@ class DbAjaxController extends \AdminBaseController {
             // add user info
             $order->user;
         }
+
+        date_default_timezone_set('America/New_York');
         foreach($orders as $order){
-          foreach($order->item_orders as $item){
-            $item_addons = ItemOrder::find($item->pivot->id)->addons->toArray();
-            $item['addons'] = $item_addons;
-          }
+            // convert to a nicer datetime string
+            $order['time'] = $order->created_at->format('M j \a\t g:i A');
+
+            // get addons for each item
+            foreach($order->item_orders as $item){
+              $item_addons = ItemOrder::find($item->pivot->id)->addons->toArray();
+              $item['addons'] = $item_addons;
+            }
         }
         $response_array['status'] = 'success';
         $response_array['cart'] =  json_decode($orders);
@@ -92,6 +98,7 @@ class DbAjaxController extends \AdminBaseController {
 
         return 1;
     }
+
     public function mark_as_fulfilled($id) {
         $order = Order::find($id);
         $order->fulfilled = 1;

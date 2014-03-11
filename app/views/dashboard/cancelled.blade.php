@@ -1,11 +1,9 @@
+@section('content')
 <div class="row">
-<h3>Cancelled Orders</h3>
-<br/>
+  <h3>Cancelled Orders</h3>
+  <br/>
 
-<div id="show_orders">
-
-
-	</div>
+  <div id="show_orders"></div>
 </div>
 
 <div class="row">
@@ -19,7 +17,9 @@
       </ul>
   </div>
 </div>
+@stop
 
+@section('additional_static')
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
 <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
 <script type="text/javascript">
@@ -109,3 +109,4 @@ unavailable();
   </ul>
 
 </script>
+@stop

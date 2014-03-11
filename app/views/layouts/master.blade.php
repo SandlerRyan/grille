@@ -25,10 +25,8 @@
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
-
-
     <!-- Slidebars -->
-    <script src="js/slidebars.min.js"></script>
+    <script src="{{ URL::asset('js/slidebars.min.js') }}"></script>
 
     <!-- Slidebars CSS -->
     <link rel="stylesheet" href="/css/slidebars.min.css">
@@ -39,11 +37,8 @@
     <link rel="stylesheet" href="/css/slidebars-theme.css">
     <link rel="stylesheet" href="/js/slidebars-theme.js">
 
-
     <!-- Toggle Switch -->
     <link rel="stylesheet" href="/css/toggle-switch.css">
-
-
 
     <!-- Responsive Tables -->
     <!-- Included CSS Files -->
@@ -62,89 +57,60 @@
 
   <body>
 
-
-
+  @section('header')
   <div id="stickyHeader">
-      <div  class="row">
-        <!-- <div class="large-12 columns"> -->
-        <h4 class="inline">
-        <a class="" href="/">Eliot Grille</a></li>
-        </h4>
+    <div  class="row">
+      <!-- <div class="large-12 columns"> -->
+      <h4 class="inline">
+      <a class="" href="/">Eliot Grille</a></li>
+      </h4>
 
-          <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')) { ?>
-              <a class="nav-item" href="/order/create">Menu</a>
-              <a class="nav-item" href="/dashboard">Staff</a>
+        @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
+            <a class="nav-item" href="/order/create">Menu</a>
+            <a class="nav-item" href="/dashboard">Staff</a>
+        </ul>
+        @else
+            <a class="nav-item" href="/order/create">Menu</a>
           </ul>
-          <?php } else{ ?>
-              <a class="nav-item" href="/order/create">Menu</a>
-            </ul>
-          <?php } ?>
+        @endif
 
-          <?php if (Session::has('user')) { ?>
-            <a class="nav-login button round" href="/user/logout">Logout</a>
-          <?php } else { ?>
-            <a class="nav-login button round" href="/user/login">Login</a>
-          <?php } ?>
+        @if (Session::has('user'))
+          <a class="nav-login button round" href="/user/logout">Logout</a>
+        @else
+          <a class="nav-login button round" href="/user/login">Login</a>
+        @endif
 
-      </div>
+    </div>
   </div>
 
+  <div class="row">
+    <div class="large-12 columns">
+      <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
+    </div>
+  </div>
+  @show
 
-  <!-- <a href="#" class="button [radius round]">Log out</a> -->
 
+  <!-- End Header and Nav -->
 
+  @yield('content')
+
+  <!-- Footer -->
+  @section('footer')
+  <footer class="row">
+    <div class="large-12 columns">
+      <hr />
       <div class="row">
-        <div class="large-12 columns">
-          <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
+        <div class="large-6 columns">
+          <p>© 2014 Eliot Grille</p>
         </div>
-<!--         <div class="large-6 columns">
-            <ul class="inline-list right">
-              <?php if(Session::has('user')){ ?>
-              <li>Logged in as <?php echo Session::get('user')->preferred_name?></li>
-              <li><a href="/user/logout">Log out</a></li>
-              <?php }else{ ?>
-              <li><a class="button" href="/user/login">Login</a></li>
-              <?php } ?>
-            </ul>
-        </div> -->
       </div>
+    </div>
+  </footer>
+  @show
 
-<!--       <nav class="row">
-        <div class="large-12 columns">
-          <?php if(Session::has('user') && (Session::get('user')->privileges != 'user')){ ?>
-            <ul class="button-group radius even-3">
-              <li><a class="button" href="/">Home</a></li>
-              <li><a class="button" href="/order/create">Menu</a></li>
-              <li><a class="button" href="/dashboard">Staff</a></li>
-          </ul>
-          <?php }else{ ?>
-            <ul class="button-group radius even-2">
-              <li><a class="button" href="/">Home</a></li>
-              <li><a class="button" href="/order/create">Menu</a></li>
-            </ul>
-          <?php } ?>
-        </div>
-      </nav> -->
+  @yield('additional_static')
 
-    <!-- End Header and Nav -->
-
-           <?= $content; ?>
-
-      <!-- Footer -->
-      <footer class="row">
-        <div class="large-12 columns">
-          <hr />
-          <div class="row">
-            <div class="large-6 columns">
-              <p>© 2014 Eliot Grille</p>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-
-
-    </body>
-
+  </body>
 
 </html>

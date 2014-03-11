@@ -1,39 +1,28 @@
+@section('content')
 <!-- End Header and Nav -->
   <div class="button alert sb-toggle-left" style="background-color:gray">
     In-Stock Side Bar
   </div>
 
-<!-- </div> -->
 <!-- Left Slidebar -->
 <div class="sb-slidebar sb-left">
-
   <!-- Lists in Slidebars -->
   <ul class="sb-menu">
-
-
     @foreach($items as $item)
+
       <li>
-
         @if ($item->available)
-
-
         <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
           {{ $item->name}}
-
         </button>
-
         @else
           <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
           {{ $item->name }}
-
           </button>
-
         @endif
-
       </li>
 
     @endforeach
-
   </ul>
 
 
@@ -57,7 +46,9 @@
       </ul>
   </div>
 </div>
+@stop
 
+@section('additional_static')
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
 <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
 <script type="text/javascript">
@@ -70,14 +61,12 @@ get_orders(tmpl, 'new');
 available();
 unavailable();
 });
-
 </script>
 
 
 <script id="tmpl-orders" type="text/template">
 
     <ul class="clearing-thumbs" data-clearing>
-
         <%
           _.each(orders, function(order) {
         %>
@@ -85,10 +74,13 @@ unavailable();
           <div class="large-12 columns">
              <div class="panel" id="<%= order.id %>">
         <% if (order.venmo_id != 0) { %>
-          <div style="float:left;"><h4 style="color: #3D95CE; font-weight: 200;">Venmo</h4></div>
-
+          <div style="float:left;">
+            <h4 style="color: #3D95CE; font-weight: 200;">Venmo (ID: <%= order.id %>)</h4>
+          </div>
         <% } else { %>
-          <div style="float:left;"><h4 style="font-weight: 200;">Pickup</h4></div>
+          <div style="float:left;">
+            <h4 style="font-weight: 200;">Pickup (ID: <%= order.id %>)</h4>
+          </div>
 
         <% }  %>
 
@@ -96,8 +88,13 @@ unavailable();
                    <h4>$<%= order.cost %></h4>
                 </div>
                 <br>
-                <h5><%= order.user.name %></h5>
-                <h6>ID: <%= order.id %></h6>
+                <div style="float:left;">
+                  <h6><%= order.user.name %></h63>
+                </div>
+                <div align="right">
+                  <h6><%= order.time %></h6>
+                </div>
+
                 <table>
                    <thead>
                       <tr>
@@ -158,8 +155,7 @@ unavailable();
         <%
           }); // end repeat orders
         %>
-
   </ul>
 </script>
-
+@stop
 

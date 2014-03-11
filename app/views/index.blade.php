@@ -1,7 +1,6 @@
 <!-- First Band (Slider) -->
-@if($err_messages)
-    <h5><font color="red">{{$err_messages}}</font></h5>
-@endif
+@section('content')
+
 <div class="row">
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
@@ -25,29 +24,30 @@
 <table class="box" style="margin:auto;">
 <!-- <caption><h4>Hours</h4></caption> -->
 	<thead>
-    	<tr>
-    		<th width="200">Day</th>
-    		<th width="200">Opens</th>
-    		<th width="200">Closes</th>
+  	<tr>
+  		<th width="200">Day</th>
+  		<th width="200">Opens</th>
+  		<th width="200">Closes</th>
 		</tr>
 	</thead>
 	<tbody>
-      	@foreach($hours as $hour)
-      	<tr>
-      		<td>{{$hour->day_of_week}}</td>
-      		<td>{{$hour->open_time}}</td>
-      		<td>{{$hour->close_time}}</td>
-      	</tr>
-      	@endforeach
-  	</tbody>
+  	@foreach($hours as $hour)
+  	<tr>
+  		<td>{{$hour->day_of_week}}</td>
+  		<td>{{$hour->open_time}}</td>
+  		<td>{{$hour->close_time}}</td>
+  	</tr>
+  	@endforeach
+	</tbody>
 </table>
 
 <br/>
 
 <div class="row">
-<h4 style="width: 100%; text-align:center;">Where to Find Us</h4>
-<h5 style="width: 100%; text-align:center;">J-Entryway Basement</h5>
+  <h4 style="width: 100%; text-align:center;">Where to Find Us</h4>
+  <h5 style="width: 100%; text-align:center;">J-Entryway Basement</h5>
   <img class="displayed" src="/img/map.png" />
 </div>
-
 <br />
+
+@stop

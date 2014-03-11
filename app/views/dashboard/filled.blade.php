@@ -1,11 +1,8 @@
+@section('content')
 <div class="row">
-<h3>Filled Orders</h3>
-<br/>
-
-<div id="show_orders">
-
-
-	</div>
+  <h3>Filled Orders</h3>
+  <br/>
+  <div id="show_orders"></div>
 </div>
 
 <div class="row">
@@ -19,7 +16,9 @@
       </ul>
   </div>
 </div>
+@stop
 
+@section('additional_static')
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
 <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
 <script type="text/javascript">
@@ -45,14 +44,21 @@ unavailable();
           <div class="large-12 columns">
              <div class="panel" id="<%= order.id %>">
 
-	          <div style="float:left;"><h4 style="color: green; font-weight: 200;">Filled</h4></div>
+	          <div style="float:left;">
+              <h4 style="color: green; font-weight: 200;">Filled (ID: <%= order.id %>)</h4>
+            </div>
 
                 <div align="right">
                    <h4>$<%= order.cost %></h4>
                 </div>
                 <br>
-                <h5><%= order.user.name %></h5>
-                <h6>ID: <%= order.id %></h6>
+                <div style="float:left;">
+                  <h6><%= order.user.name %></h63>
+                </div>
+                <div align="right">
+                  <h6><%= order.time %></h6>
+                </div>
+
                 <table>
                    <thead>
                       <tr>
@@ -107,5 +113,5 @@ unavailable();
         %>
 
   </ul>
-
 </script>
+@stop
