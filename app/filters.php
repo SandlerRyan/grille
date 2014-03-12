@@ -33,7 +33,15 @@ App::before(function($request)
 	Route::filter('manager', function()
 	{
 		if(Session::get('user')->privileges != ('manager' || 'admin')) {
-			return Redirect::to('/admin')->with('message',
+			return Redirect::to('/')->with('message',
+				'You do not have sufficient privileges to access this page');
+		}
+	});
+
+	Route::filter('grille', function()
+	{
+		if(Session::get('user')->grille_id != App::make('grille_id')) {
+			return Redirect::to('/')->with('message',
 				'You do not have sufficient privileges to access this page');
 		}
 	});

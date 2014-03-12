@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('content')
 <!-- End Header and Nav -->
   <div class="button alert sb-toggle-left" style="background-color:gray">

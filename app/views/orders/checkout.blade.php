@@ -66,6 +66,7 @@
 </div>
 @stop
 
+@section('additional_static')
 <script>
 // makes an ajax call to the database to add a note
 function add_note ()
@@ -123,3 +124,4 @@ $(document).ready(function () {
 
 </script>
 
+@stop

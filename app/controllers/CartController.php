@@ -8,7 +8,7 @@ class CartController extends \BaseController {
     * Called by ajax when "+" sign is pressed
     */
     public function increment($id)
-    {   
+    {
         $item = Item::find($id);
         $response_array = array();
 
@@ -19,13 +19,13 @@ class CartController extends \BaseController {
         //turn json into a php array
         $item = json_decode($item,true);
 
-        // insert will add a new item if not already in cart, 
+        // insert will add a new item if not already in cart,
         // or increment item if it exists already
         Cart::insert($item);
 
         $total = Cart::total_with_addons();
-        $response_array['status'] = 'success';    
-        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);    
+        $response_array['status'] = 'success';
+        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);
         return json_encode($response_array);
     }
 
@@ -46,7 +46,7 @@ class CartController extends \BaseController {
             if ($item->quantity == 1) {
                 Cart::remove($item->identifier);
             }
-            else 
+            else
             {
                 $item->quantity -- ;
 
@@ -59,9 +59,9 @@ class CartController extends \BaseController {
                     }
                 }
             }
-        }   
-        $response_array['status'] = 'success';      
-        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);  
+        }
+        $response_array['status'] = 'success';
+        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);
         return json_encode($response_array);
     }
 
@@ -75,7 +75,7 @@ class CartController extends \BaseController {
         $addon = Addon::find($addon_id);        // from database
         $response_array = array();
 
-        // if item doesn't exist, return success 
+        // if item doesn't exist, return success
         // but don't validate so nothing will change
         if (!$item) return json_encode(array('status' => 'success', 'validated' => 'false'));
 
@@ -87,13 +87,13 @@ class CartController extends \BaseController {
         // try inserting. If insertion returns false, there are too many addons
         // for the number of items. In this case, return false for validation
         $insertion = Cart::insert_addon($addon, $item);
-        if (!$insertion){ 
-            return json_encode(array('status' => 'success', 'validated' => 'false', 'available' => true)); 
-        } 
-        $response_array['status'] = 'success';   
-        $response_array['validated'] = true;  
+        if (!$insertion){
+            return json_encode(array('status' => 'success', 'validated' => 'false', 'available' => true));
+        }
+        $response_array['status'] = 'success';
+        $response_array['validated'] = true;
         $response_array['cart'] = number_format(Cart::total_with_addons(), 2);
-        return json_encode($response_array);   
+        return json_encode($response_array);
     }
 
     /**
@@ -112,14 +112,14 @@ class CartController extends \BaseController {
                 {
                     Cart::remove_addon($addon_id, $item);
                 }
-                else 
+                else
                 {
                     Cart::update_addon($addon_id, $item, 'quantity', --$addon->quantity);
                 }
             }
         }
-        $response_array['status'] = 'success';      
-        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);    
+        $response_array['status'] = 'success';
+        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);
         return json_encode($response_array);
     }
 
@@ -130,9 +130,9 @@ class CartController extends \BaseController {
     public function empty_cart()
     {
         Cart::destroy();
-        $response_array['status'] = 'success';      
-        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);    
-        return json_encode($response_array);   
+        $response_array['status'] = 'success';
+        $response_array['cart'] = number_format(Cart::total_with_addons(), 2);
+        return json_encode($response_array);
     }
 
     /**

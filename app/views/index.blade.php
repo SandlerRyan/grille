@@ -1,6 +1,6 @@
-<!-- First Band (Slider) -->
 @section('content')
 
+<!-- First Band (Slider) -->
 <div class="row">
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>

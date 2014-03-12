@@ -1,7 +1,6 @@
 <?php
 
 class OrderController extends \BaseController {
-    protected $GRILLE_ID = 1;
     /**
      * Show the form for creating a new order.
      *
@@ -10,11 +9,12 @@ class OrderController extends \BaseController {
     public function create()
     {
         // fetch all available menu items by category
-        $categories = Category::all();
+        $categories = Category::where('grille_id', $this->grille_id)->get();
         $menu = array();
         foreach ($categories as $category)
         {
-            $items = Item::where('category_id', $category->id)->get();
+            $items = Item::where('category_id', $category->id)
+                            ->where('grille_id', $this->grille_id)->get();
             $menu[$category['name']] = $items;
         }
 
@@ -151,7 +151,7 @@ class OrderController extends \BaseController {
         // create the new order
         $order = new Order();
         $order->user_id = Session::get('user')->id;
-        $order->grille_id = $this->GRILLE_ID;
+        $order->grille_id = $this->grille_id;
         $order->cost = Cart::total_with_addons();
         $order->venmo_id = $transaction;
         $order->fulfilled = 0;

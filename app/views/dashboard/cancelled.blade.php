@@ -1,3 +1,5 @@
+@extends('layouts.admin')
+
 @section('content')
 <div class="row">
   <h3>Cancelled Orders</h3>

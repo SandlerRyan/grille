@@ -15,6 +15,9 @@ class CreateInventoryTable extends Migration {
 		Schema::create('inventories', function($table)
 		{
 			$table->increments('id');
+			$table->integer('grille_id')->unsigned();
+			$table->foreign('grille_id')->references('id')->on('grilles');
+
 			$table->string('name');
 			$table->string('description');
 			$table->integer('quantity')->unsigned();

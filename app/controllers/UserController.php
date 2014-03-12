@@ -94,7 +94,6 @@ class UserController extends \BaseController {
 
     public function edit_user()
     {
-
         //check to make sure phone number in correct format
         $number = Input::get('phone_number');
 
@@ -146,26 +145,6 @@ class UserController extends \BaseController {
         }
 
     }
-
-
-    /* adds user's phone number to the database
-    * called by ajax from the success page
-    */
-    public function add_phone($phone)
-    {
-        $user = Session::get('user');
-        if (!$user){
-            return Redirect::to('/order/checkout')->with('message','Could not add phone number. User not logged in');
-        }
-        $user_info = User::findorfail($user->id);
-        $user_info->phone_number = $phone;
-        $user_info->save();
-        Session::put("user",$user_info);
-        $response['status'] = 'success';
-        return json_encode($response);
-    }
-
-
 }
 
 

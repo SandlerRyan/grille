@@ -28,16 +28,14 @@
 
 		<label for="checkbox1">Update me about special hours</label>
 		<input type="checkbox" name="hours_notification" id='checkbox1' />
-
 		<br/>
-
 		<label for="checkbox2">Update me about deals and discounts </label>
 		<input type="checkbox" name="deals_notification" id='checkbox2' />
-	</form>
 
-	<div class="row">
-		<button type="submit" id='submit' class='radius button'>Submit</button>
-	</div>
+		<div class="row">
+			<button type="submit" id="submit" class="radius button">Submit</button>
+		</div>
+	</form>
 </table>
 
 </div>

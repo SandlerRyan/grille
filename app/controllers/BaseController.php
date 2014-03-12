@@ -5,6 +5,14 @@ class BaseController extends Controller {
     protected $layout = 'layouts/master';
 
     /**
+    * set grille id, which has been bound from the routes
+    */
+    public $grille_id;
+    public function __construct () {
+        $this->grille_id = App::make('grille_id');
+    }
+
+    /**
      * GET /
      */
     public function getIndex()
