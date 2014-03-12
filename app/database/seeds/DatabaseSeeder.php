@@ -83,7 +83,7 @@ class GrilleTableSeeder extends Seeder
 	public function run()
 	{
 		Grille::create(array(	'id' => 1,
-								'name' => 'Eliot Inferno',
+								'name' => 'Eliot Inferno Grille',
 								'phone_number' => '5555555555',
 								'open_now' => 1
 							));

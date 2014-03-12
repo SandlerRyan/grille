@@ -104,12 +104,12 @@ Route::group(array(), function()
 
 	/**
 	* ROUTE TO CHECK GRILLE OPENING
-	* Chron job meant to be run every 10 minutes
+	* Chron job meant to be run every 10 minutes from easychron.com
 	* Eventually this will be changed from a url to an artisan command
 	*/
 	Route::get('/check_open/cron/run/c68pd2s4e363221a3064e8807da20s1sf', function () {
 		$grille_id = App::make('grille_id');
-		$manager = User::where('grille_id', $grille_id)->where('privileges', 'manager')->get()[0];
+		$managers = User::where('grille_id', $grille_id)->where('privileges', 'manager')->get();
 		$hours = Hour::where('grille_id', $grille_id)->get();
 
 		date_default_timezone_set('America/New_York');
@@ -135,7 +135,9 @@ Route::group(array(), function()
 			else {
 				if ($open < $now && $now < $open->add($interval)) {
 					$message = 'NOTICE: The grille is listed as closed outside of regular hours.';
-					Sms::send_sms($manager->phone_number, $message);
+					foreach($managers as $manager) {
+						Sms::send_sms($manager->phone_number, $message);
+					}
 				}
 			}
 		}

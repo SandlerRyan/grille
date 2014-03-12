@@ -98,7 +98,8 @@ class DashboardController extends \AdminBaseController {
         $name = User::where('id', $order->user_id)->pluck('preferred_name');
         $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
-        $message = "Hi " . $name . ", your order is ready! Come pick it up from the grille!";
+        $message = "Hi " . $name . ", your order with " . $order->grille->name .
+            " is ready! Come pick it up from the grille!";
 
         Sms::send_sms($phone, $message);
 
@@ -114,7 +115,8 @@ class DashboardController extends \AdminBaseController {
         $name = User::where('id', $order->user_id)->pluck('preferred_name');
         $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
-        $message = "Hi " . $name . ", your order is closed! Enjoy the food!";
+        $message = "Hi " . $name . ", your order with " . $order->grille->name .
+            " is closed! Enjoy the food!";
 
         Sms::send_sms($phone, $message);
 
@@ -153,7 +155,7 @@ class DashboardController extends \AdminBaseController {
         $phone = User::where('id', $order->user_id)->pluck('phone_number');
 
         $message = "Hi " . $name . ", something went wrong and your order (no. "
-            . $order->id . ") has been cancelled. Sorry!";
+            . $order->id . ") with " . $order->grille->name . " has been cancelled. Sorry!";
 
         Sms::send_sms($phone, $message);
 

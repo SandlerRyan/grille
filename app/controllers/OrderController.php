@@ -194,12 +194,14 @@ class OrderController extends \BaseController {
         $num_orders = Order::where('fulfilled', 0)->where('id', '!=', $order->id)
                         ->where('cancelled', 0)->count();
         if ($num_orders == 1) {
-            $message = "Hi " . $name . ", your order has been received! Your order number is " . $order->id .
-            ". There is currently " . $num_orders . " order in front of you. See you soon!";
+            $message = "Hi " . $name . ", your order with " . $order->grille->name .
+                " has been received! Your order number is " . $order->id . ". There is currently " .
+                $num_orders . " order in front of you. See you soon!";
         }
         else {
-            $message = "Hi " . $name . ", your order has been received! Your order number is " . $order->id .
-                ". There are currently " . $num_orders . " orders in front of you. See you soon!";
+            $message = "Hi " . $name . ", your order with " . $order->grille->name .
+                " has been received! Your order number is " . $order->id . ". There are currently " .
+                $num_orders . " orders in front of you. See you soon!";
         }
         Sms::send_sms($phone,$message);
 
