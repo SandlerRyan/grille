@@ -47,14 +47,22 @@ unavailable();
         <li>
           <div class="large-12 columns">
             <div class="panel" id="<%= order.id %>">
-              <div style="float:left;"><h4 style="color:red; font-weight: 200;">Cancelled</h4></div>
+
+                <div style="float:left;">
+                  <h4 style="color: red; font-weight: 200;">Cancelled (ID: <%= order.id %>)</h4>
+                </div>
 
                 <div align="right">
                    <h4>$<%= order.cost %></h4>
                 </div>
                 <br>
-                <h5><%= order.user.name %></h5>
-                <h6>ID: <%= order.id %></h6>
+                <div style="float:left;">
+                  <h6><%= order.user.name %></h63>
+                </div>
+                <div align="right">
+                  <h6><%= order.time %></h6>
+                </div>
+
                 <table>
                    <thead>
                       <tr>

@@ -87,6 +87,11 @@ class GrilleTableSeeder extends Seeder
 								'phone_number' => '5555555555',
 								'open_now' => 1
 							));
+		Grille::create(array(	'id' => 2,
+								'name' => 'Quincy Grille',
+								'phone_number' => '5555555555',
+								'open_now' => 1
+							));
 	}
 }
 

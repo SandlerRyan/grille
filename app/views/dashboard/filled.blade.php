@@ -46,9 +46,9 @@ unavailable();
           <div class="large-12 columns">
              <div class="panel" id="<%= order.id %>">
 
-	          <div style="float:left;">
-              <h4 style="color: green; font-weight: 200;">Filled (ID: <%= order.id %>)</h4>
-            </div>
+    	          <div style="float:left;">
+                  <h4 style="color: green; font-weight: 200;">Filled (ID: <%= order.id %>)</h4>
+                </div>
 
                 <div align="right">
                    <h4>$<%= order.cost %></h4>

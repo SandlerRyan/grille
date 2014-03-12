@@ -62,22 +62,28 @@
     <div  class="row">
       <!-- <div class="large-12 columns"> -->
       <h4 class="inline">
-      <a class="" href="/">Eliot Grille</a></li>
+        <a class="" href="/">Eliot Grille</a></li>
       </h4>
 
         @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
             <a class="nav-item" href="/order/create">Menu</a>
             <a class="nav-item" href="/dashboard">Staff</a>
-        </ul>
         @else
             <a class="nav-item" href="/order/create">Menu</a>
-          </ul>
         @endif
 
         @if (Session::has('user'))
-          <a class="nav-login button round" href="/user/logout">Logout</a>
+          <a class="nav-login" href="#" data-dropdown="drop">
+            Settings &raquo;
+            <!-- <img src="{{URL::asset('img/settings.png')}}" width="28" height="28"> -->
+          </a>
+          <ul id="drop" class="[tiny small medium large content]f-dropdown" data-dropdown-content>
+            <li><a href="#">Edit settings</a></li>
+            <li><a href="/user/logout">Logout</a></li>
+          </ul>
+
         @else
-          <a class="nav-login button round" href="/user/login">Login</a>
+          <a class="nav-login button" href="/user/login">Login</a>
         @endif
 
     </div>
