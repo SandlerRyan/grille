@@ -13,6 +13,15 @@ use LaravelBook\Ardent\Ardent;
           'notes' => 'max:255'
         );
 
+      public function order()
+      {
+        return $this->belongsTo('Order');
+      }
+
+      public function item()
+      {
+        return $this->belongsTo('Item');
+      }
 
     	public function addons()
     	{

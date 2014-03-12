@@ -1,0 +1,1 @@
+This file has been placed here so the /app/config/administrator/settings folder will be included in version control, without which the package will throw an error.

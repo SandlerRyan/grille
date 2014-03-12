@@ -57,6 +57,9 @@ return array(
 			'items',
 			'hours',
 			'inventory',
+			'orders',
+			'item_orders',
+			'addon_item_orders',
 			),
 
 	/**

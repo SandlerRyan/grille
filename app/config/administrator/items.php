@@ -30,7 +30,7 @@ return array(
 			'select' => "(:table).description",
 		),
 		'available' => array(
-			'title' => 'Availble',
+			'title' => 'Available',
 			'select' => "(:table).available",
 		),
 		'category' => array(
