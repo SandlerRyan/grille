@@ -53,8 +53,7 @@
 		<div class="result"></div>
 
 		@if (Session::has('user'))
-		    <a class="button round" href="https://api.venmo.com/v1/oauth/authorize?
-		    	client_id=1322&scope=make_payments%20access_profile&response_type=token">
+		    <a class="button round" href="https://api.venmo.com/v1/oauth/authorize?client_id=1322&scope=make_payments%20access_profile&response_type=token">
 		    	Use Venmo</a>
 		    <a class="button alert round" href="/order/pay_later">Pay At Pick-Up</a>
 		@else

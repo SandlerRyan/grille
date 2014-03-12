@@ -35,6 +35,12 @@
     <ul class="clearing-thumbs" data-clearing>
     </ul>
   </div>
+  <div class="textblasts"> 
+        <textarea id="textareablast"></textarea>
+        <button id="send_text_blast">Send Text Blast </button>
+
+  </div>
+
 </div>
 
 <div class="row">

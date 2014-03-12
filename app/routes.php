@@ -79,7 +79,8 @@ Route::group(array(), function()
 		Route::get('/cancelled_orders', function () {
 			return View::make('dashboard.cancelled');
 		});
-
+		Route::put('/send_text_blast/{message}', 'DashboardController@send_text_blast');
+		
 		Route::put('/toggle_open/', 'DashboardController@toggle_open');
 		Route::post('/get_orders/{type}', 'DashboardController@get_orders');
 		Route::post('/refund_order/{id}', 'DashboardController@refund_order');

@@ -4,6 +4,7 @@
   <br/>
 </div>
 
+
 <!-- Main body of Inventory Tracking -->
 <div class="row">
     <table>

@@ -2,7 +2,21 @@
 * AJAX functions for getting new orders
 * and controlling item availability, order status, etc.
 */
+$(document).on('click', '#send_text_blast', function() {
+  console.log($("#textareablast").val())
 
+  var message = $("#textareablast").val();
+  $.ajax({
+    type: "PUT",
+    url: "/dashboard/send_text_blast/" + message,
+    success: function(data){
+      console.log(data)
+    },
+    error: function() {
+      alert('Sorry, something bad happened');
+    }
+  });
+});
 // toggles the open/closed state of the grille
 $(document).on('click', '.open', function() {
   var button = $(this);
@@ -50,7 +64,7 @@ $( document ).on( 'click', '.cooked', function () {
     var id = $(this).attr('id');
     var url = "/dashboard/mark_as_cooked/" + $(this).attr('id');
     var element = $(this);
-  $.ajax({
+    $.ajax({
       url: url,
       type: "post",
       success: function(){
@@ -67,15 +81,18 @@ $( document ).on( 'click', '.cooked', function () {
 // ajax call to indicate that item has been picked up and order is fulfilled
 $( document ).on( 'click', '.picked', function () {
     console.log($(this).attr('id'))
+    var id = $(this).attr('id');
     var url = "/dashboard/mark_as_fulfilled/" + $(this).attr('id');
     var element = $(this);
   $.ajax({
       url: url,
       type: "post",
       success: function(data){
-          // update cart
-          console.log("good")
+          // update cart and remove the element
+          $("#" + id).parent().remove();
           $(element).closest('li').text("This order is complete!");
+
+
       },
       error:function(){
           alert("Sorry, something bad happened.");
@@ -87,17 +104,23 @@ $( document ).on( 'click', '.picked', function () {
 $( document ).on( 'click', '.refund', function () {
     console.log($(this).attr('id'))
     var url = "/dashboard/refund_order/" + $(this).attr('id');
-  $.ajax({
-      url: url,
-      type: "post",
-      success: function(data){
-          // update cart
-          console.log("order refunded and has been cancelled")
-      },
-      error:function(){
-          alert("Sorry, something went wrong.");
-      }
-    });
+
+    if (confirm("Are you sure?")) {
+      $.ajax({
+          url: url,
+          type: "post",
+          success: function(data){
+              // update cart
+              console.log("order refunded and has been cancelled")
+          },
+          error:function(){
+              alert("Sorry, something went wrong.");
+          }
+        });  
+    } else {
+      return false;
+    }
+  
 });
 
 // ajax call to cancel a order if it has not been picked up or if item has run out
@@ -105,18 +128,24 @@ $( document ).on( 'click', '.cancel', function () {
     console.log($(this).attr('id'))
     var url = "/dashboard/cancel/" + $(this).attr('id');
     var element = $(this);
-  $.ajax({
-      url: url,
-      type: "post",
-      success: function(data){
-          // update cart
-          console.log("good")
-          $(element).closest('li').text("Order cancelled!");
-      },
-      error:function(){
-          alert("Sorry, something bad happened.");
-      }
-    });
+    if (confirm("Are you sure?")) {
+      $.ajax({
+          url: url,
+          type: "post",
+          success: function(data){
+              // update cart
+              console.log("good")
+              $(element).closest('li').text("Order cancelled!");
+          },
+          error:function(){
+              alert("Sorry, something bad happened.");
+          }
+        });  
+    } else {
+      return false;
+    }
+
+  
 });
 
 // ajax call to mark an item unavailable when it runs out
@@ -171,3 +200,4 @@ function available () {
     });
   });
 }
+

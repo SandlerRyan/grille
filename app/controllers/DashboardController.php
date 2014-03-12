@@ -90,6 +90,12 @@ class DashboardController extends \AdminBaseController {
         return json_encode($response_array);
     }
 
+    public function send_text_blast($message) {
+        
+        $this->alert_deals($message)
+        return 1;
+
+    }
     public function mark_as_cooked($id) {
         $order = Order::find($id);
         $order->cooked = 1;
