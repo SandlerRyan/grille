@@ -32,6 +32,7 @@ Route::group(array(), function()
 		Route::get('/logout', 'UserController@logout');
 		Route::get('/return_to', 'UserController@return_to');
 		Route::get('/edit_user', 'UserController@edit_user');
+		Route::get('/user_settings', 'UserController@user_settings');
 	});
 
 	/**

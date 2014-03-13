@@ -16,7 +16,7 @@
 		<div class="row collapse">
 			<div class="large-4 columns">
 				<label>Preferred Name</label>
-				<input type="text" name="preferred_name" value="{{$pending_user["preferred_name"]}}" />
+				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" />
 			</div>
 		</div>
 		<div class="row collapse">
@@ -35,6 +35,9 @@
 		<div class="row">
 			<button type="submit" id="submit" class="radius button">Submit</button>
 		</div>
+		@if($user["new"]==0)
+			<div>Note: If you opted to stop receiving text messages and want to opt back in, text 'START' to (843) 271-6240 </>
+		@endif
 	</form>
 </table>
 

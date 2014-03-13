@@ -69,13 +69,15 @@ class UserController extends \BaseController {
             $user = array("cs50_id"=> $current_user["identity"],
                             "fullname" => $current_user["fullname"],
                             "preferred_name" => $first,
-                            "email" => $current_user["email"]);
+                            "email" => $current_user["email"],
+                            "new" => 1);
+
 
             //put user in the session
             Session::put('pending_user', $user);
 
             $failure = Session::get('failure');
-            $this->layout->content = View::make('users.edit', ['pending_user' => $user, 'failure' => $failure]);
+            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
 
         //else, redirect to intended page
@@ -91,57 +93,141 @@ class UserController extends \BaseController {
         }
     }
 
-
-    public function edit_user()
+    //function for user to change profile information
+    public function user_settings()
     {
-        //check to make sure phone number in correct format
-        $number = Input::get('phone_number');
 
-        //took pattern from http://www.w3resource.com/javascript/form/phone-no-validation.php
-        $pattern = "/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/";
-
-        if (preg_match ($pattern, $number))
+        //if existing user, go to settings
+        if (Session::has('user'))
         {
-            $pending = Session::get('pending_user');
+            //remember url user is coming from
+            Session::put('redirect', URL::previous());
 
-            // Input doesn't return zero for unchecked boxes, so change these to zero
-            $hours_notification = (Input::get('hours_notification') ? 1 : 0);
-            $deals_notification = (Input::get('deals_notification') ? 1 : 0);
+            $user = Session::get('user');
+            $failure = Session::get('failure');
 
-            //strip any punctuation from phone number, if exists
-            $phone = str_replace(array("-",".","(",")"," "), "", Input::get('phone_number'));
+            //specify whether user is new or not
+            $user->new = 0;
 
-
-            //create user based on session data and input
-            $pending = Session::get('pending_user');
-
-            $user = new User();
-            $user->cs50_id = $pending["cs50_id"];
-            $user->name = $pending["fullname"];
-            $user->preferred_name = Input::get('preferred_name');
-            $user->email = $pending["email"];
-            $user->phone_number = $phone;
-            $user->hours_notification = $hours_notification;
-            $user->deals_notification = $deals_notification;
-            $user->save();
-
-            //remove pending user from session
-            Session::forget('pending_user');
-
-            //log user in
-            Session::put('user', $user);
-            Auth::loginUsingId($user->id);
-
-            //redirect to most recent page
-            $url = Session::get('redirect');
-            Session::forget('redirect');
-            return Redirect::to($url);
+            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
+        //else redirect back to where came from
         else
         {
-            $failure = 'Please enter a 10-digit phone number';
-            $user = Session::get('pending_user');
-            $this->layout->content = View::make('users.edit', ['pending_user' => $user, 'failure' => $failure]);
+            try {
+            return Redirect::back();
+            }
+            catch (Exception $e) {
+                return Redirect::to('/');
+            }
+
+        }
+    }
+
+    //edit user info, either on login or by changing settings
+    public function edit_user()
+    {
+        //make sure user logged in or pending
+        if (Session::has('user') || Session::has('pending_user'))
+        {
+            //check to make sure phone number in correct format
+            $number = Input::get('phone_number');
+
+            //took pattern from http://www.w3resource.com/javascript/form/phone-no-validation.php
+            $pattern = "/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/";
+
+            //if phone entered correctly
+            if (preg_match ($pattern, $number))
+            {
+
+                // Input doesn't return zero for unchecked boxes, so change these to zero
+                $hours_notification = (Input::get('hours_notification') ? 1 : 0);
+                $deals_notification = (Input::get('deals_notification') ? 1 : 0);
+
+                //strip any punctuation from phone number, if exists
+                $phone = str_replace(array("-",".","(",")"," "), "", Input::get('phone_number'));
+
+                //if user already logged in
+                if (Session::has('user'))
+                {
+                    $user_session = Session::get('user');
+                    $user = User::find($user_session->id);
+                    $user->preferred_name = Input::get('preferred_name');
+                    $user->phone_number = $phone;
+                    $user->hours_notification = $hours_notification;
+                    $user->deals_notification = $deals_notification;
+                    $user->save();
+
+                }
+                //else create new user
+                else
+                {
+                    //create user based on session data and input
+                    $pending = Session::get('pending_user');
+
+                    $user = new User();
+                    $user->cs50_id = $pending["cs50_id"];
+                    $user->name = $pending["fullname"];
+                    $user->preferred_name = Input::get('preferred_name');
+                    $user->email = $pending["email"];
+                    $user->phone_number = $phone;
+                    $user->hours_notification = $hours_notification;
+                    $user->deals_notification = $deals_notification;
+                    $user->save();
+
+                    //remove pending user from session
+                    Session::forget('pending_user');
+
+                    //log user in
+                    Session::put('user', $user);
+                    Auth::loginUsingId($user->id);
+
+                    //send user text message about signing up
+                    $grille_id =1;
+                    $grille_name = Grille::where('id', $grille_id)->pluck('name');
+                    $message = "Thanks for signing up for " . $grille_name . "'s online ordering! If you received this message by accident, reply 'STOP'";
+
+                    Sms::send_sms($phone, $message);                     
+                }
+
+                //redirect to most recent page
+                $url = Session::get('redirect');
+                Session::forget('redirect');
+                return Redirect::to($url);
+            }
+            //else alert user to enter correct phone number
+            else
+            {
+                $failure = 'Please enter a 10-digit phone number';
+
+                //if user already has account
+                if (Session::has('user'))
+                {   
+                    $user = Session::get('user');
+                    $user->new = 0;
+                    $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
+                }
+
+                //if user is logging in for first time
+                else
+                {
+                    $user = Session::get('pending_user');
+                    $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);   
+                }
+              
+                    
+            }
+        }
+
+        //if not user or pending user, redirect
+        else
+        {
+            try {
+            return Redirect::back();
+            }
+            catch (Exception $e) {
+                return Redirect::to('/');
+            }
         }
 
     }

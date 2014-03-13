@@ -78,7 +78,8 @@
             <!-- <img src="{{URL::asset('img/settings.png')}}" width="28" height="28"> -->
           </a>
           <ul id="drop" class="[tiny small medium large content]f-dropdown" data-dropdown-content>
-            <li><a href="#">Edit settings</a></li>
+            <li>Logged in as {{Session::get('user')->preferred_name}}</li>
+            <li><a href="/user/user_settings">Edit settings</a></li>
             <li><a href="/user/logout">Logout</a></li>
           </ul>
 
