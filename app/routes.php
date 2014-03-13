@@ -80,18 +80,16 @@ Route::group(array(), function()
 		Route::get('/cancelled_orders', function () {
 			return View::make('dashboard.cancelled');
 		});
-		Route::put('/send_text_blast/{message}', 'DashboardController@send_text_blast');
-		
+
 		Route::put('/toggle_open/', 'DashboardController@toggle_open');
-		Route::post('/get_orders/{type}', 'DashboardController@get_orders');
+		Route::get('/get_orders/{type}', 'DashboardController@get_orders');
+		Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
 		Route::post('/refund_order/{id}', 'DashboardController@refund_order');
 		Route::post('/mark_as_cooked/{id}', 'DashboardController@mark_as_cooked');
 		Route::post('/mark_as_fulfilled/{id}', 'DashboardController@mark_as_fulfilled');
 		Route::post('/mark_as_unavailable/{id}', 'DashboardController@mark_as_unavailable');
 		Route::post('/mark_as_available/{id}', 'DashboardController@mark_as_available');
 		Route::post('/cancel/{id}', 'DashboardController@cancel');
-		Route::get('/alert_deals', 'DashboardController@alert_deals');
-		Route::get('/alert_hours', 'DashboardController@alert_hours');
 	});
 
 	/**

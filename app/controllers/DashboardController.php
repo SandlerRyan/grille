@@ -27,6 +27,14 @@ class DashboardController extends \AdminBaseController {
         return 1;
     }
 
+    public function send_text_blast($message)
+    {
+
+        $this->alert_deals($message);
+        return 1;
+
+    }
+
     public function toggle_open ()
     {
         $grille = Grille::find($this->grille_id);
@@ -38,7 +46,6 @@ class DashboardController extends \AdminBaseController {
             $grille->open_now = 1;
             $grille->save();
         }
-
         return array('status' => 'success', 'open' => $grille->open_now);
     }
 
@@ -85,18 +92,14 @@ class DashboardController extends \AdminBaseController {
               $item['addons'] = $item_addons;
             }
         }
+        // some weird json decoding/encoding needed to get js scripts to parse correctly
         $response_array['status'] = 'success';
         $response_array['cart'] =  json_decode($orders);
         return json_encode($response_array);
     }
 
-    public function send_text_blast($message) {
-        
-        $this->alert_deals($message)
-        return 1;
-
-    }
-    public function mark_as_cooked($id) {
+    public function mark_as_cooked($id)
+    {
         $order = Order::find($id);
         $order->cooked = 1;
         $order->save();
