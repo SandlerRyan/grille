@@ -26,22 +26,22 @@
 
     @endforeach
   </ul>
-
-
 </div>
 
+<!-- ORDERS INSERTED HERE -->
 <div class="row">
   <div id="show_orders">
     <ul class="clearing-thumbs" data-clearing>
     </ul>
   </div>
-  <div class="textblasts"> 
+
+  <div class="textblasts">
         <textarea id="textareablast"></textarea>
         <button id="send_text_blast">Send Text Blast </button>
 
   </div>
-
 </div>
+
 
 <div class="row">
   <div class="large-12 columns">

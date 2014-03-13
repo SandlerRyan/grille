@@ -7,7 +7,7 @@ $(document).on('click', '#send_text_blast', function() {
 
   var message = $("#textareablast").val();
   $.ajax({
-    type: "PUT",
+    type: "POST",
     url: "/dashboard/send_text_blast/" + message,
     success: function(data){
       console.log(data)
@@ -17,6 +17,7 @@ $(document).on('click', '#send_text_blast', function() {
     }
   });
 });
+
 // toggles the open/closed state of the grille
 $(document).on('click', '.open', function() {
   var button = $(this);
@@ -43,9 +44,13 @@ $(document).on('click', '.open', function() {
 function get_orders(tmpl, type) {
   var feedback =
   $.ajax({
-      type: "POST",
+      type: "GET",
       url: "/dashboard/get_orders/" + type,
-      async: false
+      async: false,
+      // error: function() {
+        // alert(xhr.status);
+        // alert(xhr.responseText);
+      //   alert(thrownError); }
   }).complete(function(data){
 
     data = JSON.parse(data.responseText);
@@ -116,11 +121,11 @@ $( document ).on( 'click', '.refund', function () {
           error:function(){
               alert("Sorry, something went wrong.");
           }
-        });  
+        });
     } else {
       return false;
     }
-  
+
 });
 
 // ajax call to cancel a order if it has not been picked up or if item has run out
@@ -140,12 +145,12 @@ $( document ).on( 'click', '.cancel', function () {
           error:function(){
               alert("Sorry, something bad happened.");
           }
-        });  
+        });
     } else {
       return false;
     }
 
-  
+
 });
 
 // ajax call to mark an item unavailable when it runs out
