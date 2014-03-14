@@ -74,22 +74,17 @@
         @endif
 
         @if (Session::has('user'))
-         <!-- <a class="nav-login button" href ="/user/logout">Logout</a> -->
+         <a class="nav-login button" href ="/user/logout">Logout</a>
           <!-- TRYING TO IMPLEMENT DROPDOWN SETTINGS MENU HERE -->
-          <a class="nav-login" href="#" data-dropdown="drop">
+          <!-- <a class="nav-login" href="#" data-dropdown="drop">
             <img src="{{URL::asset('img/settings.png')}}" width="28" height="28">
           </a>
-
-         <ul id="drop" class="[tiny small medium large content]f-dropdown" data-dropdown-content>
-            <li>Logged in as {{Session::get('user')->preferred_name}}</li>
-            <li><a href="/user/user_settings">Edit settings</a></li> 
-            <li><a href="/user/logout">Logout</a></li>
-         </ul> 
-          <!-- <ul id="drop" class="f-dropdown" data-dropdown-content>
+          <ul id="drop" class="f-dropdown" data-dropdown-content>
             <li><a href="#">Logged in as {{Session::get('user')->preferred_name}}</a></li>
             <li><a href="#">Edit settings</a></li>
-            <li><a href="/user/logout">Logout</a></li> -->
-        
+            <li><a href="/user/logout">Logout</a></li>
+          </ul> -->
+
         @else
           <a class="nav-login button" href="/user/login">Login</a>
         @endif
