@@ -108,6 +108,7 @@ class UserController extends \BaseController {
 
             //specify whether user is new or not
             $user->new = 0;
+            $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
 
             $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }
@@ -183,8 +184,8 @@ class UserController extends \BaseController {
                     Auth::loginUsingId($user->id);
 
                     //send user text message about signing up
-                    $grille_id =1;
-                    $grille_name = Grille::where('id', $grille_id)->pluck('name');
+                    
+                    $grille_name = Grille::where('id', $this->grille_id)->pluck('name');
                     $message = "Thanks for signing up for " . $grille_name . "'s online ordering! If you received this message by accident, reply 'STOP'";
 
                     Sms::send_sms($phone, $message);                     
@@ -205,6 +206,7 @@ class UserController extends \BaseController {
                 {   
                     $user = Session::get('user');
                     $user->new = 0;
+                    $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
                     $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
                 }
 

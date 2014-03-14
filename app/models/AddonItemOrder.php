@@ -2,7 +2,7 @@
 
 use LaravelBook\Ardent\Ardent;
 
-    class AddonItemOrder extends Eloquent 
+    class AddonItemOrder extends Ardent
     {
 
     	public static $rules = array(
