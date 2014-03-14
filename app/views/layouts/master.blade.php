@@ -75,6 +75,8 @@
 
         @if (Session::has('user'))
          <a class="nav-login button" href ="/user/logout">Logout</a>
+         <a class="nav-login button" style="background-color:green" href="/user/user_settings">
+            User Settings</a>
           <!-- TRYING TO IMPLEMENT DROPDOWN SETTINGS MENU HERE -->
           <!-- <a class="nav-login" href="#" data-dropdown="drop">
             <img src="{{URL::asset('img/settings.png')}}" width="28" height="28">
