@@ -5,9 +5,8 @@
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
   @endif
-<!-- <div class="large-12 columns"> -->
+
 	@if($open==1)
-		<!-- <h1 id="neon-tubing">Open</h1> -->
 		<h3 style="width: 100%; text-align:center;">
 			We're open! Check out our <a class="" href="/order/create">menu</a>.
 		</h3>

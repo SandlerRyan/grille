@@ -26,7 +26,6 @@
   </ul>
 @endif
 
-
 <script>
 (function($) {
   $(document).ready(function() {
