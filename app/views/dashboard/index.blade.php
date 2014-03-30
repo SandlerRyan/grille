@@ -115,9 +115,6 @@ unavailable();
                    <tbody>
                       <%
                         _.each(order.item_orders, function(item) {
-                          ////////////////////
-                          console.log(item);
-                          ////////////////////
                       %>
                         <tr>
                            <td><%= item.name %></td>

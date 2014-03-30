@@ -25,7 +25,7 @@
     <h3>{{$category}}</h3>
     <table>
       <tr>
-        <th width="200">Item</th>
+        <th width="350">Item</th>
         <th width="50">Add</th>
         <th width="50">Quantity</th>
         <th width="50">Remove</th>
@@ -49,7 +49,7 @@
                 <tr>
                   <td>
                   {{{ $addon->name }}}
-                  {{{ $addon->price }}}
+                  ${{{ $addon->price }}}
                   </td>
                   <td>
                     <button type="button" class="addAddon" id="add-{{$addon->id}}-{{ $item->id }}"
