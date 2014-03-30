@@ -71,15 +71,6 @@ class OrderController extends \BaseController {
             ['err_messages' => $errors, 'user'=>Session::get('user')]);
     }
 
-    //Function to Make POST Requests with Data
-    protected function sendPostData($url, $post)
-    {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
-        return curl_exec($ch);
-    }
 
     //User has decided to Pay Later.
     public function pay_later()
@@ -88,28 +79,6 @@ class OrderController extends \BaseController {
 
         $response_array['status'] = 'later';
         $response_array['message'] = "You have decided to pay later.";
-
-        return Redirect::to('/order/success')->with('response',$response_array);
-    }
-
-    // accesses the venmo API so users can pay
-    public function authenticatePayment()
-    {
-        //Get Access Token from Venmo Response
-        $access_token = Input::get('access_token');
-        // $phone_number = Session::get('user')->phone_number;
-        // Create Payment and Charge the User
-        $url = 'https://api.venmo.com/v1/payments';
-        // randomized so each note is different
-        $amt = ((float) rand(1,5)) / 100.;
-        $note = date('m/d/Y h:i:s a', time());
-
-        $data = array("access_token" => $access_token, "amount" => $amt,
-            "phone" => "7734901404", "note" => $note);
-        $response = $this->sendPostData($url, $data);
-
-        $response_array['status'] = 'venmo';
-        $response_array['message'] = $response;
 
         return Redirect::to('/order/success')->with('response',$response_array);
     }

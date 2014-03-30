@@ -58,9 +58,14 @@ Route::group(array(), function()
 	{
 		Route::get('/create', 'OrderController@create');
 		Route::get('/checkout', 'OrderController@checkout');
-		Route::get('/authenticate_venmo', array('before' => 'auth', 'uses' => 'OrderController@authenticatePayment'));
 		Route::get('/pay_later', array('before' => 'auth', 'uses' => 'OrderController@pay_later'));
-		//Final Step in the Ordering Process; orders are stored here
+
+		// Venmo api redirects to this url after user logs into venmo; authenticate payment on our end here
+		Route::get('/authenticate_venmo', array('before' => 'auth', function() {
+			return Venmo::authenticate_payment();
+		}));
+
+		// Final Step in the Ordering Process; orders are stored here
 		Route::get('/success', array('before' => 'auth', 'uses' => 'OrderController@success'));
 	});
 
@@ -83,16 +88,22 @@ Route::group(array(), function()
 		Route::get('/text_blasts', function () {
 			return View::make('dashboard.textblasts');
 		});
-
-		Route::put('/toggle_open/', 'DashboardController@toggle_open');
-		Route::get('/get_orders/{type}', 'DashboardController@get_orders');
-		Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
 		Route::post('/refund_order/{id}', 'DashboardController@refund_order');
+
+		// ajax call to get all orders of a certain type
+		Route::get('/get_orders/{type}', 'DashboardController@get_orders');
+
+		// order handling ajax calls
 		Route::post('/mark_as_cooked/{id}', 'DashboardController@mark_as_cooked');
 		Route::post('/mark_as_fulfilled/{id}', 'DashboardController@mark_as_fulfilled');
+		Route::post('/cancel/{id}', 'DashboardController@cancel');
+
+		// mark items available or unavailable, called by sidebar
 		Route::post('/mark_as_unavailable/{id}', 'DashboardController@mark_as_unavailable');
 		Route::post('/mark_as_available/{id}', 'DashboardController@mark_as_available');
-		Route::post('/cancel/{id}', 'DashboardController@cancel');
+
+		Route::put('/toggle_open/', 'DashboardController@toggle_open');
+		Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
 	});
 
 	/**
