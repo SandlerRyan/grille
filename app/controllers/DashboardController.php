@@ -27,11 +27,25 @@ class DashboardController extends \AdminBaseController {
         return 1;
     }
 
-    public function send_text_blast($message)
+    public function send_text_blast()
     {
 
-        $this->alert_deals($message);
-        return 1;
+        $type = Input::get('alert_type');
+        $message = Input::get('message');
+
+        //send it to group of users, depending on which type selected
+        if ($type=='deal') {
+            echo $this->alert_deals($message);
+        }
+        else if ($type=='hour') {
+            $this->alert_hours($message);
+        }
+
+        
+        //redirect to most recent page
+        $url = Session::get('redirect');
+        Session::forget('redirect');
+        return Redirect::to($url);
 
     }
 
@@ -202,6 +216,11 @@ class DashboardController extends \AdminBaseController {
         foreach($users as $user){
             $phone = $user->phone_number;
             Sms::send_sms($phone, $message);
+            $error = Sms::send_sms($phone, $message);
+            //if error, return it
+            if (!empty($error)) {
+                return $error;
+            }
         }
     }
 
@@ -212,7 +231,11 @@ class DashboardController extends \AdminBaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            Sms::send_sms($phone, $message);
+            $error = Sms::send_sms($phone, $message);
+            //if error, return it
+            if (!empty($error)) {
+                return $error;
+            }
         }
     }
 

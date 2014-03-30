@@ -81,12 +81,14 @@ Route::group(array(), function()
 			return View::make('dashboard.cancelled');
 		});
 		Route::get('/text_blasts', function () {
-			return View::make('dashboard.textblasts');
+			//remember url user is coming from
+            Session::put('redirect', URL::previous());
+			return View::make('dashboard.text_blasts');
 		});
 
 		Route::put('/toggle_open/', 'DashboardController@toggle_open');
 		Route::get('/get_orders/{type}', 'DashboardController@get_orders');
-		Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
+		Route::get('/send_text_blast/', 'DashboardController@send_text_blast');
 		Route::post('/refund_order/{id}', 'DashboardController@refund_order');
 		Route::post('/mark_as_cooked/{id}', 'DashboardController@mark_as_cooked');
 		Route::post('/mark_as_fulfilled/{id}', 'DashboardController@mark_as_fulfilled');
@@ -127,14 +129,16 @@ Route::group(array(), function()
 			$close = new DateTime($hour->close_time);
 			$interval = new DateInterval('PT15M');
 
-			// send text alert if hours say grille should have closed within last 15 minutes
+			/* send text message to manager if grille should have closed within last 15 minutes, 
+			but is marked as open */
 			if ($is_open) {
 				if ($close < $now && $now < $close->add($interval)) {
 					$message = 'NOTICE: The grille is listed as open outside of regular hours.';
 					Sms::send_sms($manager->phone_number, $message);
 				}
 			}
-			// send text alert if hours say grille should have opened within last 15 minutes
+			/* send text message to manager if grille should have open within last 15 minutes, 
+			but is marked as closed */
 			else {
 				if ($open < $now && $now < $open->add($interval)) {
 					$message = 'NOTICE: The grille is listed as closed outside of regular hours.';

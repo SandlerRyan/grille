@@ -27,6 +27,7 @@ class UserController extends \BaseController {
         }
     }
 
+    //logout 
     public function logout()
     {
 
@@ -216,7 +217,6 @@ class UserController extends \BaseController {
                     $user = Session::get('pending_user');
                     $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);   
                 }
-              
                     
             }
         }
