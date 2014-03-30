@@ -42,7 +42,8 @@
 <script type="text/javascript" src="{{ URL::asset('js/dashboard.js') }}"></script>
 <script type="text/javascript" src="http://documentcloud.github.com/underscore/underscore-min.js"></script>
 <script type="text/javascript">
-  // get new orders
+
+// get new orders
 $(document).ready(function () {
 
 var tmpl = $('#tmpl-orders').html();

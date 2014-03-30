@@ -4,7 +4,7 @@
 */
 
 // toggles the open/closed state of the grille
-$(document).on('click', '.open', function() {
+$('input[type=checkbox]').change( function() {
   var button = $(this);
   $.ajax({
     type: "PUT",
