@@ -75,6 +75,7 @@ Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 });
 
 
+
 /**
 * ADMIN DASHBOARD ROUTES
 */
@@ -91,7 +92,9 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth|staff|grille'), fu
 		return View::make('dashboard.cancelled');
 	});
 	Route::get('/text_blasts', function () {
-		return View::make('dashboard.textblasts');
+		//remember url user is coming from
+        Session::put('redirect', URL::previous());
+		return View::make('dashboard.text_blasts');
 	});
 	Route::post('/refund_order/{id}', 'DashboardController@refund_order');
 
@@ -108,7 +111,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth|staff|grille'), fu
 	Route::post('/mark_as_available/{id}', 'DashboardController@mark_as_available');
 
 	Route::put('/toggle_open/', 'DashboardController@toggle_open');
-	Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
+	Route::get('/send_text_blast/', 'DashboardController@send_text_blast');
 });
 
 /**

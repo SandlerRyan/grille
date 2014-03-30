@@ -32,10 +32,13 @@ class UserController extends \BaseController {
         }
     }
 
+
+
     /**
     * Logs the user out
     * @return Response
     */
+
     public function logout()
     {
 
@@ -203,7 +206,6 @@ class UserController extends \BaseController {
                     $user = Session::get('pending_user');
                     $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
                 }
-
 
             }
         }

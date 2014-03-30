@@ -6,11 +6,52 @@ class DashboardController extends \BaseController {
         View::make('test');
     }
 
-    public function send_text_blast($message)
+    protected function sendPostData($url, $post)
+    {
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($post));
+        return curl_exec($ch);
+    }
+
+    protected function refundCostViaVenmo($id)
+    {
+        // This function uses the Grille App access token to pay the phone number
+        //of the user that placed the order.
+        $url = 'https://api.venmo.com/v1/payments';
+        $access_token = "waMg5yEHQZZUHvcdJbyqAWCJTxgZR8eD";
+        $order = Order::find($id);
+        $phone_number = $order->user->phone_number;
+        $note = "Your money for order " . $id . " has been refunded.";
+        $data = array("access_token" => $access_token, "amount" => 0.04,
+                "phone" => $phone_number, "note" => $note, "audience" => "private");
+        $response = $this->sendPostData($url, $data);
+
+        return 1;
+    }
+
+    public function send_text_blast()
     {
 
-        $this->alert_deals($message);
-        return 1;
+        $type = Input::get('alert_type');
+        $message = Input::get('message');
+
+        //send it to group of users, depending on which type selected
+        if ($type=='deal') {
+            echo $this->alert_deals($message);
+        }
+        else if ($type=='hour') {
+            $this->alert_hours($message);
+        }
+
+        
+        //redirect to most recent page
+        $url = Session::get('redirect');
+        Session::forget('redirect');
+        return Redirect::to($url);
+
+
     }
 
     /**
@@ -213,6 +254,11 @@ class DashboardController extends \BaseController {
         foreach($users as $user){
             $phone = $user->phone_number;
             Sms::send_sms($phone, $message);
+            $error = Sms::send_sms($phone, $message);
+            //if error, return it
+            if (!empty($error)) {
+                return $error;
+            }
         }
     }
 
@@ -228,7 +274,11 @@ class DashboardController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            Sms::send_sms($phone, $message);
+            $error = Sms::send_sms($phone, $message);
+            //if error, return it
+            if (!empty($error)) {
+                return $error;
+            }
         }
     }
 

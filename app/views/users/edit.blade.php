@@ -16,13 +16,13 @@
 		<div class="row collapse">
 			<div class="large-4 columns">
 				<label>Preferred Name</label>
-				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" />
+				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" required/>
 			</div>
 		</div>
 		<div class="row collapse">
 			<div class="large-4 columns">
 				<label>Phone Number</label>
-				<input type="text" name="phone_number" placeholder = "XXX.XXX.XXXX" />
+				<input type="text" name="phone_number" placeholder = "XXX.XXX.XXXX" required/>
 			</div>
 		</div>
 

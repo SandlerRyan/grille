@@ -62,8 +62,8 @@ class BaseController extends Controller {
             }
             else
             {
-                $hour->open_time = date('h:i a', strtotime($hour->open_time));
-                $hour->close_time = date('h:i a', strtotime($hour->close_time));
+                $hour->open_time = date('g:i a', strtotime($hour->open_time));
+                $hour->close_time = date('g:i a', strtotime($hour->close_time));
 
                 //map day names to numbers
                 switch ($hour->day_of_week)
