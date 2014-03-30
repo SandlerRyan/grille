@@ -21,6 +21,8 @@ App::bind('grille_id', function () {
 	return 1;
 });
 
+Route::get('/test', 'DashboardController@template');
+
 /**
 * USER CONTROLLER ROUTES
 */
@@ -61,7 +63,7 @@ Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 		$response_array['status'] = 'later';
         $response_array['message'] = "You have decided to pay later.";
         return Redirect::to('/order/success')->with('response',$response_array);
-	});
+	}));
 
 	// Venmo api redirects to this url after user logs into venmo; authenticate payment on our end here
 	Route::get('/authenticate_venmo', array('before' => 'auth', function() {

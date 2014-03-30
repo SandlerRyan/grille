@@ -1,6 +1,10 @@
 <?php
 
-class DashboardController extends \AdminBaseController {
+class DashboardController extends \BaseController {
+
+    public function template() {
+        View::make('test');
+    }
 
     public function send_text_blast($message)
     {
