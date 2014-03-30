@@ -109,7 +109,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth|staff|grille'), fu
 	Route::post('/mark_as_available/{id}', 'DashboardController@mark_as_available');
 
 	Route::put('/toggle_open/', 'DashboardController@toggle_open');
-	Route::post('/send_text_blast/{message}', 'DashboardController@send_text_blast');
+	Route::get('/send_text_blast/', 'DashboardController@send_text_blast');
 });
 
 /**
