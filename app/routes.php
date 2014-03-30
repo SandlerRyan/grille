@@ -19,6 +19,7 @@
 Route::group(array(), function()
 {
 	App::bind('grille_id', function () {
+		// return grille id; Eliot grille is 1
 		return 1;
 	});
 
@@ -53,7 +54,6 @@ Route::group(array(), function()
 	/**
 	* ORDER CONTROLLER ROUTES
 	*/
-	// The default CRUD for creating, destroying, editing, orders
 	Route::group(array('prefix' => 'order', 'before' => 'open'), function ()
 	{
 		Route::get('/create', 'OrderController@create');
@@ -79,6 +79,9 @@ Route::group(array(), function()
 		});
 		Route::get('/cancelled_orders', function () {
 			return View::make('dashboard.cancelled');
+		});
+		Route::get('/text_blasts', function () {
+			return View::make('dashboard.textblasts');
 		});
 
 		Route::put('/toggle_open/', 'DashboardController@toggle_open');
