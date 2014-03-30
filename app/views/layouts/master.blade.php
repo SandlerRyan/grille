@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="/js/slidebars-theme.js">
 
     <!-- Toggle Switch -->
-    <link rel="stylesheet" href="/css/toggle-switch.css">
+    <!-- <link rel="stylesheet" href="/css/toggle-switch.css"> -->
 
     <!-- Responsive Tables -->
     <!-- Included CSS Files -->
@@ -62,8 +62,8 @@
   <div id="stickyHeader">
     <div  class="row">
       <!-- <div class="large-12 columns"> -->
-      <h4 class="inline">
-        <a class="" href="/">Eliot Grille</a></li>
+      <h4>
+        <a id="logo" href="/">Eliot Grille</a></li>
       </h4>
 
         @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
@@ -74,9 +74,9 @@
         @endif
 
         @if (Session::has('user'))
-         <a class="nav-login button" href ="/user/logout">Logout</a>
+ <!--         <a class="nav-login button" href ="/user/logout">Logout</a>
          <a class="nav-login button" style="background-color:green" href="/user/user_settings">
-            User Settings</a>
+            User Settings</a> -->
           <!-- TRYING TO IMPLEMENT DROPDOWN SETTINGS MENU HERE -->
           <!-- <a class="nav-login" href="#" data-dropdown="drop">
             <img src="{{URL::asset('img/settings.png')}}" width="28" height="28">
@@ -86,9 +86,26 @@
             <li><a href="#">Edit settings</a></li>
             <li><a href="/user/logout">Logout</a></li>
           </ul> -->
+        <ul>
+        <li class="drop">
+          <a id="user">You</a>
+          
+          <div class="dropdownContain">
+            <div class="dropOut">
+              <div class="triangle"></div>
+              <ul>
+                <li>
+                <a class="dropdown-item" href="/user/user_settings">
+                Settings</a></li>
+                <li><a class="dropdown-ite" href ="/user/logout">Logout</a></li>
+              </ul>
+            </div>
+          </div>
+      </li>
+    <ul>
 
         @else
-          <a class="nav-login button" href="/user/login">Login</a>
+          <a id="login" href="/user/login">Login</a>
         @endif
 
     </div>

@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 @section('header')
+
 <div class="row">
     @if (Grille::find(1)->open_now)
       <button class="open button" style="background-color: green; float: right">Close Grille</button>
