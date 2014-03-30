@@ -74,35 +74,22 @@
         @endif
 
         @if (Session::has('user'))
- <!--         <a class="nav-login button" href ="/user/logout">Logout</a>
-         <a class="nav-login button" style="background-color:green" href="/user/user_settings">
-            User Settings</a> -->
-          <!-- TRYING TO IMPLEMENT DROPDOWN SETTINGS MENU HERE -->
-          <!-- <a class="nav-login" href="#" data-dropdown="drop">
-            <img src="{{URL::asset('img/settings.png')}}" width="28" height="28">
-          </a>
-          <ul id="drop" class="f-dropdown" data-dropdown-content>
-            <li><a href="#">Logged in as {{Session::get('user')->preferred_name}}</a></li>
-            <li><a href="#">Edit settings</a></li>
-            <li><a href="/user/logout">Logout</a></li>
-          </ul> -->
         <ul>
-        <li class="drop">
-          <a id="user">You</a>
-          
-          <div class="dropdownContain">
-            <div class="dropOut">
-              <div class="triangle"></div>
-              <ul>
-                <li>
-                <a class="dropdown-item" href="/user/user_settings">
-                Settings</a></li>
-                <li><a class="dropdown-ite" href ="/user/logout">Logout</a></li>
-              </ul>
-            </div>
-          </div>
-      </li>
-    <ul>
+          <li class="drop">
+              Hello, <a><b>{{Session::get('user')->preferred_name}}</b></a>
+              <div class="dropdownContain">
+                <div class="dropOut">
+                  <div class="triangle"></div>
+                  <ul>
+                    <li>
+                    <a class="dropdown-item" href="/user/user_settings">
+                    Settings</a></li>
+                    <li><a class="dropdown-ite" href ="/user/logout">Logout</a></li>
+                  </ul>
+                </div>
+              </div>
+          </li>
+        <ul>
 
         @else
           <a id="login" href="/user/login">Login</a>
