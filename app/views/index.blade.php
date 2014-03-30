@@ -1,8 +1,5 @@
 @section('content')
 
-<?php
-Venmo::refund_order(8);
-?>
 <!-- First Band (Slider) -->
 <div class="row">
   @if($err_messages)
