@@ -4,23 +4,31 @@
 */
 
 // toggles the open/closed state of the grille
-$('input[type=checkbox]').change( function() {
+$('#open-close').change( function() {
   var button = $(this);
-  $.ajax({
-    type: "PUT",
-    url: "/dashboard/toggle_open",
-    success: function(){
-      if ($(button).text() == 'Close Grille') {
-        $(button).text('Open Grille');
+  if (confirm("Are you sure you?")) {
+    $.ajax({
+      type: "PUT",
+      url: "/dashboard/toggle_open",
+      success: function(){
+        if ($(button).text() == 'Close Grille') {
+          $(button).text('Open Grille');
+        }
+        else {
+          $(button).text('Close Grille');
+        }
+      },
+      error: function() {
+        alert('Sorry, something bad happened');
       }
-      else {
-        $(button).text('Close Grille');
-      }
-    },
-    error: function() {
-      alert('Sorry, something bad happened');
-    }
-  });
+    });
+  }
+  else {
+    // switch will automatically toggle even though action was cancelled;
+    // reload the page to set it to correct value
+    window.location.reload();
+    return false;
+  }
 });
 
 /* contacts the server to get orders every 5000 millisecs
@@ -89,7 +97,6 @@ $( document ).on( 'click', '.picked', function () {
 
 // ajax call to refund users who have paid with venmo
 $( document ).on( 'click', '.refund', function () {
-    console.log($(this).attr('id'))
     var url = "/dashboard/refund_order/" + $(this).attr('id');
 
     if (confirm("Are you sure?")) {
