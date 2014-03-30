@@ -18,11 +18,8 @@
 	@endif
 </div>
 
-
-<!-- <div class="row"> -->
 <h4 style="width: 100%; text-align:center;">Hours</h4>
 <table class="box" style="margin:auto;">
-<!-- <caption><h4>Hours</h4></caption> -->
 	<thead>
   	<tr>
   		<th width="200">Day</th>
