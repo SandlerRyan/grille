@@ -2,21 +2,6 @@
 * AJAX functions for getting new orders
 * and controlling item availability, order status, etc.
 */
-$(document).on('click', '#send_text_blast', function() {
-  console.log($("#textareablast").val())
-
-  var message = $("#textareablast").val();
-  $.ajax({
-    type: "POST",
-    url: "/dashboard/send_text_blast/" + message,
-    success: function(data){
-      console.log(data)
-    },
-    error: function() {
-      alert('Sorry, something bad happened');
-    }
-  });
-});
 
 // toggles the open/closed state of the grille
 $(document).on('click', '.open', function() {
