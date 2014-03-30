@@ -21,6 +21,14 @@
     <link rel="stylesheet" href="/css/app.css" />
     <link rel="stylesheet" href="/css/style.css" />
 
+    <!-- Pure -->
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
+<!-- </div> -->
+<!-- </div> -->
+ <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+<!-- </div> -->
+<!-- </div> -->
+
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />

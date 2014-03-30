@@ -1,4 +1,5 @@
 @section('content')
+
 <!-- sticky footer -->
  <div class="stickyFooter">
     <div class="row">
@@ -6,14 +7,15 @@
         <!-- <div class="panel"> -->
           <h4 class="inline">Your total is: <div id="totalPrice" class="inline"> ${{{Cart::total()}}} </div> </h4>
           <ul class="button-group round even-2">
-            <li><button id="checkout" class="button" disabled>Checkout</button></li>
-            <li><button id="clearCart" class="button alert">Clear Cart</button></li>
+            <li><button id="checkout" class="pure-button pure-button-primary" disabled>Checkout</button></li>
+            <li><button id="clearCart" class="pure-button">Clear Cart</button></li>
           </ul>
           <br/>
         <!-- </div> -->
       </div>
     </div>
  </div>
+
 
 <!-- Main body of menu -->
 <div class="row">
@@ -23,7 +25,7 @@
 
   @foreach($menu as $category=>$items)
     <h3>{{$category}}</h3>
-    <table>
+    <table class="pure-table-striped">
       <tr>
         <th width="350">Item</th>
         <th width="50">Add</th>
@@ -52,7 +54,7 @@
                   ${{{ $addon->price }}}
                   </td>
                   <td>
-                    <button type="button" class="addAddon" id="add-{{$addon->id}}-{{ $item->id }}"
+                    <button type="button" class="addAddon pure-button" id="add-{{$addon->id}}-{{ $item->id }}"
                       @if(!$item->available || !$addon->available) disabled @endif>+</button>
                   </td>
                   <td>
@@ -66,7 +68,7 @@
                     <div class="addonQuantity" id="value-{{ $addon->id }}-{{ $item->id }}">{{ $addon_qty }}</div>
                   </td>
                   <td>
-                    <button type="button" class="removeAddon" id="remove-{{$addon->id}}-{{ $item->id }}"
+                    <button type="button" class="removeAddon pure-button" id="remove-{{$addon->id}}-{{ $item->id }}"
                       @if(!$item->available || !$addon->available) disabled @endif>-</button>
                   </td>
                 </tr>
@@ -78,14 +80,14 @@
           @endif
           </td>
           <td>
-            <button type="button" class="addItem" id="add-{{ $item->id }}"
+            <button type="button" class="addItem pure-button pure-button-primary" id="add-{{ $item->id }}"
               @if(!$item->available) disabled @endif> + </button>
           </td>
           <td>
             <div class="itemQuantity" id="value-{{ $item->id }}">{{ $qty }}</div>
           </td>
           <td>
-            <button type="button" class="removeItem" id="remove-{{ $item->id }}"
+            <button type="button" class="removeItem pure-button pure-button-primary" id="remove-{{ $item->id }}"
               @if(!$item->available) disabled @endif> - </button>
       	  </td>
           <td>
