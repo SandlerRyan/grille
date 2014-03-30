@@ -21,7 +21,7 @@ class BaseController extends Controller {
 
         //get hours
         //for now just hardcode that Eliot grille
-        $grille_id = 1;
+        $grille_id = $this->grille_id;
         $hours = Hour::where('grille_id', $grille_id)->get();
 
         //find days that close the following day
