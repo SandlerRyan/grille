@@ -1,7 +1,13 @@
 <?php
 
+// Class for handling Twilio-based SMS functions
 class Sms
 {
+    /**
+    * Generalized function for sending a text message to a given phone number
+    * @param $message    the text body of the message to be sent
+    * @return void
+    */
     static public function send_sms($phone, $message)
     {
         // this line loads the library
@@ -17,6 +23,12 @@ class Sms
             'Body' => $message,
         ));
     }
+
+    /**
+    * Sends a text blast to all subscribers
+    * @param $message    the text body of the message to be sent
+    * @return void
+    */
     static public function send_text_blast($message)
     {
         // this line loads the library

@@ -3,7 +3,6 @@
 class OrderController extends \BaseController {
     /**
      * Show the form for creating a new order.
-     *
      * @return Response
      */
     public function create()
@@ -29,6 +28,7 @@ class OrderController extends \BaseController {
 
     /**
     * Displays checkout page with order summary and check is use is logged in
+    * @return Response
     */
     public function checkout()
     {
@@ -72,18 +72,11 @@ class OrderController extends \BaseController {
     }
 
 
-    //User has decided to Pay Later.
-    public function pay_later()
-    {
-        //TODO: Edit Order for Pay Later and send back Order ID
-
-        $response_array['status'] = 'later';
-        $response_array['message'] = "You have decided to pay later.";
-
-        return Redirect::to('/order/success')->with('response',$response_array);
-    }
-
-    //Show Success Page with appropiate message
+    /**
+    * Big function that validates and stores each order in the db
+    * and notifies user that the order has been successful
+    * @return Response
+    */
     public function success()
     {
         // make sure this was routed from the payment methods

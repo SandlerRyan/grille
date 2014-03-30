@@ -1,7 +1,12 @@
 <?php
 
 class UserController extends \BaseController {
-    //Check if user already logged in
+
+    /**
+    * Logs the user in or redirects to account creation if user's HUID
+    * is not in the db
+    * @return Response
+    */
     public function login()
     {
         require_once(app_path().'/config/id.php');
@@ -27,6 +32,10 @@ class UserController extends \BaseController {
         }
     }
 
+    /**
+    * Logs the user out
+    * @return Response
+    */
     public function logout()
     {
 
@@ -44,6 +53,11 @@ class UserController extends \BaseController {
         }
     }
 
+    /**
+    * Gets input from the user editing form to get additional information
+    * like phone number, preferred name, etc.
+    * @return Response
+    */
     public function return_to()
     {
         // configuration
@@ -93,39 +107,11 @@ class UserController extends \BaseController {
         }
     }
 
-    //function for user to change profile information
-    public function user_settings()
-    {
-
-        //if existing user, go to settings
-        if (Session::has('user'))
-        {
-            //remember url user is coming from
-            Session::put('redirect', URL::previous());
-
-            $user = Session::get('user');
-            $failure = Session::get('failure');
-
-            //specify whether user is new or not
-            $user->new = 0;
-            $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
-
-            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
-        }
-        //else redirect back to where came from
-        else
-        {
-            try {
-            return Redirect::back();
-            }
-            catch (Exception $e) {
-                return Redirect::to('/');
-            }
-
-        }
-    }
-
-    //edit user info, either on login or by changing settings
+    /**
+    * Return_to redirects here to finalize gather of user information
+    * and save the new user in the db
+    * @return Response
+    */
     public function edit_user()
     {
         //make sure user logged in or pending
@@ -184,11 +170,12 @@ class UserController extends \BaseController {
                     Auth::loginUsingId($user->id);
 
                     //send user text message about signing up
-                    
-                    $grille_name = Grille::where('id', $this->grille_id)->pluck('name');
-                    $message = "Thanks for signing up for " . $grille_name . "'s online ordering! If you received this message by accident, reply 'STOP'";
 
-                    Sms::send_sms($phone, $message);                     
+                    $grille_name = Grille::where('id', $this->grille_id)->pluck('name');
+                    $message = "Thanks for signing up for " . $grille_name . "'s online ordering!
+                        If you received this message by accident, reply 'STOP'";
+
+                    Sms::send_sms($phone, $message);
                 }
 
                 //redirect to most recent page
@@ -203,7 +190,7 @@ class UserController extends \BaseController {
 
                 //if user already has account
                 if (Session::has('user'))
-                {   
+                {
                     $user = Session::get('user');
                     $user->new = 0;
                     $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
@@ -214,10 +201,10 @@ class UserController extends \BaseController {
                 else
                 {
                     $user = Session::get('pending_user');
-                    $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);   
+                    $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
                 }
-              
-                    
+
+
             }
         }
 
@@ -232,6 +219,42 @@ class UserController extends \BaseController {
             }
         }
 
+    }
+
+    /**
+    * Displays user settings page so user can edit phone number
+    * and text blast subscriptions
+    * @return Response
+    */
+    public function user_settings()
+    {
+
+        //if existing user, go to settings
+        if (Session::has('user'))
+        {
+            //remember url user is coming from
+            Session::put('redirect', URL::previous());
+
+            $user = Session::get('user');
+            $failure = Session::get('failure');
+
+            //specify whether user is new or not
+            $user->new = 0;
+            $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
+
+            $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
+        }
+        //else redirect back to where came from
+        else
+        {
+            try {
+            return Redirect::back();
+            }
+            catch (Exception $e) {
+                return Redirect::to('/');
+            }
+
+        }
     }
 }
 

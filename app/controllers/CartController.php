@@ -2,10 +2,12 @@
 
 class CartController extends \BaseController {
 
-   /**
+    /**
     * Increment the quantity of a cart item,
     * or add it if not yet in cart
     * Called by ajax when "+" sign is pressed
+    * @param $id    id of the item to be added
+    * @return $response_array       json object with status and any additional data
     */
     public function increment($id)
     {
@@ -33,6 +35,8 @@ class CartController extends \BaseController {
     * Decrement the quantity of a cart item,
     * or remove it if only 1 left
     * Called by ajax when "-" sign is pressed
+    * @param $id    id of the item to be decremented
+    * @return $response_array       json object with status and any additional data
     */
     public function decrement($id)
     {
@@ -68,6 +72,9 @@ class CartController extends \BaseController {
     /**
     * Increment an addon when the user presses the plus button on the order page
     * called by ajax
+    * @param $item_id    id of the item to be added
+    * @param $addon_id    id of the addon to be added
+    * @return $response_array       json object with status and any additional data
     */
     public function increment_addon($addon_id, $item_id)
     {
@@ -99,6 +106,9 @@ class CartController extends \BaseController {
     /**
     * Decrement or remove an addon when user presses the minus button on order page
     * called by ajax
+    * @param $item_id    id of the item to be added
+    * @param $addon_id    id of the addon to be added
+    * @return $response_array       json object with status and any additional data
     */
     public function decrement_addon($addon_id, $item_id)
     {
@@ -126,6 +136,7 @@ class CartController extends \BaseController {
     /**
     * Empty the shopping cart when user presses "clear"
     * Called by ajax
+    * @return $response_array       json object with status and any additional data
     */
     public function empty_cart()
     {
@@ -136,7 +147,9 @@ class CartController extends \BaseController {
     }
 
     /**
-    * Add to the session if user specifies anything from the checkout page
+    * Add a note to the item if user specifies anything from the checkout page
+    * @param $id          id of the item referenced in the note
+    * @param $note        the body text of the note
     * */
     public function add_note($id, $note)
     {
