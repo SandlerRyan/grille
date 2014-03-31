@@ -55,9 +55,9 @@
   <input id="open-close" type="checkbox" value="1" checked>
 </div>
 
-<<<<<<< HEAD
+<!-- <<<<<<< HEAD -->
 <!-- Ordinary users and unauthenticated guests already filtered out in routes by this point -->
-@if (Session::get('user')->privileges != 'staff')
+<!-- @if (Session::get('user')->privileges != 'staff')
   <ul class="button-group radius even-4">
     <li><a class="button" href="/dashboard">Orders</a></li>
     <li><a class="button" href="/inventory">Inventory</a></li>
@@ -71,7 +71,7 @@
     <li><a class="button" href="/">Main Site</a></li>
   </ul>
 @endif
-=======
+======= -->
 <script>
   // set the on/off switch properties
   $("input[type=checkbox]").switchButton({
@@ -90,7 +90,7 @@
   <script>$("input[type=checkbox]").switchButton({checked:false});</script>
 @endif
 
->>>>>>> 85db34346f9a61e56950bb2115519884a9fafa1c
+<!-- >>>>>>> 85db34346f9a61e56950bb2115519884a9fafa1c -->
 
 <script>
 (function($) {
