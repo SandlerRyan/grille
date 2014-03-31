@@ -344,11 +344,11 @@ ul li:hover .dropOut { opacity: 1; margin-top: 8px; }
 }
 #cssmenu ul li ul li:hover > a,
 #cssmenu ul li ul li.active > a {
-  color: #0000ff;
+  color: #4099FF;
 }
 #cssmenu ul li ul li:hover:after,
 #cssmenu ul li ul li.active:after {
-  background: #0000ff;
+  background: #4099FF;
 }
 #cssmenu ul li ul li:hover > ul {
   left: 170px;
@@ -418,7 +418,7 @@ ul li:hover .dropOut { opacity: 1; margin-top: 8px; }
 }
 #cssmenu > ul > li:hover > a,
 #cssmenu > ul > li.active > a {
-  color: #000dff;
+  color: #4099FF;
 }
 #cssmenu > ul > li:hover > a:after,
 #cssmenu > ul > li.active > a:after {
@@ -495,7 +495,7 @@ ul li:hover .dropOut { opacity: 1; margin-top: 8px; }
     padding: 8px 20px 8px 50px;
   }
   #cssmenu ul li ul li:hover > a {
-    color: #000dff;
+    color: #4099FF;
   }
   #cssmenu #menu-button {
     display: block;
