@@ -448,3 +448,7 @@ img.displayed {
     top: 26px;
   }
 }
+
+ul > li {
+ display: inline-block;
+}
