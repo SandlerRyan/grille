@@ -6,7 +6,7 @@
 // toggles the open/closed state of the grille
 $('#open-close').change( function() {
   var button = $(this);
-  if (confirm("Are you sure you?")) {
+  if (confirm("Are you sure?")) {
     $.ajax({
       type: "PUT",
       url: "/dashboard/toggle_open",
