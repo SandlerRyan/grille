@@ -21,7 +21,9 @@
         </ul>
      </li>
      <li><a href='/dashboard/text_blasts'><span>Text Blasts</span></a></li>
+     @if(Session::get('user')->privileges == 'manager' || Session::get('user')->privileges == 'admin')
      <li class='last'><a href='/admin' target='_blank'><span>Admin</span></a></li>
+     @endif
   </ul>
   </div>
   </div>
