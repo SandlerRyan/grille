@@ -10,7 +10,7 @@
   <div  class="row">
   <div id='cssmenu'>
   <ul>
-     <li class='active'><a href='/'><span>Staff Portal</span></a></li>
+     <li class='active'><a href='/dashboard'><span>Staff Portal</span></a></li>
      <li><a href='/'><span>Home</span></a></li>
      <li><a href='/inventory'><span>Inventory</span></a></li>
      <li class='has-sub'><a href='#'><span>Orders</span></a>
