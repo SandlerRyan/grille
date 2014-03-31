@@ -73,9 +73,11 @@
     $grille = Grille::find($grille_id);
   ?>
 
-  <div id="stickyHeader">
+
+
+<div id="stickyHeader">
+
     <div  class="row">
-      <!-- <div class="large-12 columns"> -->
       <h4>
         <a id="logo" href="/">{{$grille->name}}</a></li>
       </h4>
