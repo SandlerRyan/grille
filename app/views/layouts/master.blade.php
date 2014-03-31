@@ -38,7 +38,7 @@
     <link rel="stylesheet" href="/css/example-styles.css">
 
     <link rel="stylesheet" href="/css/slidebars-theme.css">
-    <link rel="stylesheet" href="/js/slidebars-theme.js">
+    <link rel="stylesheet" href="{{ URL::asset('js/slidebars-theme.js') }}">
 
     <!-- Toggle Switch -->
     <!-- <link rel="stylesheet" href="/css/toggle-switch.css"> -->
@@ -75,12 +75,10 @@
       <div id='cssmenu'>
         <ul>
            <li class='active'><a href='/'><span>{{$grille->name}}</span></a></li>
-           
+           <li><a href='/order/create'><span>Menu</span></a></li>
+
            @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
-             <li><a href='/order/create'><span>Menu</span></a></li>
              <li><a href='/dashboard' target='_blank'><span>Staff Portal</span></a></li>
-           @else
-             <li><a href='/order/create'><span>Menu</span></a></li>
            @endif
 
            @if (Session::has('user'))
