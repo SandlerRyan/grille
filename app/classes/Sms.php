@@ -11,7 +11,7 @@ class Sms
     static public function send_sms($phone, $message)
     {
         // this line loads the library
-        require(app_path().'/config/twilio-php/Services/Twilio.php');
+        require_once(app_path().'/config/twilio-php/Services/Twilio.php');
 
         $account_sid = 'AC08031ad462de058a85cfebfbf5be5331';
         $auth_token = '9b04babfc8f329f90f4f432926eaa007';
@@ -25,7 +25,7 @@ class Sms
                 'Body' => $message,
             ));
         } catch (Services_Twilio_RestException $e) {
-            return $e->getStatus();
+            return $e;
         }
     }
 

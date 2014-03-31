@@ -39,7 +39,7 @@ class DashboardController extends \BaseController {
 
         //send it to group of users, depending on which type selected
         if ($type=='deal') {
-            echo $this->alert_deals($message);
+            $this->alert_deals($message);
         }
         else if ($type=='hour') {
             $this->alert_hours($message);
@@ -146,6 +146,7 @@ class DashboardController extends \BaseController {
         Sms::send_sms($phone, $message);
 
         return 1;
+        
     }
 
     /**
@@ -165,7 +166,7 @@ class DashboardController extends \BaseController {
             " is closed! Enjoy the food!";
 
         Sms::send_sms($phone, $message);
-
+   
         return 1;
     }
 
@@ -254,11 +255,7 @@ class DashboardController extends \BaseController {
         foreach($users as $user){
             $phone = $user->phone_number;
             Sms::send_sms($phone, $message);
-            $error = Sms::send_sms($phone, $message);
-            //if error, return it
-            if (!empty($error)) {
-                return $error;
-            }
+
         }
     }
 
@@ -274,11 +271,7 @@ class DashboardController extends \BaseController {
 
         foreach($users as $user){
             $phone = $user->phone_number;
-            $error = Sms::send_sms($phone, $message);
-            //if error, return it
-            if (!empty($error)) {
-                return $error;
-            }
+            Sms::send_sms($phone, $message);
         }
     }
 

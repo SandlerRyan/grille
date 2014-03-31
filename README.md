@@ -21,7 +21,7 @@ from the internet directly at runtime.
 
 2. Foundation - css library for many types of styling
 
-3. Twilio - for interacting with the twilio API
+3. Twilio - for interacting with the twilio API; most package files located in config/twilio-php
 
 4. Frozennode administrator - an AngularJS-based laravel package that creates an admin panel,
 		allowing user modification of the database directly from the website
@@ -33,7 +33,7 @@ from the internet directly at runtime.
 
 6. Ardent - package for improved testing
 
-7. CS50ID - allows authentication to be handled through the HUID system
+7. CS50ID - allows authentication to be handled through the HUID system; most files located in config/CS50.
 
 
 ----------------------------------------------------
@@ -43,9 +43,25 @@ After cloning the source files for this website from git, simply run "composer u
 directory of the app.
 
 
+----------------------------------------------------
+III. Additional Code
+----------------------------------------------------
+We have code located in various files outside of the usual Laravel folders.
+
+1. Most of the cart logic is located in the file moltin/cart/src/Moltin/Cart/Cart.php. This file was originally
+part of the moltin/cart package, but we had issues extending the Cart class in a separate file and instead
+modified the Cart class directly to add logic for addon handling.
+
+2. Several additional classes that we have written are located in the classes/ folder. These handle operations
+used throughout the website, including Venmo payments and Twilio texting; they are loaded into the global namespace.
+
+3. The config/administrator/ folder contains the config files used to configure the frozennode administrator package.
+These files tell the admin panel which eloquent models to load, how to display the information, and how fields can be
+filtered and edited. The master config file for this package is located at config/packages/frozennode/administrator/administrator.php.
+
 
 ----------------------------------------------------
-III. Included from the Laravel README
+IV. Included from the Laravel README
 ----------------------------------------------------
 ## Laravel PHP Framework
 
