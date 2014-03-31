@@ -61,17 +61,23 @@
     <link rel="stylesheet" href="/css/tables/reveal.css">
     <link rel="stylesheet" href="/css/tables/mobile.css">
 
-    <title>Eliot Inferno Grille</title>
+    <title>Harvard Grilles</title>
   </head>
 
   <body>
 
   @section('header')
+
+  <!-- Get the requested grille object through the IOC -->
+  <?php $grille_id = App::make('grille_id');
+    $grille = Grille::find($grille_id);
+  ?>
+
   <div id="stickyHeader">
     <div  class="row">
       <!-- <div class="large-12 columns"> -->
       <h4>
-        <a id="logo" href="/">Eliot Grille</a></li>
+        <a id="logo" href="/">{{$grille->name}}</a></li>
       </h4>
 
         @if (Session::has('user') && (Session::get('user')->privileges != 'user'))

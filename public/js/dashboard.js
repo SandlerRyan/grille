@@ -2,21 +2,6 @@
 * AJAX functions for getting new orders
 * and controlling item availability, order status, etc.
 */
-$(document).on('click', '#send_text_blast', function() {
-  console.log($("#textareablast").val())
-
-  var message = $("#textareablast").val();
-  $.ajax({
-    type: "POST",
-    url: "/dashboard/send_text_blast/" + message,
-    success: function(data){
-      console.log(data)
-    },
-    error: function() {
-      alert('Sorry, something bad happened');
-    }
-  });
-});
 
 // toggles the open/closed state of the grille
 $(document).on('click', '.open', function() {
@@ -38,19 +23,16 @@ $(document).on('click', '.open', function() {
   });
 });
 
-// contacts the server to get orders every 5000 millisecs
-// tmpl param is _.js template
-// uri param is either get_new_orders, get_cancelled_orders, or get_fulfilled_orders
+/* contacts the server to get orders every 5000 millisecs
+*  tmpl param is _.js template
+*  uri param is either get_new_orders, get_cancelled_orders, or get_fulfilled_orders
+*/
 function get_orders(tmpl, type) {
   var feedback =
   $.ajax({
       type: "GET",
       url: "/dashboard/get_orders/" + type,
       async: false,
-      // error: function() {
-        // alert(xhr.status);
-        // alert(xhr.responseText);
-      //   alert(thrownError); }
   }).complete(function(data){
 
     data = JSON.parse(data.responseText);

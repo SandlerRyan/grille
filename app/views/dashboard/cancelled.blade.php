@@ -8,17 +8,6 @@
   <div id="show_orders"></div>
 </div>
 
-<div class="row">
-  <div class="large-12 columns">
-  </div>
-  <div class="large-6 columns">
-      <ul class="inline-list right">
-        <li><a class="button" style="background-color:gray" href="/dashboard/">Incoming orders</a></li>
-        <li><a class="button" style="background-color:gray" href="/dashboard/filled_orders">Fulfilled orders</a></li>
-        <li><a class="button" style="background-color:gray" href="/dashboard/cancelled_orders">Cancelled orders</a></li>
-      </ul>
-  </div>
-</div>
 @stop
 
 @section('additional_static')

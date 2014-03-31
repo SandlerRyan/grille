@@ -5,7 +5,7 @@ class BaseController extends Controller {
     protected $layout = 'layouts/master';
 
     /**
-    * set grille id, which has been bound from the routes
+    * set grille id in the IOC, which has been bound from the routes
     */
     public $grille_id;
     public function __construct () {
@@ -13,18 +13,16 @@ class BaseController extends Controller {
     }
 
     /**
-     * GET /
+     * display index page
      */
     public function getIndex()
     {
         $errors = Session::get('message');
 
-        //get hours
-        //for now just hardcode that Eliot grille
-        $grille_id = 1;
-        $hours = Hour::where('grille_id', $grille_id)->get();
+        //get table of hours
+        $hours = Hour::where('grille_id', $this->grille_id)->get();
 
-        //find days that close the following day
+        // find time intervals that close the following day (e.g. 10PM - 2AM)
         $hours2 = clone $hours;
 
         foreach ($hours as $hour)
@@ -64,8 +62,8 @@ class BaseController extends Controller {
             }
             else
             {
-                $hour->open_time = date('h:i a', strtotime($hour->open_time));
-                $hour->close_time = date('h:i a', strtotime($hour->close_time));
+                $hour->open_time = date('g:i a', strtotime($hour->open_time));
+                $hour->close_time = date('g:i a', strtotime($hour->close_time));
 
                 //map day names to numbers
                 switch ($hour->day_of_week)
@@ -97,15 +95,11 @@ class BaseController extends Controller {
             }
         }
 
-        //check to see if open now
+        // check to see if open now
         date_default_timezone_set('America/New_York');
         $current_time = date('H:i:s', time());
         $weekday = date('w', time());
-
-        //attempt to pull from database
-
-        $open_now = Grille::find($grille_id)->open_now;
-
+        $open_now = Grille::find($this->grille_id)->open_now;
 
         $this->layout->content = View::make('index',
             ['hours' => $hours, 'open' => $open_now, 'err_messages' => $errors]);
