@@ -14,23 +14,23 @@
 
 			<div class="pure-control-group">
 				<label for="name">Preferred Name</label>
-				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" />
+				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" required />
 			</div>
 
 			<div class="pure-control-group">
 				<label for="number">Phone Number</label>
-				<input type="text" name="phone_number" placeholder = "XXX.XXX.XXXX" />
+				<input type="text" name="phone_number" value="{{$user["phone_formatted"]}}" required />
 			</div>
 
 
 			<div class="pure-controls">
 	            <label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="hours_notification" id='checkbox1'/> 
+	                <input type="checkbox" name="hours_notification" id='checkbox1'/>
 	                Update me about special hours
 	            </label>
 
 	           	<label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="deals_notification" id='checkbox2' /> 
+	                <input type="checkbox" name="deals_notification" id='checkbox2' />
 	                Update me about deals and discounts
 	            </label>
 
@@ -45,7 +45,7 @@
 		<br/>
 	@endif
 
-	
+
   </div>
 </div>
 

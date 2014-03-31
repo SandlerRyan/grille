@@ -2,41 +2,41 @@
 
 @section('content')
 
-    <style scoped>
+<style scoped>
 
-        .button-success,
-        .button-error,
-        .button-warning,
-        .button-secondary {
-            color: white;
-            border-radius: 4px;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-        }
+    .button-success,
+    .button-error,
+    .button-warning,
+    .button-secondary {
+        color: white;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
 
-        .button-success {
-            background: rgb(28, 184, 65); /* this is a green */
-        }
+    .button-success {
+        background: rgb(28, 184, 65); /* this is a green */
+    }
 
-        .button-error {
-            background: rgb(202, 60, 60); /* this is a maroon */
-        }
+    .button-error {
+        background: rgb(202, 60, 60); /* this is a maroon */
+    }
 
-        .button-warning {
-            background: rgb(223, 117, 20); /* this is an orange */
-        }
+    .button-warning {
+        background: rgb(223, 117, 20); /* this is an orange */
+    }
 
-        .button-secondary {
-            background: rgb(66, 184, 221); /* this is a light blue */
-        }
+    .button-secondary {
+        background: rgb(66, 184, 221); /* this is a light blue */
+    }
 
-    </style>
+</style>
 
-  <div class="row">
-    <!-- End Header and Nav -->
-    <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
-      Mark Items In Stock
-    </div>
+<div class="row">
+  <!-- End Header and Nav -->
+  <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
+    Stock Tracking
   </div>
+</div>
 
 <!-- Left Slidebar -->
 <div class="sb-slidebar sb-left">
