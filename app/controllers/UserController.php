@@ -87,7 +87,8 @@ class UserController extends \BaseController {
                             "fullname" => $current_user["fullname"],
                             "preferred_name" => $first,
                             "email" => $current_user["email"],
-                            "new" => 1);
+                            "new" => 1,
+                            "phone_formatted" => "(XXX) XXX-XXXX");
 
 
             //put user in the session
