@@ -32,7 +32,7 @@
     </style>
 <!-- End Header and Nav -->
   <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
-    In-Stock Side Bar
+    Mark Items In Stock
   </div>
 
 
