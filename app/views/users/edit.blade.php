@@ -59,12 +59,12 @@
 
 			<div class="pure-controls">
 	            <label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="hours_notification" id='checkbox1'/> 
+	                <input type="checkbox" name="hours_notification" id='checkbox1'/>
 	                Update me about special hours
 	            </label>
 
 	           	<label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="deals_notification" id='checkbox2' /> 
+	                <input type="checkbox" name="deals_notification" id='checkbox2' />
 	                Update me about deals and discounts
 	            </label>
 
@@ -74,7 +74,7 @@
 <!-- 		@if($user["new"]==0)
 			<div>Note: If you opted to stop receiving text messages and want to opt back in, text 'START' to (843) 271-6240 </>
 		@endif -->
-	
+
 
 		</fieldset>
 	</form>
