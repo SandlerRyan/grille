@@ -1,6 +1,6 @@
 <?php
 
-class InventoryController extends \AdminBaseController {
+class InventoryController extends \DashboardController {
 
     /**
     * Display all the inventory items
