@@ -33,7 +33,7 @@ unavailable();
         %>
         <li>
           <div class="large-12 columns">
-             <div class="panel" id="<%= order.id %>">
+             <div class="panel" style="margin:10px;" id="<%= order.id %>">
 
     	          <div style="float:left;">
                   <h4 style="color: green; font-weight: 200;">Filled (ID: <%= order.id %>)</h4>
@@ -62,9 +62,6 @@ unavailable();
                    <tbody>
                       <%
                         _.each(order.item_orders, function(item) {
-                          ////////////////////
-                          console.log(item);
-                          ////////////////////
                       %>
                         <tr>
                            <td><%= item.name %></td>

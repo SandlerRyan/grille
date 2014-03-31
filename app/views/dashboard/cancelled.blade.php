@@ -35,7 +35,7 @@ unavailable();
         %>
         <li>
           <div class="large-12 columns">
-            <div class="panel" id="<%= order.id %>">
+            <div class="panel" style="margin:10px;" id="<%= order.id %>">
 
                 <div style="float:left;">
                   <h4 style="color: red; font-weight: 200;">Cancelled (ID: <%= order.id %>)</h4>

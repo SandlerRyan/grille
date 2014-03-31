@@ -1,24 +1,61 @@
 @extends('layouts.admin')
 
 @section('content')
+
+    <style scoped>
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
 <!-- End Header and Nav -->
-  <div class="button alert sb-toggle-left" style="background-color:gray">
+  <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
     In-Stock Side Bar
   </div>
 
+
 <!-- Left Slidebar -->
 <div class="sb-slidebar sb-left">
+
+
+
+
+
+
+
   <!-- Lists in Slidebars -->
   <ul class="sb-menu">
     @foreach($items as $item)
 
       <li>
         @if ($item->available)
-        <button style="width: 100%;" class="button success mark_item_unavailable" id="{{$item->id}}">
+        <button style="width: 100%;" class="button-success pure-button mark_item_unavailable" id="{{$item->id}}">
           {{ $item->name}}
         </button>
         @else
-          <button style="width: 100%;" class="button alert mark_item_available" id="{{$item->id}}">
+          <button style="width: 100%;" class="button-error pure-button mark_item_available" id="{{$item->id}}">
           {{ $item->name }}
           </button>
         @endif
@@ -63,7 +100,7 @@ unavailable();
         %>
         <li>
           <div class="large-12 columns">
-             <div class="panel" id="<%= order.id %>">
+             <div class="panel" style="margin:10px;" id="<%= order.id %>">
         <% if (order.venmo_id != 0) { %>
           <div style="float:left;">
             <h4 style="color: #3D95CE; font-weight: 200;">Venmo (ID: <%= order.id %>)</h4>
@@ -124,16 +161,16 @@ unavailable();
 
                 <ul class="button-group">
                   <% if (order.cooked == 0) { %>
-                    <li><a href="javascript:void(0)" id="<%= order.id %>" class="small button success cooked">Cooked</a></li>
+                    <li><a href="javascript:void(0)" id="<%= order.id %>" class="pure-button pure-button-primary cooked">Cooked</a></li>
                   <% } else { %>
                     <li>Cooked!</li>
                   <% } %>
-                  <li><a href="javascript:void(0)" id="<%= order.id %>" class="small button success picked">Picked Up</a></li>
+                  <li><a href="javascript:void(0)" id="<%= order.id %>" class="pure-button pure-button-primary picked">Picked Up</a></li>
                   <% if (!order.refunded && order.venmo_id != 0) { %>
-                    <li><a href="javascript:void(0)" id="<%= order.id %>" class="small button alert refund">Refund</a></li>
+                    <li><a href="javascript:void(0)" id="<%= order.id %>" class="button-error pure-button refund">Refund</a></li>
                   <% } %>
-                  <li><a href="javascript:void(0)" id="<%= order.id %>" class="small button alert cancel"
-                    style="background-color: red">Cancel</a></li>
+                  <li><a href="javascript:void(0)" id="<%= order.id %>" class="button-error pure-button cancel"
+                    style="">Cancel</a></li>
                 </ul>
              </div>
           </div>

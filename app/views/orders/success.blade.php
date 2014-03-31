@@ -4,15 +4,19 @@
 
     <div class="panel">
 
-	<h3>{{{ $response }}}</h3>
+	<h4>{{{ $response }}}</h4>
 
 	<h5><b>Order number: </b>{{ $order->id }}</h5>
-	<table class="box">
+	
+	<table class="pure-table-horizontal">
+	  <thead>
 		<tr>
 			<th>Item</th>
 			<th>Price</th>
 			<th>Quantity</th>
 		<tr>
+	  </thead>
+	  <tbody>
 		@foreach($order->item_orders as $item)
 		<tr>
 			<td>{{$item->name}}</td>
@@ -32,8 +36,8 @@
 			<td></td>
 			<td><h5>Total:</h5></td>
 			<td><h5 id="totalPrice">${{number_format($order->cost, 2)}}</h5></td>
-			<td></td>
 		</tr>
+	  </tbody>
 	</table>
 
 	<!-- <form>
@@ -48,7 +52,9 @@
 	  </fieldset>
 	</form> -->
 	<br/>
+
     </div>
+
   </div>
 </div>
 @stop

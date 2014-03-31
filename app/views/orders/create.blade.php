@@ -28,9 +28,9 @@
     <table class="pure-table-striped">
       <tr>
         <th width="350">Item</th>
-        <th width="50">Add</th>
-        <th width="50">Quantity</th>
-        <th width="50">Remove</th>
+        <th width="20">Add</th>
+        <th width="20">Q</th>
+        <th width="20">Remove</th>
         <th width="50">Price</th>
       </tr>
     @foreach($items as $item)

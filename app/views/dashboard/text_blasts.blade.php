@@ -1,22 +1,38 @@
-<table>
-	<form onsubmit="return validate(this);" role="form" method="get" action="/dashboard/send_text_blast">
-		<div class="row collapse">
-			<div class="large-4 columns">
-				<label>Type</label>
-				<input id = "deal" type="radio" name="alert_type" value="deal" required>Deal Notification<br>
-				<input id = "hour" type="radio" name="alert_type" value="hour">Hour Notification
-			</div>
-		</div>
-		<div class="row collapse">
+@extends('layouts.admin')
 
-			<label>Message Text:</label>
-			<input type="textarea" name="message" required/>
-		</div>
-		<div class="row">
-			<button type="submit" id="submit" class="radius button">Send</button>
-		</div>
+@section('content')
+
+
+<!-- <table> -->
+<div class="row">
+<div class="panel">
+	<form <form class="pure-form"
+	onsubmit="return validate(this);" role="form" method="get" action="/dashboard/send_text_blast">
+			<!-- <div class="large-4 columns"> -->
+				<h4>Type</h4>
+				<label class="pure-radio">
+				  <input id="deal" type="radio" name="alert_type" value="deal" checked> Deal Notification
+				</label>
+				<label class="pure-radio">
+				  <input id="hour" type="radio" name="alert_type" value="hour"> Hour Notification
+				</label>
+			<!-- </div> -->
+		<!-- </div> -->
+		<!-- <div class="row collapse"> -->
+
+			<h4>Message Text:</h4>
+			<textarea name="message"></textarea>
+			<br/>
+		<!-- </div> -->
+		<!-- <div class="row"> -->
+			<button type="submit" id="submit" class="pure-button pure-button-primary">Send</button>
+		<!-- </div> -->
 	</form>
-</table>
+
+	</div>
+	</div>
+
+<!-- </table> -->
 
 <script>
 function validate(form) {
@@ -35,3 +51,7 @@ function validate(form) {
     	type + ' notifications:\n\n' + message);
 }
 </script>
+
+
+
+@stop

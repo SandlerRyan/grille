@@ -7,17 +7,16 @@
 
 <div class="large-12 columns">
 
-	<div class="panel">
+	<!-- <div class="panel"> -->
 		<h3>Order Details</h3>
 
-		<table>
+		<table class="pure-table-horizontal">
 			<thead>
 				<tr>
 					<th>Item</th>
 					<th>Price</th>
 					<th>Quantity</th>
-					<th>Notes</th>
-					<th></th>
+					<th width="300">Notes</th>
 				<tr>
 			</thead>
 			<tbody>
@@ -27,8 +26,12 @@
 				<td>${{$item->price}}</td>
 				<td>{{$item->quantity}}</td>
 				<td>
-					<input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
-					<button type="button" class="addNote" id="{{$item->id}}">Submit Note</button>
+				  <form class="pure-form">
+					<fieldset>
+					  <input type="text" class="note" id="text-{{$item->id}}" maxlength="250" />
+					  <button type="button" class="addNote pure-button pure-button-primary" id="{{$item->id}}">Submit Note</button>
+					</fieldset>
+				  </form>
 				</td>
 			</tr>
 				@if($item->addons)
@@ -45,7 +48,6 @@
 				<td></td>
 				<td><h5>Total:</h5></td>
 				<td><h5 id="totalPrice">${{number_format(Cart::total_with_addons(), 2)}}</h5></td>
-				<td></td>
 			</tr>
 			</tbody>
 		</table>
@@ -53,15 +55,15 @@
 		<div class="result"></div>
 
 		@if (Session::has('user'))
-		    <a class="button round" href="{{ Venmo::AUTHENTICATION_URL }}">
+		    <a class="button pure-button pure-button-primary" style="margin:5px;" href="{{ Venmo::AUTHENTICATION_URL }}">
 		    	Use Venmo
 		    </a>
-		    <a class="button alert round" href="/order/pay_later">Pay At Pick-Up</a>
+		    <a class="button pure-button pure-button-primary" style="margin:5px;" href="/order/pay_later">Pay At Pick-Up</a>
 		@else
-		    <a class="button" href="/user/login">Log In To Proceed</a>
+		    <a class="button pure-button pure-button-primary" style="margin:5px;" href="/user/login">Log In To Proceed</a>
 		@endif
-		<br/>
-	</div>
+		<br/><br/>
+	<!-- </div> -->
 </div>
 </div>
 @stop
@@ -88,7 +90,7 @@ function add_note ()
 				// replace with the note and an "edit note"
 				console.log('success');
 				$("#" + id).replaceWith(
-					'<button type="button" class="editNote" id="' + id +
+					'<button type="button" class="editNote pure-button pure-button-primary" id="' + id +
 					'">Edit Note</button>');
 				$(containerID).replaceWith(
 					'<p id="text-' + id + '">' + value + '</p>');
@@ -107,7 +109,7 @@ function edit_note ()
 		containerID = "#text-" + id;
 		var value = $(containerID).text();
 		$("#" + id).replaceWith(
-			'<button type="button" class="addNote" id="' + id +
+			'<button type="button" class="addNote pure-button pure-button-primary" id="' + id +
 			'">Submit Note</buton>');
 		$(containerID).replaceWith(
 			'<input type="text" class="note" id="text-' + id +
