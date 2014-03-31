@@ -14,12 +14,12 @@
 
 			<div class="pure-control-group">
 				<label for="name">Preferred Name</label>
-				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" />
+				<input type="text" name="preferred_name" value="{{$user["preferred_name"]}}" required />
 			</div>
 
 			<div class="pure-control-group">
 				<label for="number">Phone Number</label>
-				<input type="text" name="phone_number" placeholder = "XXX.XXX.XXXX" />
+				<input type="text" name="phone_number" value="{{$user["phone_formatted"]}}" required />
 			</div>
 
 
