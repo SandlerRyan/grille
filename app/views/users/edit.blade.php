@@ -25,12 +25,12 @@
 
 			<div class="pure-controls">
 	            <label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="hours_notification" id='checkbox1'/> 
+	                <input type="checkbox" name="hours_notification" id='checkbox1'/>
 	                Update me about special hours
 	            </label>
 
 	           	<label for="cb" class="pure-checkbox">
-	                <input type="checkbox" name="deals_notification" id='checkbox2' /> 
+	                <input type="checkbox" name="deals_notification" id='checkbox2' />
 	                Update me about deals and discounts
 	            </label>
 
@@ -45,7 +45,7 @@
 		<br/>
 	@endif
 
-	
+
   </div>
 </div>
 

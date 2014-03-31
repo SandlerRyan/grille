@@ -155,9 +155,9 @@ function unavailable () {
       success: function(data){
           //TODO:  MAKE THE DIV GRAY AND CHANGE THE BUTTON TO MARK AVAILABLE
           id = "#" + id;
-          $(id).removeClass('success');
-          $(id).addClass('alert');
+          $(id).removeClass('button-success');
           $(id).removeClass('mark_item_unavailable');
+          $(id).addClass('button-error');
           $(id).addClass('mark_item_available');
           available ();
           // $(id).removeClass('mark_item_available');
@@ -182,9 +182,9 @@ function available () {
       success: function(data){
 
           id = "#" + id;
-          $(id).removeClass('alert');
-          $(id).addClass('success');
+          $(id).removeClass('button-error');
           $(id).removeClass('mark_item_available');
+          $(id).addClass('button-success');
           $(id).addClass('mark_item_unavailable');
           unavailable ();
       },

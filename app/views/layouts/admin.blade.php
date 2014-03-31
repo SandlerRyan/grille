@@ -54,23 +54,7 @@ $('#cssmenu').prepend('<div id="menu-button">Menu</div>');
 
 
 </div>
-<!-- <<<<<<< HEAD -->
-<!-- Ordinary users and unauthenticated guests already filtered out in routes by this point -->
-<!-- @if (Session::get('user')->privileges != 'staff')
-  <ul class="button-group radius even-4">
-    <li><a class="button" href="/dashboard">Orders</a></li>
-    <li><a class="button" href="/inventory">Inventory</a></li>
-    <li><a class="button" href="/admin">Admin</a></li>
-    <li><a class="button" href="/">Home</a></li>
-  </ul>
-@else
-  <ul class="button-group radius even-3">
-    <li><a class="button" href="/dashboard">Orders</a></li>
-    <li><a class="button" href="/inventory">Inventory</a></li>
-    <li><a class="button" href="/">Main Site</a></li>
-  </ul>
-@endif
-======= -->
+
 <script>
   // set the on/off switch properties
   $("input[type=checkbox]").switchButton({
@@ -89,7 +73,6 @@ $('#cssmenu').prepend('<div id="menu-button">Menu</div>');
   <script>$("input[type=checkbox]").switchButton({checked:false});</script>
 @endif
 
-<!-- >>>>>>> 85db34346f9a61e56950bb2115519884a9fafa1c -->
 
 <script>
 (function($) {
