@@ -8,11 +8,10 @@
 
 <div id="stickyHeader">
   <div  class="row">
-    <!-- <div class="large-12 columns"> -->
+
     <h4>
       <a id="logo" href="/">Staff Portal</a></li>
     </h4>
-
 
     <a class="nav-item" href="/">Home</a>
     <a class="nav-item" href="/inventory">Inventory</a>
@@ -46,6 +45,31 @@
   </div>
 </div>
 
+<script>
+YUI({
+    classNamePrefix: 'pure'
+}).use('gallery-sm-menu', function (Y) {
+
+    var horizontalMenu = new Y.Menu({
+        container         : '#demo-horizontal-menu',
+        sourceNode        : '#std-menu-items',
+        orientation       : 'horizontal',
+        hideOnOutsideClick: false,
+        hideOnClick       : false
+    });
+
+    horizontalMenu.render();
+    horizontalMenu.show();
+
+});
+</script>
+
+
+
+
+
+
+
 <?php
   $grille_id = App::make('grille_id');
   $grille = Grille::find($grille_id);
@@ -55,6 +79,8 @@
   <input id="open-close" type="checkbox" value="1" checked>
 </div>
 
+
+</div>
 <!-- <<<<<<< HEAD -->
 <!-- Ordinary users and unauthenticated guests already filtered out in routes by this point -->
 <!-- @if (Session::get('user')->privileges != 'staff')

@@ -18,7 +18,7 @@
 </div>
 
 <h4 style="width: 100%; text-align:center;">Hours</h4>
-<table class="box" style="margin:auto;">
+<table class="pure-table pure-table-horizontal box" style="margin:auto;">
 	<thead>
   	<tr>
   		<th width="200">Day</th>

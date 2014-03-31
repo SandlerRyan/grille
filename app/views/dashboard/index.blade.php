@@ -30,20 +30,16 @@
         }
 
     </style>
-<!-- End Header and Nav -->
-  <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
-    Mark Items In Stock
-  </div>
 
+  <div class="row">
+    <!-- End Header and Nav -->
+    <div class="button-secondary pure-button sb-toggle-left" style="font-size: 125%; margin:10px;">
+      Mark Items In Stock
+    </div>
+  </div>
 
 <!-- Left Slidebar -->
 <div class="sb-slidebar sb-left">
-
-
-
-
-
-
 
   <!-- Lists in Slidebars -->
   <ul class="sb-menu">
