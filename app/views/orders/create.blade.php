@@ -4,21 +4,19 @@
  <div class="stickyFooter">
     <div class="row">
       <div class="large-12 columns">
-        <!-- <div class="panel"> -->
           <h4 class="inline">Your total is: <div id="totalPrice" class="inline"> ${{{Cart::total()}}} </div> </h4>
           <ul class="button-group round even-2">
             <li><button id="checkout" class="pure-button pure-button-primary" disabled>Checkout</button></li>
             <li><button id="clearCart" class="pure-button">Clear Cart</button></li>
           </ul>
           <br/>
-        <!-- </div> -->
       </div>
     </div>
  </div>
 
-
 <!-- Main body of menu -->
 <div class="row">
+
   @if($err_messages)
     <h5><font color="red">{{$err_messages}}</font></h5>
   @endif
@@ -97,6 +95,7 @@
       @endforeach
     </table>
   @endforeach
+
 </div>
 
 <div id="result"></div>
