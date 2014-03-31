@@ -8,66 +8,39 @@
 
 <div id="stickyHeader">
   <div  class="row">
-
-    <h4>
-      <a id="logo" href="/">Staff Portal</a></li>
-    </h4>
-
-    <a class="nav-item" href="/">Home</a>
-    <a class="nav-item" href="/inventory">Inventory</a>
-    <a class="nav-item" href="/admin">Admin</a>
-
-    <ul>
-      <li class="drop">
-        <a>Orders</a>
-          <div class="dropdownContain">
-            <div class="dropOut">
-              <div class="triangle"></div>
-              <ul>
-                <li>
-                  <a class="dropdown-item" href="/dashboard">Incoming</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href ="/dashboard/filled_orders">Fulfilled</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="/dashboard/cancelled_orders">Cancelled</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="/dashboard/text_blasts">Text Blasts</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-      </li>
-    <ul>
-
+  <div id='cssmenu'>
+  <ul>
+     <li class='active'><a href='/'><span>Staff Portal</span></a></li>
+     <li><a href='/'><span>Home</span></a></li>
+     <li><a href='/inventory'><span>Inventory</span></a></li>
+     <li class='has-sub'><a href='#'><span>Orders</span></a>
+        <ul>
+           <li><a href='/dashboard'><span>Incoming</span></a></li>
+           <li><a href='/dashboard/filled_orders'><span>Fulfilled</span></a></li>
+           <li class='last'><a href='/dashboard/cancelled_orders'><span>Cancelled</span></a></li>
+        </ul>
+     </li>
+     <li><a href='/dashboard/text_blasts'><span>Text Blasts</span></a></li>
+     <li class='last'><a href='/admin' target='_blank'><span>Admin</span></a></li>
+  </ul>
+  </div>
   </div>
 </div>
 
 <script>
-YUI({
-    classNamePrefix: 'pure'
-}).use('gallery-sm-menu', function (Y) {
-
-    var horizontalMenu = new Y.Menu({
-        container         : '#demo-horizontal-menu',
-        sourceNode        : '#std-menu-items',
-        orientation       : 'horizontal',
-        hideOnOutsideClick: false,
-        hideOnClick       : false
-    });
-
-    horizontalMenu.render();
-    horizontalMenu.show();
-
+$( document ).ready(function() {
+$('#cssmenu').prepend('<div id="menu-button">Menu</div>');
+  $('#cssmenu #menu-button').on('click', function(){
+    var menu = $(this).next('ul');
+    if (menu.hasClass('open')) {
+      menu.removeClass('open');
+    }
+    else {
+      menu.addClass('open');
+    }
+  });
 });
 </script>
-
-
-
-
-
 
 
 <?php

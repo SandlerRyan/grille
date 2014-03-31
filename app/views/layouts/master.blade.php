@@ -23,12 +23,6 @@
 
     <!-- Pure -->
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure-min.css">
-<!-- </div> -->
-<!-- </div> -->
- <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
-<!-- </div> -->
-<!-- </div> -->
-
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
@@ -77,49 +71,58 @@
 
 <div id="stickyHeader">
 
-    <div  class="row">
-      <h4>
-        <a id="logo" href="/">{{$grille->name}}</a></li>
-      </h4>
+    <div class="row">
 
-        @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
-            <a class="nav-item" href="/order/create">Menu</a>
-            <a class="nav-item" href="/dashboard">Staff</a>
-        @else
-            <a class="nav-item" href="/order/create">Menu</a>
-        @endif
-
-        @if (Session::has('user'))
+      <div id='cssmenu'>
         <ul>
-          <li class="drop">
-              Hello, <a><b>{{Session::get('user')->preferred_name}}</b></a>
-              <div class="dropdownContain">
-                <div class="dropOut">
-                  <div class="triangle"></div>
-                  <ul>
-                    <li>
-                    <a class="dropdown-item" href="/user/user_settings">
-                    Settings</a></li>
-                    <li><a class="dropdown-ite" href ="/user/logout">Logout</a></li>
-                  </ul>
-                </div>
-              </div>
-          </li>
-        <ul>
+           <li class='active'><a href='/'><span>{{$grille->name}}</span></a></li>
+           
+           @if (Session::has('user') && (Session::get('user')->privileges != 'user'))
+             <li><a href='/order/create'><span>Menu</span></a></li>
+             <li><a href='/dashboard' target='_blank'><span>Staff Portal</span></a></li>
+           @else
+             <li><a href='/order/create'><span>Menu</span></a></li>
+           @endif
 
-        @else
-          <a id="login" href="/user/login">Login</a>
-        @endif
+           @if (Session::has('user'))
+             <li class='has-sub'><a href='#'><span>Hello, {{Session::get('user')->preferred_name}}</span></a>
+                <ul>
+                   <li><a href='/user/user_settings'><span>Settings</span></a></li>
+                   <li class='last'><a href='/user/logout'><span>Logout</span></a></li>
+                </ul>
+             </li>
+           @else
+             <li class='last'><a href='/user/login'><span>Login</span></a></li>
+           @endif
+        </ul>
+      </div>
+
 
     </div>
   </div>
+
+  <script>
+  $( document ).ready(function() {
+  $('#cssmenu').prepend('<div id="menu-button">Menu</div>');
+    $('#cssmenu #menu-button').on('click', function(){
+      var menu = $(this).next('ul');
+      if (menu.hasClass('open')) {
+        menu.removeClass('open');
+      }
+      else {
+        menu.addClass('open');
+      }
+    });
+  });
+  </script>
 
   <div class="row">
     <div class="large-12 columns">
       <h1><img width="25" src="/img/logo.jpg" /> Eliot Grille</h1>
     </div>
   </div>
-  @show
+
+@show
 
 
   <!-- End Header and Nav -->
