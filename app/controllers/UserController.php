@@ -148,6 +148,10 @@ class UserController extends \BaseController {
                     $user->deals_notification = $deals_notification;
                     $user->save();
 
+                    //put updated user on to session
+
+                    Session::put('user', $user);
+
                 }
                 //else create new user
                 else
@@ -242,7 +246,15 @@ class UserController extends \BaseController {
 
             //specify whether user is new or not
             $user->new = 0;
-            $user->grille_number = Grille::where('id', $this->grille_id)->pluck('phone_number');
+
+            //get the grille's phone number, and put it in readable format
+            $grille_num = Grille::where('id', $this->grille_id)->pluck('phone_number');
+            $user->grille_number = '(' . substr($grille_num, 0, 3) . ') ' . substr($grille_num, 3, 3)  
+                                    . '-' . substr($grille_num, 6, 4);
+
+            //format phone number to prefill
+            $user->phone_formatted = '(' . substr($user->phone_number, 0, 3) . ') ' . substr($user->phone_number, 3, 3)  
+                                    . '-' . substr($user->phone_number, 6, 4);
 
             $this->layout->content = View::make('users.edit', ['user' => $user, 'failure' => $failure]);
         }

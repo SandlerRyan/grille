@@ -22,7 +22,7 @@
 		<div class="row collapse">
 			<div class="large-4 columns">
 				<label>Phone Number</label>
-				<input type="text" name="phone_number" placeholder = "XXX.XXX.XXXX" required/>
+				<input type="text" name="phone_number" value="{{$user["phone_formatted"]}}" required/>
 			</div>
 		</div>
 
@@ -36,7 +36,7 @@
 			<button type="submit" id="submit" class="radius button">Submit</button>
 		</div>
 		@if($user["new"]==0)
-			<div>Note: If you opted to stop receiving text messages and want to opt back in, text 'START' to (843) 271-6240 </>
+			<div>Note: If you opted to stop receiving text messages and want to opt back in, text 'START' to {{$user["grille_number"]}} </>
 		@endif
 	</form>
 </table>
